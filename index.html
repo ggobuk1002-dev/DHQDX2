@@ -1,0 +1,375 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>금동대향로 자연사박물관 | 가상 웹전시</title>
+  
+  <!-- Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Three.js & Loaders (CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+</head>
+<body>
+
+  <!-- Global Loading Screen -->
+  <div id="global-loader" style="position: fixed; inset: 0; background: #08090d; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease;">
+    <div style="width: 50px; height: 50px; border: 3px solid rgba(212,175,55,0.2); border-top-color: #d4af37; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1.5rem;"></div>
+    <div id="global-loader-text" style="color: #d4af37; font-family: 'Noto Serif KR', serif; font-size: 1.1rem; letter-spacing: 0.05em; margin-bottom: 1rem;">금동대향로 유물 데이터를 불러오는 중...</div>
+    <div style="width: 260px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;">
+      <div id="global-loader-bar" style="width: 0%; height: 100%; background: #d4af37; transition: width 0.3s ease;"></div>
+    </div>
+  </div>
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="brand-title" data-nav="main">
+      <div class="brand-icon">향</div>
+      <div>
+        <span class="brand-name">금동대향로 자연사박물관</span>
+        <span class="brand-sub">가상웹전시</span>
+      </div>
+    </div>
+
+    <nav class="header-nav">
+      <button class="nav-btn" data-nav="intro">인트로</button>
+      <button class="nav-btn active" data-nav="main">전시관람(메인)</button>
+      <button class="nav-btn" data-nav="catalog">상징도감(목록)</button>
+      <button class="btn-docent-call" id="btn-docent-call">
+        <span>👨‍🏫 과학해설사</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- 3D Background Canvas (Shared across Views) -->
+  <div class="scrolly-canvas-container">
+    <canvas id="scrolly-canvas" class="scrolly-3d-canvas"></canvas>
+  </div>
+
+  <!-- ============================================================
+       1. VIEW: INTRO
+       ============================================================ -->
+  <section id="view-intro" class="view-section active">
+    <div class="intro-media-wrapper">
+      <video id="intro-video" class="intro-video" playsinline preload="auto">
+        <source src="Asset/1. Intro/opening.mp4" type="video/mp4">
+      </video>
+      <div id="intro-blackout" class="intro-blackout-overlay"></div>
+      <div id="intro-3d-stage" class="intro-3d-stage"></div>
+    </div>
+
+    <div id="intro-ui-overlay" class="intro-ui-overlay">
+      <span class="intro-badge">BAEKJE GREAT GILT-BRONZE INCENSE BURNER</span>
+      <h1 class="intro-title">금동대향로 자연사박물관</h1>
+      <p class="intro-subtitle">"자세히 보아야 예쁘다. 너도 그렇다."<br>하나의 유물 속에서 피어나는 하늘·육지·바다의 생명과 인류사</p>
+      <button id="btn-start-exhibition" class="btn-start-exhibition">
+        <span>전시 관람 시작하기</span>
+        <span>→</span>
+      </button>
+    </div>
+
+    <button id="btn-intro-skip" class="intro-skip-btn">오프닝 건너뛰기 ✕</button>
+  </section>
+
+  <!-- ============================================================
+       2. VIEW: MAIN (SCROLLYTELLING)
+       ============================================================ -->
+  <section id="view-main" class="view-section">
+    <div class="scrolly-content-container">
+      
+      <!-- Step 0: Whole Relic -->
+      <div class="scrolly-step align-center is-active" data-step-id="intro">
+        <div class="scrolly-card">
+          <span class="scrolly-tag">전시 개요</span>
+          <h2 class="scrolly-title">하나의 유물을 마주하다</h2>
+          <p class="scrolly-desc">백제금동대향로는 1993년 부여 능산리 절터에서 온전한 모습으로 출토되었습니다. 높이 61.8cm, 무게 11.8kg의 대형 향로로 백제 금속공예와 이상세계의 정점을 보여줍니다.</p>
+          <span class="btn-step-action">↓ 아래로 스크롤하여 층위 탐색</span>
+        </div>
+      </div>
+
+      <!-- Step 1: Sky (Phoenix) -->
+      <div class="scrolly-step align-left" data-step-id="sky">
+        <div class="scrolly-card">
+          <span class="scrolly-tag">1층위 · 하늘</span>
+          <h2 class="scrolly-title">하늘을 품은 날갯짓, 봉황</h2>
+          <p class="scrolly-desc">향로 정상에서 목과 부리로 여의주를 품고 날개를 활짝 펴고 서 있는 봉황. 천하가 태평할 때 나타난다는 성스러운 새로 백제인이 꿈꾸었던 가장 높은 이상세계의 시작입니다.</p>
+          <span class="btn-step-action">↓ 계속해서 천상 세계로</span>
+        </div>
+      </div>
+
+      <!-- Step 2: Heaven (Musicians) -->
+      <div class="scrolly-step align-right" data-step-id="heaven">
+        <div class="scrolly-card">
+          <span class="scrolly-tag">2층위 · 천상</span>
+          <h2 class="scrolly-title">음악이 흐르는 신선의 산</h2>
+          <p class="scrolly-desc">피리, 소비파, 현금, 북을 연주하는 5인의 악사와 하늘을 날아다니는 신선들. 뚜껑 곳곳에 뚫린 구멍으로 향 연기가 피어오르면 산과 구름이 살아 움직입니다.</p>
+          <span class="btn-step-action">↓ 생명의 터전 육지로</span>
+        </div>
+      </div>
+
+      <!-- Step 3: Land (Animals) -->
+      <div class="scrolly-step align-left" data-step-id="land">
+        <div class="scrolly-card">
+          <span class="scrolly-tag">3층위 · 육지</span>
+          <h2 class="scrolly-title">첩첩산중 생명의 터전</h2>
+          <p class="scrolly-desc">23개의 겹겹이 솟은 산봉우리 사이에 호랑이, 사슴, 멧돼지, 말 등 39마리의 동물들과 기마수렵상이 생생하게 살아 숨 쉬고 있습니다.</p>
+          <span class="btn-step-action">↓ 신비로운 바다 세계로</span>
+        </div>
+      </div>
+
+      <!-- Step 4: Water (Lotus) -->
+      <div class="scrolly-step align-right" data-step-id="water">
+        <div class="scrolly-card">
+          <span class="scrolly-tag">4층위 · 바다</span>
+          <h2 class="scrolly-title">피어나는 연꽃과 수중 생태</h2>
+          <p class="scrolly-desc">활짝 피어난 3단의 연꽃잎 사이로 악어, 물고기, 수달, 물범 등 26마리의 동물들이 노니는 생명의 바다가 펼쳐집니다.</p>
+          <span class="btn-step-action">↓ 바다를 떠받치는 용으로</span>
+        </div>
+      </div>
+
+      <!-- Step 5: Dragon Base -->
+      <div class="scrolly-step align-center" data-step-id="dragon">
+        <div class="scrolly-card">
+          <span class="scrolly-tag">5층위 · 해저</span>
+          <h2 class="scrolly-title">기운을 뿜어 올리는 용</h2>
+          <p class="scrolly-desc">한 다리를 치켜들고 물을 박차며 하늘로 솟구치듯 연꽃 몸체를 입으로 떠받치고 있는 용. 바다를 다스리는 신이자 백제의 역동적 기운을 상징합니다.</p>
+        </div>
+      </div>
+
+      <!-- Bottom CTA Section -->
+      <div class="scrolly-footer-cta">
+        <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: #fff; margin-bottom: 1rem;">향로 속 21개 상징을 발견하셨나요?</h2>
+        <p style="color: var(--text-secondary); max-width: 600px; margin-bottom: 2.5rem;">이제 개별 동물들의 숨겨진 문화적 상징과 자연과학적 비밀을 직접 탐색해 보세요.</p>
+        <button class="btn-explore-catalog" data-nav="catalog">
+          <span>상징 도감 전체 탐색하기</span>
+          <span>🏛️</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       3. VIEW: CATALOG / SYMBOL DISCOVERY
+       ============================================================ -->
+  <section id="view-catalog" class="view-section">
+    <div class="catalog-header">
+      <h2 class="catalog-title">향로의 그림자: 상징 도감</h2>
+      <p class="catalog-desc">검은 실루엣 속 동물을 탐색하고 퀴즈를 풀면 원래의 찬란한 금빛을 되찾습니다. 21개 백제의 상징을 모두 발견해 보세요.</p>
+
+      <!-- Discovery Progress -->
+      <div class="discovery-progress-wrap">
+        <div class="progress-header">
+          <span style="color: var(--accent-gold); font-weight: 700;">상징 도감 완성도</span>
+          <span id="discovery-progress-label" style="color: var(--text-secondary);">0 / 21 개 발견 (0%)</span>
+        </div>
+        <div class="progress-track">
+          <div id="discovery-progress-bar" class="progress-bar-fill"></div>
+        </div>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="catalog-tabs">
+        <button class="tab-btn active" data-category="all">전체 상징 (21)</button>
+        <button class="tab-btn" data-category="sky">하늘 · 천상</button>
+        <button class="tab-btn" data-category="land">육지 · 산악</button>
+        <button class="tab-btn" data-category="water">바다 · 연꽃 · 용</button>
+      </div>
+    </div>
+
+    <!-- Animal Card Grid -->
+    <div class="animal-grid" id="animal-grid">
+      <!-- Dynamically generated by app.js -->
+    </div>
+  </section>
+
+  <!-- ============================================================
+       4. VIEW: DETAIL (MULTI-PERSPECTIVE)
+       ============================================================ -->
+  <section id="view-detail" class="view-section">
+    
+    <!-- Navigation Top Bar -->
+    <div class="detail-nav-top">
+      <button class="btn-back-to-catalog" data-nav="catalog">
+        <span>←</span>
+        <span>상징 목록으로 돌아가기</span>
+      </button>
+      <div class="detail-step-indicator" id="detail-indicator">01 / 21</div>
+    </div>
+
+    <div class="detail-main-layout">
+      
+      <!-- Left Column: 3D / Image Viewer -->
+      <div class="detail-stage-column">
+        <div class="stage-viewer-wrap">
+          <img id="detail-panel-image" class="detail-image-fallback" src="Asset/Final.png" alt="패널 이미지">
+        </div>
+        <div class="stage-controls">
+          <span class="stage-hint">💡 3D 모델 및 패널 도판을 자세히 관찰하세요</span>
+          <button id="btn-toggle-stage-view" class="btn-view-toggle">🖼️ 2D 패널 보기</button>
+        </div>
+      </div>
+
+      <!-- Right Column: Multi-Perspective Info Panel -->
+      <div class="detail-info-column">
+        
+        <!-- Header Info -->
+        <div class="detail-header-info">
+          <span class="detail-code-tag" id="detail-code-tag">NO. 01 · 뚜껑 (산악)</span>
+          <h1 class="detail-title" id="detail-title">말</h1>
+          <p class="detail-simple-desc" id="detail-simple-desc">단단한 땅을 빠르게 달리는 인간의 오랜 동반자이자 기마문화의 상징.</p>
+        </div>
+
+        <!-- 3 Key Features Box -->
+        <div class="feature-box">
+          <h4>눈여겨볼 핵심 관찰 포인트 3가지</h4>
+          <ul class="feature-list" id="detail-features-list">
+            <!-- Dynamically populated -->
+          </ul>
+        </div>
+
+        <!-- Perspective 1: Social & Cultural Story -->
+        <div class="perspective-section">
+          <div class="perspective-header">
+            <div class="perspective-icon icon-culture">🏛️</div>
+            <h3 class="perspective-title">사회 · 문화적 관점</h3>
+          </div>
+          <p class="perspective-text" id="detail-culture-text"></p>
+        </div>
+
+        <!-- Perspective 2: Science & Evolution Story -->
+        <div class="perspective-section">
+          <div class="perspective-header">
+            <div class="perspective-icon icon-science">🔬</div>
+            <h3 class="perspective-title">자연과학 · 진화적 관점</h3>
+          </div>
+          <p class="perspective-text" id="detail-science-text"></p>
+        </div>
+
+        <!-- Perspective 3: Related Relics & Sources -->
+        <div class="perspective-section">
+          <div class="perspective-header">
+            <div class="perspective-icon icon-relic">📜</div>
+            <h3 class="perspective-title">관련 유물 및 학술 근거</h3>
+          </div>
+          <p class="perspective-text" id="detail-relic-text"></p>
+          <div class="source-credit" id="detail-source-credit"></div>
+        </div>
+
+        <!-- Interactive OX Quiz Module -->
+        <div class="quiz-module-card" id="detail-quiz-box">
+          <!-- Dynamically generated by app.js -->
+        </div>
+
+        <!-- Guestbook Comments Section -->
+        <div class="comments-section">
+          <h4 style="color: #fff; margin-bottom: 1rem; font-size: 1.1rem;">관람객 참여 감상 한줄평</h4>
+          <div class="comment-input-row">
+            <input type="text" id="comment-input" class="comment-input" placeholder="유물을 감상한 생각이나 질문을 남겨보세요...">
+            <button id="btn-submit-comment" class="btn-submit-comment">등록</button>
+          </div>
+          <div class="comment-list" id="comment-list">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Bottom Navigation Buttons -->
+        <div class="detail-bottom-nav">
+          <button id="btn-detail-prev" class="btn-nav-prev">
+            <span>←</span>
+            <span>이전 전시품</span>
+          </button>
+          <button id="btn-detail-next" class="btn-nav-next">
+            <span>다음 전시품</span>
+            <span>→</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ============================================================
+       5. MODAL: DOCENT (VISUAL NOVEL STYLE)
+       ============================================================ -->
+  <div id="docent-modal" class="docent-vn-backdrop">
+    <div class="docent-vn-container">
+      
+      <!-- Close Button -->
+      <button id="btn-close-docent" class="btn-close-vn">✕ 전시로 돌아가기</button>
+
+      <!-- Character Portrait Layer -->
+      <div class="docent-vn-character">
+        <div class="docent-avatar-art">👨‍🏫</div>
+      </div>
+
+      <!-- Dialogue UI Layer -->
+      <div class="docent-vn-ui">
+        
+        <!-- Progress Gauge -->
+        <div class="vn-progress-wrap">
+          <span id="docent-step-label">탐구 단계 1 / 3</span>
+          <div class="vn-gauge-track">
+            <div id="docent-gauge-fill" class="vn-gauge-fill"></div>
+          </div>
+        </div>
+
+        <!-- Dialogue Box -->
+        <div class="vn-dialogue-box">
+          <div class="vn-speaker-name" id="docent-sub-title">국립박물관 과학해설사</div>
+          <div class="vn-text-content" id="docent-chat-body">
+            <!-- Text injected via JS with typewriter effect -->
+          </div>
+        </div>
+
+        <!-- Choices -->
+        <div class="vn-options-container" id="docent-options-footer">
+          <!-- Buttons generated dynamically -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+        <button id="btn-close-docent" class="btn-close-modal">✕</button>
+      </div>
+
+      <!-- Progress Gauge -->
+      <div class="docent-progress-bar-wrap">
+        <span id="docent-step-label">탐구 단계 1 / 3</span>
+        <div class="docent-gauge-track">
+          <div id="docent-gauge-fill" class="docent-gauge-fill"></div>
+        </div>
+      </div>
+
+      <!-- Chat History Body -->
+      <div class="docent-chat-body" id="docent-chat-body">
+        <!-- Message bubbles appended here -->
+      </div>
+
+      <!-- Interactive Option Buttons Footer -->
+      <div class="docent-options-footer" id="docent-options-footer">
+        <!-- Interactive choice buttons generated dynamically -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/threeViewer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
