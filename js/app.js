@@ -201,6 +201,7 @@ class ExhibitionApp {
     const blackout = document.getElementById('intro-blackout');
     const stage3d = document.getElementById('intro-3d-stage');
     const uiOverlay = document.getElementById('intro-ui-overlay');
+    const canvasContainer = document.getElementById('scrolly-canvas-container');
 
     if (video) video.classList.add('converging');
 
@@ -211,8 +212,9 @@ class ExhibitionApp {
     setTimeout(() => {
       if (stage3d) stage3d.classList.add('visible');
       if (uiOverlay) uiOverlay.classList.add('visible');
+      if (canvasContainer) canvasContainer.classList.remove('hidden');
       if (this.viewer) this.viewer.setIntroMode(true);
-    }, 1800);
+    }, 1500);
   }
 
   /* ============================================================

@@ -194,11 +194,11 @@ img {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 1;
-  pointer-events: none;
+  z-index: 1; /* 완벽한 배경: 모든 UI 및 카드 뒤에 고정 */
+  pointer-events: none !important;
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition: opacity 0.6s ease;
 }
 
 .scrolly-canvas-container.hidden {
@@ -219,8 +219,8 @@ img {
 #view-intro {
   position: fixed;
   inset: 0;
-  background: #000;
-  z-index: 2000;
+  background: transparent; /* 캔버스가 완벽히 보이도록 투명화 */
+  z-index: 10;
   flex-direction: column;
   justify-content: center;
   align-items: center;
