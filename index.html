@@ -52,8 +52,8 @@
     </nav>
   </header>
 
-  <!-- 3D Background Canvas (Shared across Views) -->
-  <div class="scrolly-canvas-container">
+  <!-- 3D Background Canvas (Shared across Intro/Main) -->
+  <div id="scrolly-canvas-container" class="scrolly-canvas-container">
     <canvas id="scrolly-canvas" class="scrolly-3d-canvas"></canvas>
   </div>
 
@@ -210,14 +210,13 @@
 
     <div class="detail-main-layout">
       
-      <!-- Left Column: 3D / Image Viewer -->
+      <!-- Left Column: Image / Panel Viewer -->
       <div class="detail-stage-column">
         <div class="stage-viewer-wrap">
           <img id="detail-panel-image" class="detail-image-fallback" src="Asset/Final.png" alt="패널 이미지">
         </div>
         <div class="stage-controls">
-          <span class="stage-hint">💡 3D 모델 및 패널 도판을 자세히 관찰하세요</span>
-          <button id="btn-toggle-stage-view" class="btn-view-toggle">🖼️ 2D 패널 보기</button>
+          <span class="stage-hint">💡 유물 세부 도판을 자세히 관찰하세요</span>
         </div>
       </div>
 
@@ -341,29 +340,6 @@
         </div>
 
       </div>
-    </div>
-  </div>
-        <button id="btn-close-docent" class="btn-close-modal">✕</button>
-      </div>
-
-      <!-- Progress Gauge -->
-      <div class="docent-progress-bar-wrap">
-        <span id="docent-step-label">탐구 단계 1 / 3</span>
-        <div class="docent-gauge-track">
-          <div id="docent-gauge-fill" class="docent-gauge-fill"></div>
-        </div>
-      </div>
-
-      <!-- Chat History Body -->
-      <div class="docent-chat-body" id="docent-chat-body">
-        <!-- Message bubbles appended here -->
-      </div>
-
-      <!-- Interactive Option Buttons Footer -->
-      <div class="docent-options-footer" id="docent-options-footer">
-        <!-- Interactive choice buttons generated dynamically -->
-      </div>
-
     </div>
   </div>
 

@@ -1,5 +1,6 @@
-/**
- * 금동대향로 3D 뷰어 및 카메라 인터랙션 컨트롤러 (Three.js)
+﻿/**
+ * 백제 금동대향로 3D 시네마틱 뷰어 (Three.js)
+ * intro.jpg 스타일의 장엄한 림라이트(Edge Glow / Rim Light) 및 고품질 금동 PBR 질감 구현
  */
 
 class IncenseBurner3DViewer {
@@ -13,10 +14,10 @@ class IncenseBurner3DViewer {
     this.model = null;
     
     this.isIntroMode = true;
-    this.autoRotateSpeed = 0.003;
-    this.targetCameraPos = new THREE.Vector3(0, 0.1, 2.3);
-    this.targetLookAt = new THREE.Vector3(0, 0, 0);
-    this.currentLookAt = new THREE.Vector3(0, 0, 0);
+    this.autoRotateSpeed = 0.0025; // 우아하고 느린 자전 속도
+    this.targetCameraPos = new THREE.Vector3(-0.35, 0.15, 1.8);
+    this.targetLookAt = new THREE.Vector3(0.1, 0.05, 0);
+    this.currentLookAt = new THREE.Vector3(0.1, 0.05, 0);
     
     this.init();
   }
@@ -28,37 +29,37 @@ class IncenseBurner3DViewer {
     this.scene = new THREE.Scene();
 
     // Camera
-    const aspect = this.canvas.clientWidth / this.canvas.clientHeight;
-    this.camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 100);
-    this.camera.position.set(0, 0.1, 2.3);
+    const width = this.canvas.clientWidth || window.innerWidth;
+    const height = this.canvas.clientHeight || window.innerHeight;
+    this.camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
+    this.camera.position.set(-0.35, 0.15, 1.8);
 
-    // Renderer
+    // Renderer with ACES Filmic Tone Mapping
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       antialias: true,
-      alpha: true
+      alpha: true,
+      powerPreference: "high-performance"
     });
-    this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+    this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.1;
+    this.renderer.toneMappingExposure = 1.05;
     this.renderer.outputEncoding = THREE.sRGBEncoding;
 
-    // Controls
+    // Controls (수동 조작용)
     this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.05;
     this.controls.enableZoom = true;
-    this.controls.minDistance = 0.5;
-    this.controls.maxDistance = 5.0;
-    this.controls.enabled = false; // 기본적으로 스크롤 중에는 비활성화
+    this.controls.minDistance = 0.6;
+    this.controls.maxDistance = 4.0;
+    this.controls.enabled = false;
 
-    // Lighting
+    // Setup Cinematic Lighting (intro.jpg 스타일)
     this.setupLighting();
-    
 
-
-    // Load 3D Model
+    // Load Model
     this.loadModel();
 
     // Resize Event
@@ -69,29 +70,34 @@ class IncenseBurner3DViewer {
   }
 
   setupLighting() {
-    // Ambient Light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2.0);
+    // 1. Ambient Light (깊은 어둠 속 은은한 베이스광)
+    const ambientLight = new THREE.AmbientLight(0x181c28, 0.6);
     this.scene.add(ambientLight);
 
-    // Key Light (Main Gold Front Light)
-    const keyLight = new THREE.DirectionalLight(0xffe8b3, 2.5);
-    keyLight.position.set(2, 3, 3);
-    this.scene.add(keyLight);
+    // 2. Main Rim / Backlight 1 (좌측 후방 강한 하이라이트 에지광 - intro.jpg 핵심)
+    const mainRimLight = new THREE.DirectionalLight(0xe8f0ff, 4.2);
+    mainRimLight.position.set(-4, 2.5, -3.5);
+    this.scene.add(mainRimLight);
 
-    // Fill Light
-    const fillLight = new THREE.DirectionalLight(0x8bc34a, 0.4);
-    fillLight.position.set(-3, -1, 2);
-    this.scene.add(fillLight);
+    // 3. Gold Edge Light 2 (우측 후방 보조 림라이트)
+    const goldRimLight = new THREE.DirectionalLight(0xd4af37, 3.0);
+    goldRimLight.position.set(3.5, 3.0, -2.5);
+    this.scene.add(goldRimLight);
 
-    // Back / Rim Light (Cinematic Silhouette Effect)
-    const rimLight = new THREE.DirectionalLight(0xd4af37, 2.0);
-    rimLight.position.set(0, 2, -3);
-    this.scene.add(rimLight);
+    // 4. Subtle Key Light (전면에서 유물의 섬세한 조각 윤곽만 살짝 비추는 키라이트)
+    const frontKeyLight = new THREE.DirectionalLight(0xffdf9e, 0.9);
+    frontKeyLight.position.set(1.5, 1.8, 3.2);
+    this.scene.add(frontKeyLight);
 
-    // Top Light for Phoenix
-    const topLight = new THREE.PointLight(0xfff0b3, 1.5, 5);
-    topLight.position.set(0, 2.0, 0.5);
+    // 5. Top Point Light (봉황 정상 디테일 강조)
+    const topLight = new THREE.PointLight(0xfffae0, 1.5, 4);
+    topLight.position.set(0, 1.8, 0.3);
     this.scene.add(topLight);
+
+    // 6. Dragon Base Light (하단 용의 역동적 실루엣)
+    const bottomLight = new THREE.PointLight(0x2dd4bf, 1.2, 3);
+    bottomLight.position.set(0, -1.2, 0.5);
+    this.scene.add(bottomLight);
   }
 
   loadModel() {
@@ -102,41 +108,35 @@ class IncenseBurner3DViewer {
       modelUrl,
       (gltf) => {
         this.model = gltf.scene;
-        
-        // Ensure materials are visible
+
+        // 고풍스럽고 장엄한 백제 금동 PBR 재질 적용
+        const antiqueGold = new THREE.Color(0xb8974a); // 고풍스러운 금동 컬러
         this.model.traverse((child) => {
           if (child.isMesh) {
-            // Recompute normals just in case
             child.geometry.computeVertexNormals();
             if (child.material) {
-              child.material.metalness = 0.1;
-              child.material.roughness = 0.7;
-              child.material.color = new THREE.Color(0xd4af37); // Base gold color
-              child.material.emissive = new THREE.Color(0x110d00); // Slight glow
+              child.material.metalness = 0.82; // 진짜 금속 느낌
+              child.material.roughness = 0.32; // 세련된 반사광
+              child.material.color = antiqueGold;
+              child.material.emissive = new THREE.Color(0x000000); // 발광 제거 (노란 가로등 현상 완전 해결)
               child.material.needsUpdate = true;
             }
           }
         });
 
-        // Robust sizing
+        // Bounding Box 정규화 및 정확한 중심 정렬
         const box = new THREE.Box3().setFromObject(this.model);
-        if (box.isEmpty()) {
-            // Fallback scale if empty
-            this.model.scale.set(1, 1, 1);
-        } else {
-            const size = box.getSize(new THREE.Vector3());
-            const maxDim = Math.max(size.x, size.y, size.z);
-            const scale = maxDim > 0 ? (1.5 / maxDim) : 1;
-            this.model.scale.set(scale, scale, scale);
-        }
-        
-        // Robust centering
-        const scaledBox = new THREE.Box3().setFromObject(this.model);
-        if (!scaledBox.isEmpty()) {
-            const center = scaledBox.getCenter(new THREE.Vector3());
-            this.model.position.x -= center.x;
-            this.model.position.y -= center.y;
-            this.model.position.z -= center.z;
+        if (!box.isEmpty()) {
+          const size = box.getSize(new THREE.Vector3());
+          const maxDim = Math.max(size.x, size.y, size.z);
+          const scale = maxDim > 0 ? (1.5 / maxDim) : 1;
+          this.model.scale.set(scale, scale, scale);
+
+          const scaledBox = new THREE.Box3().setFromObject(this.model);
+          const center = scaledBox.getCenter(new THREE.Vector3());
+          this.model.position.x -= center.x;
+          this.model.position.y -= center.y;
+          this.model.position.z -= center.z;
         }
 
         this.scene.add(this.model);
@@ -160,15 +160,17 @@ class IncenseBurner3DViewer {
     );
   }
 
+  // 인트로 화면 모드: intro.jpg처럼 좌측 바깥으로 이어지는 웅장한 클로즈업 뷰
   setIntroMode(enabled) {
     this.isIntroMode = enabled;
     if (enabled) {
       this.controls.enabled = false;
-      this.targetCameraPos.set(0, 0.1, 2.3);
-      this.targetLookAt.set(0, 0, 0);
+      this.targetCameraPos.set(-0.35, 0.15, 1.8);
+      this.targetLookAt.set(0.1, 0.05, 0);
     }
   }
 
+  // 메인 스크롤텔링 각 층위 카메라 이동
   setLayerCamera(cameraPos, targetPos) {
     this.isIntroMode = false;
     this.controls.enabled = false;
@@ -181,23 +183,23 @@ class IncenseBurner3DViewer {
     }
   }
 
+  // 상세 뷰어 조작
   setDetailInteractive(enabled, part) {
     this.isIntroMode = false;
     this.controls.enabled = enabled;
 
     if (enabled && part) {
-      // 해당 부위로 카메라 기본 포지셔닝
       if (part.includes('정상') || part.includes('봉황')) {
-        this.targetCameraPos.set(0, 0.8, 1.2);
+        this.targetCameraPos.set(0, 0.8, 1.15);
         this.targetLookAt.set(0, 0.55, 0);
       } else if (part.includes('산악') || part.includes('뚜껑')) {
-        this.targetCameraPos.set(0, 0.2, 1.1);
+        this.targetCameraPos.set(0, 0.2, 1.05);
         this.targetLookAt.set(0, 0.1, 0);
       } else if (part.includes('연꽃') || part.includes('몸체')) {
-        this.targetCameraPos.set(0, -0.2, 1.1);
+        this.targetCameraPos.set(0, -0.2, 1.05);
         this.targetLookAt.set(0, -0.2, 0);
       } else if (part.includes('받침') || part.includes('용')) {
-        this.targetCameraPos.set(0, -0.6, 1.2);
+        this.targetCameraPos.set(0, -0.58, 1.15);
         this.targetLookAt.set(0, -0.45, 0);
       }
     }
@@ -205,8 +207,8 @@ class IncenseBurner3DViewer {
 
   onResize() {
     if (!this.canvas || !this.camera || !this.renderer) return;
-    const width = this.canvas.clientWidth;
-    const height = this.canvas.clientHeight;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
@@ -216,12 +218,12 @@ class IncenseBurner3DViewer {
   animate() {
     requestAnimationFrame(() => this.animate());
 
-    // Slow auto rotation in intro or idle mode
+    // 인트로 또는 아이들 모드일 때 느리고 우아한 자전 (빛의 반사 변화)
     if (this.isIntroMode && this.model) {
       this.model.rotation.y += this.autoRotateSpeed;
     }
 
-    // Smooth Camera Interpolation (Lerp)
+    // 부드러운 카메라 보간 (Lerp)
     if (!this.controls.enabled) {
       this.camera.position.lerp(this.targetCameraPos, 0.05);
       this.currentLookAt.lerp(this.targetLookAt, 0.05);

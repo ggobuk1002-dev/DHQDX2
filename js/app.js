@@ -1,4 +1,8 @@
-﻿class ExhibitionApp {
+﻿/**
+ * 금동대향로 가상웹전시 메인 애플리케이션 로직 (app.js)
+ */
+
+class ExhibitionApp {
   constructor() {
     this.currentView = 'intro';
     this.currentAnimalIndex = 0;
@@ -37,9 +41,9 @@
         
         if (loadingText) {
           if (isError) {
-            loadingText.innerText = '3D 렌더링 준비 완료 (대체 모드)';
+            loadingText.innerText = '전시 준비 완료 (2D 패널 모드)';
           } else {
-            loadingText.innerText = isLoaded ? '전시 준비 완료' : '3D 유물 데이터 로딩 중... ' + percent + '%';
+            loadingText.innerText = isLoaded ? '전시 준비 완료' : '금동대향로 유물 로딩 중... ' + percent + '%';
           }
         }
         
@@ -52,7 +56,6 @@
         }
       });
     } else {
-      // 뷰어가 없는 경우 (에러 폴백) 로더 즉시 제거
       const loader = document.getElementById('global-loader');
       if (loader) loader.style.display = 'none';
     }
@@ -61,7 +64,6 @@
   bindEvents() {
     document.querySelectorAll('[data-nav]').forEach(btn => {
       btn.addEventListener('click', (e) => {
-        // 중복 클릭 시 부모 요소로의 이벤트 전파 등 해결을 위해 currentTarget 사용
         let targetView = e.currentTarget.getAttribute('data-nav');
         if (!targetView) {
            targetView = e.target.closest('[data-nav]')?.getAttribute('data-nav');
@@ -113,24 +115,24 @@
     if (btnPrev) btnPrev.addEventListener('click', () => this.navigateDetail(-1));
     if (btnNext) btnNext.addEventListener('click', () => this.navigateDetail(1));
 
-    const btnToggleView = document.getElementById('btn-toggle-stage-view');
-    if (btnToggleView) {
-      btnToggleView.addEventListener('click', () => this.toggleDetailStageView());
-    }
-
     const btnAddComment = document.getElementById('btn-submit-comment');
     if (btnAddComment) {
       btnAddComment.addEventListener('click', () => this.addComment());
     }
   }
 
+  /* ============================================================
+     뷰 전환 시스템 (3D 캔버스 표시 영역 제어 포함)
+     ============================================================ */
   switchView(viewName, animalCode = null) {
     this.currentView = viewName;
 
+    // 모든 뷰 숨기기
     document.querySelectorAll('.view-section').forEach(sec => {
       sec.classList.remove('active');
     });
 
+    // 헤더 네비게이션 활성화
     document.querySelectorAll('.nav-btn').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-nav') === viewName);
     });
@@ -138,51 +140,54 @@
     const targetSection = document.getElementById('view-' + viewName);
     if (targetSection) {
       targetSection.classList.add('active');
+      targetSection.scrollTop = 0;
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (targetSection) targetSection.scrollTop = 0;
 
-    if (this.viewer) {
-      if (viewName === 'intro') {
-        this.viewer.setIntroMode(true);
-      } else if (viewName === 'main') {
+    const canvasContainer = document.getElementById('scrolly-canvas-container');
+
+    // 뷰별 3D 캔버스 노출 여부 및 카메라 모드 제어
+    if (viewName === 'intro') {
+      if (canvasContainer) canvasContainer.classList.remove('hidden');
+      if (this.viewer) this.viewer.setIntroMode(true);
+    } else if (viewName === 'main') {
+      if (canvasContainer) canvasContainer.classList.remove('hidden');
+      if (this.viewer) {
         this.viewer.setIntroMode(false);
         const firstLayer = EXHIBITION_DATA.layers[0];
         this.viewer.setLayerCamera(firstLayer.cameraPos, firstLayer.target);
-      } else if (viewName === 'catalog') {
-        this.viewer.setIntroMode(true);
-      } else if (viewName === 'detail') {
-        const animal = animalCode ? EXHIBITION_DATA.animals.find(a => a.code === animalCode) : EXHIBITION_DATA.animals[this.currentAnimalIndex];
-        if (animal) {
-          this.viewer.setDetailInteractive(true, animal.part);
-        }
       }
-    }
-
-    if (viewName === 'detail' && animalCode) {
-      this.renderDetail(animalCode);
+    } else if (viewName === 'catalog') {
+      // 상징도감 화면에서는 3D 모델이 카드를 가리지 않도록 캔버스를 숨김
+      if (canvasContainer) canvasContainer.classList.add('hidden');
+    } else if (viewName === 'detail') {
+      // 상세 화면에서도 2D 패널 및 정보에 집중하도록 배경 캔버스 숨김
+      if (canvasContainer) canvasContainer.classList.add('hidden');
+      if (animalCode) {
+        this.renderDetail(animalCode);
+      }
     }
   }
 
+  /* ============================================================
+     1. 인트로 시퀀스 (영상 -> 수렴 -> 암전 -> 3D 림라이트 자전)
+     ============================================================ */
   initIntroSequence() {
     const video = document.getElementById('intro-video');
     if (!video) return;
 
     video.muted = true;
     
-    // 비디오 소스가 깨졌거나 없을 때 대비
     video.addEventListener('error', () => {
-       console.warn('Video failed to load.');
-       // 즉시 오프닝 종료 효과 적용
+       console.warn('Video load error or missing, fallback to 3D intro.');
        setTimeout(() => this.finishIntroVideo(), 1000);
     });
 
     const playPromise = video.play();
     if (playPromise !== undefined) {
       playPromise.catch(e => {
-        console.log('Video autoplay blocked or failed:', e);
-        // 에러나면 오프닝 건너뛰기가 가능하도록 대기
+        console.log('Video autoplay blocked:', e);
       });
     }
 
@@ -210,6 +215,9 @@
     }, 1800);
   }
 
+  /* ============================================================
+     2. 메인 스크롤텔링 관찰자
+     ============================================================ */
   initScrollyObserver() {
     const steps = document.querySelectorAll('.scrolly-step');
     if (!steps.length) return;
@@ -234,6 +242,9 @@
     steps.forEach(step => observer.observe(step));
   }
 
+  /* ============================================================
+     3. 상징 도감 목록 렌더링
+     ============================================================ */
   renderCatalog(category = 'all') {
     const grid = document.getElementById('animal-grid');
     if (!grid) return;
@@ -297,6 +308,9 @@
     this.renderCatalog(activeTab ? activeTab.getAttribute('data-category') : 'all');
   }
 
+  /* ============================================================
+     4. 상세 화면 렌더링 & OX 퀴즈 / 댓글
+     ============================================================ */
   renderDetail(animalCode) {
     const index = EXHIBITION_DATA.animals.findIndex(a => a.code === animalCode);
     if (index === -1) return;
@@ -332,20 +346,6 @@
     const btnNext = document.getElementById('btn-detail-next');
     if (btnPrev) btnPrev.style.visibility = index === 0 ? 'hidden' : 'visible';
     if (btnNext) btnNext.style.visibility = index === EXHIBITION_DATA.animals.length - 1 ? 'hidden' : 'visible';
-  }
-
-  toggleDetailStageView() {
-    const canvas = document.getElementById('scrolly-canvas');
-    const img = document.getElementById('detail-panel-image');
-    const btn = document.getElementById('btn-toggle-stage-view');
-
-    if (img.style.display === 'block') {
-      img.style.display = 'none';
-      if (btn) btn.innerText = '🖼️ 2D 패널 보기';
-    } else {
-      img.style.display = 'block';
-      if (btn) btn.innerText = '🏛️ 3D 향로 보기';
-    }
   }
 
   navigateDetail(direction) {
@@ -443,6 +443,9 @@
     this.renderComments(animal.code);
   }
 
+  /* ============================================================
+     5. 비주얼 노벨 과학해설사 모달 인터랙션
+     ============================================================ */
   openDocent(animalCode) {
     const animal = EXHIBITION_DATA.animals.find(a => a.code === animalCode) || EXHIBITION_DATA.animals[0];
     this.currentDocentAnimal = animal;
@@ -450,7 +453,7 @@
     const modal = document.getElementById('docent-modal');
     if (modal) modal.classList.add('active');
 
-    document.getElementById('docent-sub-title').innerText = `${animal.name} 심층 1:1 해설`;
+    document.getElementById('docent-sub-title').innerText = `국립박물관 과학해설사 · [${animal.name}]`;
     const chatBody = document.getElementById('docent-chat-body');
     if (chatBody) chatBody.innerHTML = '';
 
@@ -475,14 +478,13 @@
     if (stepLabel) stepLabel.innerText = `탐구 단계 ${step} / ${maxSteps}`;
     if (gaugeFill) gaugeFill.style.width = percent + '%';
 
-    // Clear previous text and options
     chatBody.innerHTML = '';
     optionsFooter.innerHTML = '';
-    optionsFooter.style.display = 'none'; // Hide options while typing
+    optionsFooter.style.display = 'none';
 
     let i = 0;
     const text = branch.text;
-    const speed = 25; // Typewriter speed (ms)
+    const speed = 20;
 
     const typeWriter = () => {
       if (i < text.length) {
@@ -490,7 +492,6 @@
         i++;
         setTimeout(typeWriter, speed);
       } else {
-        // Show options after typing finishes
         renderOptions();
       }
     };
@@ -509,7 +510,6 @@
       });
     };
 
-    // Start typing effect
     typeWriter();
   }
 }
