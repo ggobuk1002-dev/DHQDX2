@@ -365,22 +365,80 @@ const DEFAULT_ANIMAL_COMMENTS = {
 
 class CommentManager {
   constructor() {
-    this.storageKey = 'exhibition_comments_data_v3';
-    this.likedStorageKey = 'liked_comments_set_v3';
+    this.storageKey = 'baekje_exhibition_comments_persistent_v1';
+    this.likedStorageKey = 'baekje_liked_comments_set_v1';
+    this.legacyKeys = [
+      'exhibition_comments_data_v3',
+      'exhibition_comments_data_v2',
+      'exhibition_comments_data_v1',
+      'exhibition_comments_data'
+    ];
+    this.legacyLikedKeys = [
+      'liked_comments_set_v3',
+      'liked_comments_set_v2',
+      'liked_comments_set_v1',
+      'liked_comments_set'
+    ];
     this.data = this.loadData();
     this.likedSet = this.loadLikedSet();
   }
 
   loadData() {
+    let loadedData = null;
+
+    // 1. 최신 영구 스토리지 키 시도
     try {
       const saved = localStorage.getItem(this.storageKey);
       if (saved) {
-        return JSON.parse(saved);
+        loadedData = JSON.parse(saved);
       }
-    } catch (e) {
-      console.warn('Failed to load comments from localStorage', e);
+    } catch (e) {}
+
+    // 2. 이전 버전 레거시 스토리지 키 마이그레이션 시도
+    if (!loadedData) {
+      for (const legKey of this.legacyKeys) {
+        try {
+          const legSaved = localStorage.getItem(legKey);
+          if (legSaved) {
+            loadedData = JSON.parse(legSaved);
+            if (loadedData) break;
+          }
+        } catch (e) {}
+      }
     }
-    return JSON.parse(JSON.stringify(DEFAULT_ANIMAL_COMMENTS));
+
+    // 3. 기본 댓글 데이터 복제본 준비
+    const baseData = JSON.parse(JSON.stringify(DEFAULT_ANIMAL_COMMENTS));
+
+    if (!loadedData) {
+      this.data = baseData;
+      this.saveData();
+      return baseData;
+    }
+
+    // 4. 기본 댓글과 사용자가 작성한 새 댓글을 완벽 병합 (새로고침/캐시삭제 시 유실 방지)
+    const mergedData = {};
+    const allCodes = new Set([...Object.keys(baseData), ...Object.keys(loadedData)]);
+
+    allCodes.forEach(code => {
+      const baseList = baseData[code] || [];
+      const savedList = loadedData[code] || [];
+
+      const existingIds = new Set(savedList.map(c => c.id));
+      const combined = [...savedList];
+
+      baseList.forEach(bCmt => {
+        if (!existingIds.has(bCmt.id)) {
+          combined.push(bCmt);
+        }
+      });
+
+      mergedData[code] = combined;
+    });
+
+    this.data = mergedData;
+    this.saveData();
+    return mergedData;
   }
 
   saveData() {
@@ -398,6 +456,16 @@ class CommentManager {
         return new Set(JSON.parse(saved));
       }
     } catch (e) {}
+
+    for (const legKey of this.legacyLikedKeys) {
+      try {
+        const legSaved = localStorage.getItem(legKey);
+        if (legSaved) {
+          return new Set(JSON.parse(legSaved));
+        }
+      } catch (e) {}
+    }
+
     return new Set();
   }
 

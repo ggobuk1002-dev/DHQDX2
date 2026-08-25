@@ -45,7 +45,7 @@ html, body {
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.6;
-  overflow-x: hidden !important;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -174,31 +174,34 @@ img {
   background: rgba(212, 175, 55, 0.12);
 }
 
-/* Header Docent Call Button (Active state on detail page) */
+/* Header Docent Call Button (Disabled in general views, Active only on detail page) */
 .btn-docent-call {
   position: relative;
-  background: linear-gradient(135deg, #1e293b, #0f172a);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  color: var(--text-secondary);
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
   padding: 0.45rem 1.15rem;
   border-radius: 20px;
-  display: flex;
+  display: flex !important;
   align-items: center;
   gap: 0.5rem;
   font-weight: 600;
   font-size: 0.9rem;
-  opacity: 0.7;
+  opacity: 0.4;
+  filter: grayscale(40%);
+  cursor: not-allowed;
   transition: all var(--transition-normal);
 }
 
 .btn-docent-call.is-active-docent {
-  opacity: 1;
+  opacity: 1 !important;
+  filter: none !important;
+  cursor: pointer !important;
   border-color: var(--accent-gold);
   color: var(--accent-gold);
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(15, 23, 42, 0.95));
   box-shadow: 0 0 15px var(--accent-gold-glow);
   animation: docentPulse 2s infinite ease-in-out;
-  cursor: pointer;
 }
 
 .header-docent-thumb {
@@ -1058,16 +1061,16 @@ img {
   }
 }
 
-/* Left Column: 3D Stage (Sticky Viewport) */
+/* Left Column: 3D Stage (Sticky Viewport - Stays fixed while scrolling right panel, stops before comments) */
 .detail-stage-column {
-  position: -webkit-sticky;
-  position: sticky;
-  top: calc(var(--header-height) + 1.5rem);
-  align-self: start;
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: calc(var(--header-height) + 1.25rem) !important;
+  align-self: start !important;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  z-index: 15;
+  z-index: 20;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
@@ -1106,8 +1109,10 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.25rem;
   background: var(--bg-card);
-  padding: 1rem 1.5rem;
+  padding: 0.9rem 1.4rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color-subtle);
 }
@@ -1115,20 +1120,28 @@ img {
 .stage-hint {
   font-size: 0.85rem;
   color: var(--text-muted);
+  flex: 1 1 220px;
+  min-width: 0;
+  line-height: 1.45;
+  word-break: keep-all;
 }
 
 .btn-detail-docent-call {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 0.55rem;
   background: linear-gradient(135deg, var(--accent-gold), #ca8a04);
   color: #000;
   font-weight: 700;
-  font-size: 0.95rem;
-  padding: 0.6rem 1.4rem;
+  font-size: 0.92rem;
+  padding: 0.55rem 1.3rem;
   border-radius: 20px;
   box-shadow: 0 0 15px var(--accent-gold-glow);
+  white-space: nowrap;
+  flex-shrink: 0;
   animation: docentPulse 2.5s infinite;
+  cursor: pointer;
 }
 
 .btn-detail-docent-call:hover {
@@ -1324,6 +1337,96 @@ img {
 @keyframes fadeInPanel {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Iconography Real Image Tab (향로 속 도상 실물)
+   ============================================================ */
+.iconography-viewer-box {
+  background: #080c14;
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.iconography-img-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+  max-height: 460px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(20, 26, 40, 0.9) 0%, rgba(8, 12, 20, 0.98) 100%);
+  padding: 1rem;
+}
+
+.iconography-real-img {
+  max-width: 100%;
+  max-height: 440px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.9));
+  transition: transform 0.3s ease;
+}
+
+.iconography-real-img:hover {
+  transform: scale(1.02);
+}
+
+.iconography-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  color: var(--text-secondary);
+}
+
+.iconography-placeholder .placeholder-icon {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+  opacity: 0.6;
+}
+
+.iconography-info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  width: 100%;
+}
+
+.iconography-info-card {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.6rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+}
+
+.info-card-badge {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  background: rgba(212, 175, 55, 0.12);
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  margin-bottom: 0.75rem;
+}
+
+.info-card-text {
+  font-size: 0.95rem;
+  color: #e2e8f0;
+  line-height: 1.65;
+  word-break: keep-all;
 }
 
 /* Cultural Artifact Stage & Narrative (Rule: 13 Symbols) */
@@ -1524,12 +1627,13 @@ img {
   align-items: flex-end;
   justify-content: center;
   padding-bottom: 2rem;
-  pointer-events: none !important;
+  pointer-events: none;
 }
 
 .docent-vn-backdrop.active,
 .docent-vn-backdrop.is-open {
   display: flex !important;
+  pointer-events: auto !important; /* 활성화 시 클릭 100% 수신! */
 }
 
 .docent-vn-container {
@@ -1540,15 +1644,15 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  pointer-events: none !important;
+  pointer-events: auto !important;
 }
 
 .docent-vn-character {
   position: absolute;
   bottom: 150px;
   left: 2.5rem;
-  width: 260px;
-  height: 330px;
+  width: 280px;
+  height: 315px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -1557,13 +1661,12 @@ img {
 }
 
 .docent-portrait-img {
-  width: auto;
-  max-width: 100%;
+  width: 100%;
   height: 100%;
-  max-height: 330px;
   object-fit: contain;
   object-position: bottom center;
   filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.95));
+  transition: opacity 0.15s ease;
 }
 
 .docent-vn-ui {
@@ -2604,7 +2707,12 @@ img {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     align-items: flex-end !important;
-    pointer-events: none !important;
+    pointer-events: none;
+  }
+
+  .docent-vn-backdrop.active,
+  .docent-vn-backdrop.is-open {
+    pointer-events: auto !important;
   }
 
   .docent-vn-container {
@@ -2612,7 +2720,7 @@ img {
     max-width: 100% !important;
     min-height: auto !important;
     padding: 0 0.6rem !important;
-    pointer-events: none !important;
+    pointer-events: auto !important;
   }
 
   .docent-vn-character {
@@ -2757,5 +2865,45 @@ img {
   .btn-docent-option {
     font-size: 0.8rem !important;
     padding: 0.45rem 0.7rem !important;
+  }
+}
+
+/* ============================================================
+   10. FORCED LANDSCAPE ORIENTATION LOCK (모바일 가로모드 강제 고정)
+   - 모바일 기기가 세로(portrait) 상태일 때 90도 자동 회전하여 항상 16:9 와이드 가로 전시로 고정
+   ============================================================ */
+@media screen and (orientation: portrait) and (max-width: 900px) {
+  html, body {
+    width: 100vw !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+
+  body {
+    position: absolute !important;
+    top: 0 !important;
+    left: 100vw !important;
+    width: 100vh !important;
+    height: 100vw !important;
+    transform: rotate(90deg) !important;
+    transform-origin: 0 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  /* 회전 상태에서의 고정 레이어 및 3D 캔버스 크기 보정 */
+  .scrolly-canvas-container {
+    width: 100vh !important;
+    height: 100vw !important;
+  }
+
+  .app-header {
+    width: 100vh !important;
+  }
+
+  .docent-vn-backdrop {
+    width: 100vh !important;
+    height: 100vw !important;
   }
 }

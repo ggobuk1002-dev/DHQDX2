@@ -179,19 +179,13 @@ class ExhibitionApp {
       });
     });
 
-    // 헤더 과학해설사 버튼 (상세화면에서는 즉시 실행, 타 화면에서는 안내 또는 상세화면 이동)
+    // 헤더 과학해설사 버튼 (동물 상세 화면에서만 활성화)
     const btnDocentCall = document.getElementById('btn-docent-call');
     if (btnDocentCall) {
       btnDocentCall.addEventListener('click', () => {
+        if (this.currentView !== 'detail') return;
         const animal = EXHIBITION_DATA.animals[this.currentAnimalIndex] || EXHIBITION_DATA.animals[0];
-        if (this.currentView === 'detail') {
-          this.openDocent(animal.code);
-        } else {
-          this.switchView('detail', animal.code);
-          setTimeout(() => {
-            this.openDocent(animal.code);
-          }, 350);
-        }
+        this.openDocent(animal.code);
       });
     }
 
@@ -213,16 +207,19 @@ class ExhibitionApp {
       });
     }
 
-    // 도슨트 대화창 클릭/터치 진행
-    const dialogueBox = document.getElementById('docent-dialogue-box');
-    if (dialogueBox) {
-      dialogueBox.addEventListener('click', (e) => {
-        e.stopPropagation();
+    // 도슨트 모달 화면 전체 클릭 시 다음 대화로 진행 (PC 환경 어디를 클릭해도 부드럽게 진행!)
+    const docentModal = document.getElementById('docent-modal');
+    if (docentModal) {
+      docentModal.addEventListener('click', (e) => {
+        // 닫기 버튼이나 선택지 버튼 클릭은 제외
+        if (e.target.closest('#btn-close-docent') || e.target.closest('#docent-options-footer')) {
+          return;
+        }
         this.handleDocentClick();
       });
     }
 
-    // 옵션 컨테이너 내부 클릭 시 상위 대화창 클릭 전파 차단
+    // 옵션 컨테이너 내부 클릭 시 상위 화면 클릭 전파 차단
     const optionsFooter = document.getElementById('docent-options-footer');
     if (optionsFooter) {
       optionsFooter.addEventListener('click', (e) => {
@@ -300,12 +297,14 @@ class ExhibitionApp {
     const canvasContainer = document.getElementById('scrolly-canvas-container');
     const btnDocentHeader = document.getElementById('btn-docent-call');
 
-    // 과학해설사 버튼 활성화 제어
+    // 과학해설사 버튼 활성화 제어 (항상 노출되되, 동물 상세 화면에서만 활성화)
     if (btnDocentHeader) {
       if (viewName === 'detail') {
+        btnDocentHeader.disabled = false;
         btnDocentHeader.classList.add('is-active-docent');
         btnDocentHeader.title = '클릭하여 현재 동물의 래피드왜건 과학해설을 듣습니다';
       } else {
+        btnDocentHeader.disabled = true;
         btnDocentHeader.classList.remove('is-active-docent');
         btnDocentHeader.title = '개별 동물 상세 화면에서 활성화됩니다';
       }
@@ -957,10 +956,13 @@ class ExhibitionApp {
     // OX 퀴즈 렌더링
     this.renderQuiz(animal.code);
 
-    // [신규] 사회문화 유물 탭 & 뷰포트 렌더링 (culture.md 13종 연동)
+    // [신규 탭 1] 백제금동대향로 속 도상 실물 탭 렌더링 (real_img.md 19종 연동)
+    this.renderIconographyTab(animal);
+
+    // [탭 3] 사회문화 유물 탭 & 뷰포트 렌더링 (culture.md 13종 연동)
     this.renderCulturalTab(animal);
 
-    // [신규] 상세 정보 탭 전환 컨트롤러 (과학패널 / 사회문화유물 / OX퀴즈)
+    // [4대 탭] 상세 정보 탭 전환 컨트롤러 (도상 / 과학패널 / 사회문화유물 / OX퀴즈)
     this.initDetailTabs(animal);
 
     // [신규] 관람객의 한마디 (동물별 댓글 및 무제한 대댓글 시스템)
@@ -968,7 +970,41 @@ class ExhibitionApp {
   }
 
   /* ============================================================
-     8-1. 상세 탭 전환 컨트롤러
+     8-0. 백제금동대향로 속 도상 실물 탭 렌더링 (real_img.md)
+     ============================================================ */
+  renderIconographyTab(animal) {
+    const imgElem = document.getElementById('detail-iconography-img');
+    const placeholder = document.getElementById('detail-iconography-placeholder');
+    const locElem = document.getElementById('detail-iconography-location');
+    const appElem = document.getElementById('detail-iconography-appearance');
+
+    const iconData = animal.iconography || {};
+
+    if (locElem) {
+      locElem.innerText = iconData.location || '백제금동대향로 본체에 정교하게 조각되어 있습니다.';
+    }
+    if (appElem) {
+      appElem.innerText = iconData.appearance || `${animal.name}의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다.`;
+    }
+
+    if (imgElem && placeholder) {
+      if (iconData.img) {
+        imgElem.style.display = 'block';
+        placeholder.style.display = 'none';
+        imgElem.src = iconData.img;
+        imgElem.onerror = () => {
+          imgElem.style.display = 'none';
+          placeholder.style.display = 'flex';
+        };
+      } else {
+        imgElem.style.display = 'none';
+        placeholder.style.display = 'flex';
+      }
+    }
+  }
+
+  /* ============================================================
+     8-1. 상세 탭 전환 컨트롤러 (4-Tab / 3-Tab System)
      ============================================================ */
   initDetailTabs(animal) {
     const tabBtns = document.querySelectorAll('.detail-tab-btn');
@@ -980,7 +1016,7 @@ class ExhibitionApp {
       cultureBtn.style.display = (animal.culturalData) ? 'inline-flex' : 'none';
     }
 
-    // 항상 첫 번째 과학 탭으로 초기화
+    // 기본 탭: 1순위 과학 탭(science)으로 초기화
     tabBtns.forEach(b => b.classList.remove('active'));
     tabPanels.forEach(p => p.classList.remove('active'));
 
@@ -1465,11 +1501,11 @@ class ExhibitionApp {
 
         <!-- O / X 선택 버튼 -->
         <div class="quiz-options-row" style="display: flex; gap: 1.5rem; margin-bottom: 1.25rem;">
-          <button class="btn-quiz-opt" data-answer="O" style="flex: 1; padding: 1.2rem; font-size: 1.4rem; font-weight: 900; border-radius: 16px; background: rgba(34, 197, 94, 0.15); border: 2px solid #22c55e; color: #4ade80; cursor: pointer; transition: all 0.2s ease;">
-            ⭕ O (그렇다)
+          <button class="btn-quiz-opt" data-answer="O" style="flex: 1; padding: 1.1rem; font-size: 1.3rem; font-weight: 800; border-radius: 16px; background: rgba(34, 197, 94, 0.15); border: 2px solid #22c55e; color: #4ade80; cursor: pointer; transition: all 0.2s ease;">
+            O (그렇다)
           </button>
-          <button class="btn-quiz-opt" data-answer="X" style="flex: 1; padding: 1.2rem; font-size: 1.4rem; font-weight: 900; border-radius: 16px; background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; color: #f87171; cursor: pointer; transition: all 0.2s ease;">
-            ❌ X (아니다)
+          <button class="btn-quiz-opt" data-answer="X" style="flex: 1; padding: 1.1rem; font-size: 1.3rem; font-weight: 800; border-radius: 16px; background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; color: #f87171; cursor: pointer; transition: all 0.2s ease;">
+            X (아니다)
           </button>
         </div>
 
@@ -1623,13 +1659,12 @@ class ExhibitionApp {
     if (idx < queue.length) {
       const line = queue[idx];
       this.docentState.queueIdx++;
-      if (clickHint) clickHint.style.display = 'inline';
+      if (clickHint) {
+        clickHint.style.display = 'inline';
+        clickHint.textContent = '▶ 화면을 클릭하여 계속 진행';
+      }
 
-      this.typewriteDocentText(line.text, line.speaker || '래피드왜건', line.emotion || 'neutral', () => {
-        if (this.docentState.queueIdx >= queue.length) {
-          this.handleQueueEnd();
-        }
-      });
+      this.typewriteDocentText(line.text, line.speaker || '래피드왜건', line.emotion || 'neutral');
     } else {
       this.handleQueueEnd();
     }
@@ -1671,10 +1706,13 @@ class ExhibitionApp {
 
   handleDocentClick() {
     if (this.docentState.isTyping) {
-      clearTimeout(this.docentState.typeTimer);
+      if (this.docentState.typeTimer) {
+        clearTimeout(this.docentState.typeTimer);
+        this.docentState.typeTimer = null;
+      }
       this.docentState.isTyping = false;
       const chatBody = document.getElementById('docent-chat-body');
-      if (chatBody) chatBody.innerText = this.docentState.fullText;
+      if (chatBody) chatBody.textContent = this.docentState.fullText;
       return;
     }
 
@@ -1721,18 +1759,25 @@ class ExhibitionApp {
 
     this.docentState.fullText = text;
     this.docentState.isTyping = true;
-    if (chatBody) chatBody.innerHTML = '';
+    if (this.docentState.typeTimer) {
+      clearTimeout(this.docentState.typeTimer);
+      this.docentState.typeTimer = null;
+    }
+    if (chatBody) chatBody.textContent = '';
 
     let i = 0;
     const speed = 20;
 
     const typeNextChar = () => {
+      if (!this.docentState.isTyping) return;
       if (i < text.length) {
-        if (chatBody) chatBody.innerHTML += text.charAt(i);
+        if (chatBody) chatBody.textContent = text.slice(0, i + 1);
         i++;
         this.docentState.typeTimer = setTimeout(typeNextChar, speed);
       } else {
         this.docentState.isTyping = false;
+        this.docentState.typeTimer = null;
+        if (chatBody) chatBody.textContent = text;
         if (callback) callback();
       }
     };

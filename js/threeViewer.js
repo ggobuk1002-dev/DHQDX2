@@ -33,21 +33,22 @@ class IncenseBurner3DViewer {
 
   getStepCamera(stepId) {
     const isMobile = window.innerWidth <= 768;
+    // 데스크톱: 카드가 왼쪽(align-left)이면 향로는 우측(-0.55), 카드가 오른쪽(align-right)이면 향로는 좌측(+0.55)으로 100% 분리!
     const desktopMap = {
-      'intro': { pos: new THREE.Vector3(0, 0.05, 2.3), target: new THREE.Vector3(0, 0, 0) },
-      'celestial': { pos: new THREE.Vector3(-0.35, 0.75, 1.1), target: new THREE.Vector3(0, 0.55, 0) },
-      'sky': { pos: new THREE.Vector3(0.4, 0.45, 1.0), target: new THREE.Vector3(0, 0.35, 0) },
-      'land': { pos: new THREE.Vector3(-0.45, 0.2, 1.2), target: new THREE.Vector3(0, 0.15, 0) },
-      'water': { pos: new THREE.Vector3(0.45, -0.15, 1.1), target: new THREE.Vector3(0, -0.15, 0) },
-      'sea': { pos: new THREE.Vector3(0, -0.45, 1.2), target: new THREE.Vector3(0, -0.4, 0) }
+      'intro': { pos: new THREE.Vector3(-0.55, 0.05, 2.3), target: new THREE.Vector3(0, 0, 0) },
+      'celestial': { pos: new THREE.Vector3(-0.55, 0.55, 1.8), target: new THREE.Vector3(0, 0.45, 0) }, // 카드 왼쪽 -> 향로 오른쪽
+      'sky': { pos: new THREE.Vector3(0.55, 0.35, 1.8), target: new THREE.Vector3(0, 0.25, 0) },       // 카드 오른쪽 -> 향로 왼쪽
+      'land': { pos: new THREE.Vector3(-0.55, 0.15, 1.8), target: new THREE.Vector3(0, 0.08, 0) },     // 카드 왼쪽 -> 향로 오른쪽
+      'water': { pos: new THREE.Vector3(0.55, -0.12, 1.8), target: new THREE.Vector3(0, -0.15, 0) },   // 카드 오른쪽 -> 향로 왼쪽
+      'sea': { pos: new THREE.Vector3(-0.55, -0.40, 1.9), target: new THREE.Vector3(0, -0.35, 0) }     // 카드 왼쪽 -> 향로 오른쪽
     };
     const mobileMap = {
       'intro': { pos: new THREE.Vector3(0, 0.15, 2.8), target: new THREE.Vector3(0, 0, 0) },
-      'celestial': { pos: new THREE.Vector3(0, 0.8, 1.6), target: new THREE.Vector3(0, 0.55, 0) },
-      'sky': { pos: new THREE.Vector3(0, 0.45, 1.5), target: new THREE.Vector3(0, 0.35, 0) },
-      'land': { pos: new THREE.Vector3(0, 0.18, 1.6), target: new THREE.Vector3(0, 0.15, 0) },
-      'water': { pos: new THREE.Vector3(0, -0.15, 1.6), target: new THREE.Vector3(0, -0.15, 0) },
-      'sea': { pos: new THREE.Vector3(0, -0.48, 1.7), target: new THREE.Vector3(0, -0.4, 0) }
+      'celestial': { pos: new THREE.Vector3(0, 0.65, 2.4), target: new THREE.Vector3(0, 0.45, 0) },
+      'sky': { pos: new THREE.Vector3(0, 0.40, 2.4), target: new THREE.Vector3(0, 0.25, 0) },
+      'land': { pos: new THREE.Vector3(0, 0.15, 2.4), target: new THREE.Vector3(0, 0.08, 0) },
+      'water': { pos: new THREE.Vector3(0, -0.12, 2.4), target: new THREE.Vector3(0, -0.15, 0) },
+      'sea': { pos: new THREE.Vector3(0, -0.42, 2.5), target: new THREE.Vector3(0, -0.35, 0) }
     };
     const map = isMobile ? mobileMap : desktopMap;
     return map[stepId] || map['intro'];
@@ -61,28 +62,28 @@ class IncenseBurner3DViewer {
 
     const width = window.innerWidth || 800;
     const height = window.innerHeight || 600;
-    this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    // near 클리핑 플레인을 0.005로 극도로 낮추어 초근접 시 메쉬 잘림/뚫림(투명화) 원천 차단!
+    this.camera = new THREE.PerspectiveCamera(45, width / height, 0.005, 100);
     this.camera.position.copy(this.introCameraPos);
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       antialias: true,
-      alpha: false, // HTML 투명 합성 완전 차단 (투명 현상 근본 해결!)
+      alpha: false,
       powerPreference: "high-performance",
       precision: (window.innerWidth <= 768) ? "mediump" : "highp"
     });
     this.renderer.setSize(width, height);
-    this.renderer.setClearColor(0x08090d, 1.0); // 알파 1.0 완전 불투명
+    this.renderer.setClearColor(0x08090d, 1.0);
     
-    // 실시간 그림자(Shadow Map) 활성화 -> 틈새와 굴곡의 짙은 음영 생성
+    // 실시간 그림자(Shadow Map) 활성화
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    // 모바일 DPR 과부하 방지 (모바일: 최대 1.25, 데스크톱: 최대 1.75)
     const isMobile = (window.innerWidth <= 768);
     this.renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio || 1, 1.25) : Math.min(window.devicePixelRatio || 1, 1.75));
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.1; // 묵직한 어둠과 날카로운 하이라이트 대비
+    this.renderer.toneMappingExposure = 1.05;
     this.renderer.outputEncoding = THREE.sRGBEncoding;
 
     this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
@@ -224,7 +225,7 @@ class IncenseBurner3DViewer {
       this.needsRender = true;
       this.requestRender();
 
-      console.log('[ThreeViewer] 백제금동대향로 3D 모델(Pivoted Gold) 로드 및 렌더링 성공!');
+      console.log('[ThreeViewer] 백제금동대향로 3D 모델 렌더링 성공!');
 
       if (this.loadingCallback) {
         this.loadingCallback(100, true, false);
@@ -273,15 +274,13 @@ class IncenseBurner3DViewer {
 
   setCinematicIntro(enabled) {
     this.isCinematicIntro = enabled;
+    if (this.eclipseGlow) this.eclipseGlow.visible = true; // 모든 층위에서 신비로운 일식 분위기 100% 유지!
+    if (this.renderer) this.renderer.toneMappingExposure = 1.05;
+
     if (enabled) {
       this.controls.enabled = false;
       this.targetCameraPos.copy(this.introCameraPos);
       this.targetLookAt.copy(this.introTarget);
-      if (this.eclipseGlow) this.eclipseGlow.visible = true;
-      if (this.renderer) this.renderer.toneMappingExposure = 0.85;
-    } else {
-      if (this.eclipseGlow) this.eclipseGlow.visible = false;
-      if (this.renderer) this.renderer.toneMappingExposure = 1.05;
     }
     this.requestRender();
   }
@@ -292,7 +291,7 @@ class IncenseBurner3DViewer {
 
   focusStep(stepId) {
     this.isCinematicIntro = false;
-    if (this.eclipseGlow) this.eclipseGlow.visible = false;
+    if (this.eclipseGlow) this.eclipseGlow.visible = true; // 스크롤을 내려도 마음에 든 그 모습 그대로 유지!
     if (this.renderer) this.renderer.toneMappingExposure = 1.05;
 
     const step = this.getStepCamera(stepId);
@@ -305,7 +304,7 @@ class IncenseBurner3DViewer {
 
   setLayerCamera(cameraPos, targetPos) {
     this.isCinematicIntro = false;
-    if (this.eclipseGlow) this.eclipseGlow.visible = false;
+    if (this.eclipseGlow) this.eclipseGlow.visible = true;
     if (cameraPos) this.targetCameraPos.set(cameraPos.x, cameraPos.y, cameraPos.z);
     if (targetPos) this.targetLookAt.set(targetPos.x, targetPos.y, targetPos.z);
     this.requestRender();
@@ -314,12 +313,10 @@ class IncenseBurner3DViewer {
   setDetailInteractive(enabled, part) {
     this.isCinematicIntro = false;
     this.controls.enabled = enabled;
-    if (this.eclipseGlow) this.eclipseGlow.visible = false;
+    if (this.eclipseGlow) this.eclipseGlow.visible = true;
 
     if (enabled && part) {
       if (part.includes('정상') || part.includes('봉황')) {
-        this.targetCameraPos.set(0, 0.8, 1.15);
-        this.targetLookAt.set(0, 0.55, 0);
       } else if (part.includes('산악') || part.includes('뚜껑')) {
         this.targetCameraPos.set(0, 0.2, 1.05);
         this.targetLookAt.set(0, 0.1, 0);
@@ -335,8 +332,9 @@ class IncenseBurner3DViewer {
 
   onResize() {
     if (!this.canvas || !this.camera || !this.renderer) return;
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const rect = this.canvas.getBoundingClientRect();
+    const width = Math.round(rect.width) || window.innerWidth || 800;
+    const height = Math.round(rect.height) || window.innerHeight || 600;
 
     this.lastWidth = width;
     this.lastHeight = height;

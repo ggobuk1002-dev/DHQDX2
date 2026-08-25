@@ -69,6 +69,8 @@ const EXHIBITION_DATA = {
         "id": 1,
         "code": "01",
         "name": "말",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_01.webp", "location": "산악형 뚜껑의 산봉우리 사이에 인물과 함께 표현되어 있습니다.", "appearance": "말을 타고 이동하거나, 말 위에서 몸을 돌려 활을 쏘는 기마수렵 장면으로 나타납니다."},
+
         "layer": "land",
         "layerName": "삼신산",
         "layerCoords": {
@@ -149,6 +151,8 @@ const EXHIBITION_DATA = {
         "id": 2,
         "code": "02",
         "name": "호랑이",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_02.webp", "location": "산악형 뚜껑의 여러 산봉우리 사이에 자리하고 있습니다.", "appearance": "줄무늬가 표현된 네발짐승이 산속을 움직이는 듯한 모습으로 조각되어 있습니다."},
+
         "layer": "land",
         "layerName": "삼신산",
         "layerCoords": {
@@ -223,6 +227,8 @@ const EXHIBITION_DATA = {
         "id": 3,
         "code": "03",
         "name": "사자",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_03.webp", "location": "산악형 뚜껑의 신선세계에 여러 현실·상상동물과 함께 자리합니다.", "appearance": "비교적 작은 네발짐승 형태로 표현되어 있어 가까이 들여다보아야 모습을 확인할 수 있습니다."},
+
         "layer": "land",
         "layerName": "삼신산",
         "layerCoords": {
@@ -297,6 +303,8 @@ const EXHIBITION_DATA = {
         "id": 4,
         "code": "04",
         "name": "족제비",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_04.webp", "location": "산악형 뚜껑에 표현된 작은 네발짐승 가운데 하나입니다.", "appearance": "길쭉한 몸과 짧은 다리를 가진 낮은 체형으로 보여 족제비과 동물로 해석되기도 합니다."},
+
         "layer": "land",
         "layerName": "삼신산",
         "layerCoords": {
@@ -359,6 +367,8 @@ const EXHIBITION_DATA = {
         "id": 5,
         "code": "05",
         "name": "원숭이",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_05.webp", "location": "산악형 뚜껑의 산봉우리 사이에 자리하고 있습니다.", "appearance": "몸을 세우거나 앉아 주변을 바라보는 듯한 자세로 표현되어 있습니다."},
+
         "layer": "land",
         "layerName": "삼신산",
         "layerCoords": {
@@ -433,6 +443,8 @@ const EXHIBITION_DATA = {
         "id": 6,
         "code": "06",
         "name": "사슴",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_06.webp", "location": "사슴은 산악형 뚜껑과 연꽃형 몸체에서 모두 확인됩니다.", "appearance": "가느다란 다리와 사슴 특유의 몸 형태를 지닌 네발짐승으로 표현되어 있습니다."},
+
         "layer": "land",
         "layerName": "삼신산",
         "layerCoords": {
@@ -507,6 +519,8 @@ const EXHIBITION_DATA = {
         "id": 7,
         "code": "07",
         "name": "멧돼지",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_07.webp", "location": "산악형 뚜껑의 산봉우리와 기마수렵 장면 가까이에 자리합니다.", "appearance": "낮고 단단한 몸을 가진 멧돼지가 산속에서 움직이는 듯한 모습으로 표현되어 있습니다."},
+
         "layer": "land",
         "layerName": "삼신산",
         "layerCoords": {
@@ -586,6 +600,8 @@ const EXHIBITION_DATA = {
         "id": 8,
         "code": "08",
         "name": "코끼리",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_08.webp", "location": "산악형 뚜껑의 여러 동물과 인물 사이에 표현되어 있습니다.", "appearance": "긴 코와 큰 몸을 가진 코끼리의 등에 사람이 올라탄 모습으로 나타납니다."},
+
         "layer": "land",
         "layerName": "삼신산",
         "layerCoords": {
@@ -660,6 +676,8 @@ const EXHIBITION_DATA = {
         "id": 9,
         "code": "09",
         "name": "이상한 부리를 가진 새",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_09.webp", "location": "산악형 뚜껑의 여러 동물과 새 사이에 자리하고 있습니다.", "appearance": "코끼리 코처럼 길게 뻗은 부리와 새의 몸이 결합된 독특한 형상으로 표현되어 있습니다."},
+
         "layer": "land",
         "layerName": "삼신산",
         "layerCoords": {
@@ -722,6 +740,8 @@ const EXHIBITION_DATA = {
         "id": 10,
         "code": "10",
         "name": "뱀을 물고 있는 야수",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_10.webp", "location": "산악형 뚜껑의 산봉우리 사이에 자리한 상상동물입니다.", "appearance": "네발짐승이 입에 길고 가느다란 뱀을 물고 있는 모습으로 표현되어 있습니다."},
+
         "layer": "land",
         "layerName": "삼신산",
         "layerCoords": {
@@ -784,6 +804,8 @@ const EXHIBITION_DATA = {
         "id": 11,
         "code": "11",
         "name": "볏을 가진 새",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_11.webp", "location": "산악형 뚜껑에 표현된 여러 작은 새 가운데 하나입니다.", "appearance": "머리 위로 솟은 볏이 특징적인 새의 모습이지만 정확한 종류는 확인되지 않았습니다."},
+
         "layer": "land",
         "layerName": "삼신산",
         "layerCoords": {
@@ -847,6 +869,8 @@ const EXHIBITION_DATA = {
         "id": 12,
         "code": "12",
         "name": "악어",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_12.webp", "location": "연꽃형 몸체의 꽃잎 사이에 표현된 동물 가운데 하나입니다.", "appearance": "길쭉한 몸과 꼬리, 낮은 자세를 가진 파충류형 형상으로 보여 악어로 해석되기도 합니다."},
+
         "layer": "water",
         "layerName": "연꽃과 물가",
         "layerCoords": {
@@ -921,6 +945,8 @@ const EXHIBITION_DATA = {
         "id": 13,
         "code": "13",
         "name": "물고기",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_13.webp", "location": "연꽃형 몸체의 연꽃잎과 꽃잎 사이에 여러 마리가 표현되어 있습니다.", "appearance": "물고기다운 몸통과 꼬리지느러미를 가진 모습부터 상상적인 형태까지 다양하게 나타납니다."},
+
         "layer": "water",
         "layerName": "연꽃과 물가",
         "layerCoords": {
@@ -995,6 +1021,8 @@ const EXHIBITION_DATA = {
         "id": 14,
         "code": "14",
         "name": "물범",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_14.webp", "location": "연꽃형 몸체에 표현된 물·물가와 관련된 동물 가운데 하나입니다.", "appearance": "둥글고 유선형의 몸을 가진 수생동물처럼 보여 물범과 비슷한 동물로 해석되기도 합니다."},
+
         "layer": "water",
         "layerName": "연꽃과 물가",
         "layerCoords": {
@@ -1069,6 +1097,8 @@ const EXHIBITION_DATA = {
         "id": 15,
         "code": "15",
         "name": "수달",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_15.webp", "location": "연꽃형 몸체의 상단 연꽃잎 부근에 자리하고 있습니다.", "appearance": "네발짐승이 물고기를 입에 물고 이동하는 듯한 모습으로 표현되어 수달로 해석되기도 합니다."},
+
         "layer": "water",
         "layerName": "연꽃과 물가",
         "layerCoords": {
@@ -1131,6 +1161,8 @@ const EXHIBITION_DATA = {
         "id": 16,
         "code": "16",
         "name": "백로",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_16.webp", "location": "연꽃형 몸체의 상단 연꽃잎과 그 사이에 자리하고 있습니다.", "appearance": "긴 다리와 목, 뾰족한 부리를 가진 물새의 모습으로 표현되어 있습니다."},
+
         "layer": "water",
         "layerName": "연꽃과 물가",
         "layerCoords": {
@@ -1205,6 +1237,8 @@ const EXHIBITION_DATA = {
         "id": 17,
         "code": "17",
         "name": "달리는 새 (타조)",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_17.webp", "location": "연꽃형 몸체 상단의 연꽃잎에 표현된 새 가운데 하나입니다.", "appearance": "긴 다리를 뒤로 뻗고 몸을 앞으로 움직이는 듯해 달리거나 날아오르는 순간처럼 보입니다."},
+
         "layer": "land",
         "layerName": "삼신산",
         "layerCoords": {
@@ -1269,6 +1303,8 @@ const EXHIBITION_DATA = {
         "id": 18,
         "code": "18",
         "name": "봉황 (금시조)",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_18.webp", "location": "향로의 가장 높은 곳인 산악형 뚜껑 정상에 자리합니다.", "appearance": "날개와 긴 꼬리를 펼치고 턱 아래에 구슬을 품은 큰 새로, 일반적으로 봉황으로 보지만 금시조로 해석하는 견해도 있습니다."},
+
         "layer": "celestial",
         "layerName": "천상",
         "layerCoords": {
@@ -1343,6 +1379,8 @@ const EXHIBITION_DATA = {
         "id": 19,
         "code": "19",
         "name": "용",
+      "iconography": {"img": "Asset/3. Exhibition/real_img/real_19.webp", "location": "향로의 가장 아래쪽 받침 전체가 한 마리의 용으로 이루어져 있습니다.", "appearance": "입으로 연꽃 모양 몸체를 받치고 고개를 치켜든 채 몸과 꼬리를 힘차게 휘감은 역동적인 자세입니다."},
+
         "layer": "sea",
         "layerName": "바다",
         "layerCoords": {
