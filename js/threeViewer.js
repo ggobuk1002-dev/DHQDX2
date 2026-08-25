@@ -305,27 +305,6 @@ class IncenseBurner3DViewer {
     }
   }
 
-  focusStep(stepId) {
-    this.isCinematicIntro = false;
-    if (this.eclipseGlow) this.eclipseGlow.visible = false;
-    if (this.renderer) this.renderer.toneMappingExposure = 1.05;
-
-    const step = this.stepCameraMap[stepId] || this.stepCameraMap['intro'];
-    if (step) {
-      this.targetCameraPos.copy(step.pos);
-      this.targetLookAt.copy(step.target);
-      this.requestRender();
-    }
-  }
-
-  setLayerCamera(cameraPos, targetPos) {
-    this.isCinematicIntro = false;
-    if (this.eclipseGlow) this.eclipseGlow.visible = false;
-    if (cameraPos) this.targetCameraPos.set(cameraPos.x, cameraPos.y, cameraPos.z);
-    if (targetPos) this.targetLookAt.set(targetPos.x, targetPos.y, targetPos.z);
-    this.requestRender();
-  }
-
   pause() {
     this.isPaused = true;
     if (this.animId) {
