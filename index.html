@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
   
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260825">
+  <link rel="stylesheet" href="css/style.css?v=20260825_2">
   
   <!-- Three.js & Loaders (CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -47,9 +47,10 @@
       <button class="nav-btn active" data-nav="main">전시관람(메인)</button>
       <button class="nav-btn" data-nav="catalog">상징도감</button>
       <button class="nav-btn" data-nav="unwrapped">전개도 탐색</button>
-      <button class="btn-docent-call" id="btn-docent-call">
+      <button class="btn-docent-call" id="btn-docent-call" title="개별 동물 상세 화면에서 활성화됩니다">
         <img src="Asset/4. Docent/neutral.webp" alt="해설사" class="header-docent-thumb">
-        <span>과학해설사 래피드왜건</span>
+        <span id="header-docent-label">과학해설사 래피드왜건</span>
+        <span class="docent-status-dot"></span>
       </button>
     </nav>
   </header>
@@ -65,21 +66,25 @@
        ============================================================ -->
   <section id="view-intro" class="view-section active">
     <div class="intro-media-wrapper">
-      <video id="intro-video" class="intro-video" playsinline preload="auto">
+      <video id="intro-video" class="intro-video" autoplay muted playsinline preload="auto">
         <source src="Asset/1. Intro/opening.mp4" type="video/mp4">
       </video>
       <div id="intro-blackout" class="intro-blackout-overlay"></div>
-      <div id="intro-3d-stage" class="intro-3d-stage"></div>
     </div>
 
     <div id="intro-ui-overlay" class="intro-ui-overlay">
       <span class="intro-badge">BAEKJE GREAT GILT-BRONZE INCENSE BURNER</span>
       <h1 class="intro-title">금동대향로 자연사박물관</h1>
       <p class="intro-subtitle">"자세히 보아야 예쁘다. 너도 그렇다."<br>하나의 유물 속에서 피어나는 천상·하늘·육지·물가·바다의 생명과 인류사</p>
-      <button id="btn-start-exhibition" class="btn-start-exhibition">
-        <span>전시 관람 시작하기</span>
-        <span>→</span>
-      </button>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <button id="btn-start-exhibition" class="btn-start-exhibition">
+          <span>전시 관람 시작하기</span>
+          <span>→</span>
+        </button>
+        <button id="btn-replay-intro" class="btn-replay-intro">
+          <span>🎬 오프닝 영상 다시보기</span>
+        </button>
+      </div>
     </div>
 
     <button id="btn-intro-skip" class="intro-skip-btn">오프닝 건너뛰기 ✕</button>
@@ -107,6 +112,9 @@
           <span class="scrolly-tag">1층위 · 천상</span>
           <h2 class="scrolly-title">하늘을 품은 날갯짓, 봉황</h2>
           <p class="scrolly-desc">향로 정상에서 목과 부리로 여의주를 품고 날개를 활짝 펴고 서 있는 봉황. 천하가 태평할 때 나타난다는 성스러운 새로 백제인이 꿈꾸었던 가장 높은 이상세계의 시작입니다.</p>
+          <div class="scrolly-link-row">
+            <button class="btn-link-layer" data-goto-unwrapped="celestial">🗺️ 천상 층위 전개도 탐색 →</button>
+          </div>
           <span class="btn-step-action">↓ 신선 세계가 펼쳐지는 하늘로</span>
         </div>
       </div>
@@ -117,6 +125,9 @@
           <span class="scrolly-tag">2층위 · 하늘</span>
           <h2 class="scrolly-title">음악이 흐르는 신선의 산</h2>
           <p class="scrolly-desc">피리, 소비파, 현금, 북을 연주하는 5인의 악사와 하늘을 날아다니는 신선들. 뚜껑 곳곳에 뚫린 구멍으로 향 연기가 피어오르면 산과 구름이 살아 움직입니다.</p>
+          <div class="scrolly-link-row">
+            <button class="btn-link-layer" data-goto-unwrapped="sky">🗺️ 하늘 층위 전개도 탐색 →</button>
+          </div>
           <span class="btn-step-action">↓ 생명의 터전 육지(산악)로</span>
         </div>
       </div>
@@ -127,6 +138,9 @@
           <span class="scrolly-tag">3층위 · 육지</span>
           <h2 class="scrolly-title">첩첩산중 생명의 터전</h2>
           <p class="scrolly-desc">23개의 겹겹이 솟은 산봉우리 사이에 호랑이, 사슴, 멧돼지, 말, 코끼리 등 11종의 동물들과 기마수렵상이 생생하게 살아 숨 쉬고 있습니다.</p>
+          <div class="scrolly-link-row">
+            <button class="btn-link-layer" data-goto-unwrapped="land">🗺️ 육지 층위 전개도 탐색 (11종) →</button>
+          </div>
           <span class="btn-step-action">↓ 피어나는 연꽃과 물가로</span>
         </div>
       </div>
@@ -137,6 +151,9 @@
           <span class="scrolly-tag">4층위 · 물가</span>
           <h2 class="scrolly-title">피어나는 연꽃과 수중 생태</h2>
           <p class="scrolly-desc">활짝 피어난 3단의 연꽃잎 사이로 악어, 물고기, 수달, 물범, 백로 등 6종의 동물들이 노니는 생명의 물가가 펼쳐집니다.</p>
+          <div class="scrolly-link-row">
+            <button class="btn-link-layer" data-goto-unwrapped="water">🗺️ 물가 층위 전개도 탐색 (6종) →</button>
+          </div>
           <span class="btn-step-action">↓ 바다를 떠받치는 용으로</span>
         </div>
       </div>
@@ -147,6 +164,9 @@
           <span class="scrolly-tag">5층위 · 바다</span>
           <h2 class="scrolly-title">기운을 뿜어 올리는 용</h2>
           <p class="scrolly-desc">한 다리를 치켜들고 물을 박차며 하늘로 솟구치듯 연꽃 몸체를 입으로 떠받치고 있는 용. 바다를 다스리는 신이자 백제의 역동적 기운을 상징합니다.</p>
+          <div class="scrolly-link-row">
+            <button class="btn-link-layer" data-goto-unwrapped="sea">🗺️ 바다 층위 전개도 탐색 →</button>
+          </div>
         </div>
       </div>
 
@@ -160,7 +180,7 @@
             <span>🏛️</span>
           </button>
           <button class="btn-explore-catalog" data-nav="unwrapped" style="background: rgba(212,175,55,0.15); border: 1px solid var(--accent-gold);">
-            <span>전개도 공간 탐색</span>
+            <span>전개도 5층위 공간 탐색</span>
             <span>🗺️</span>
           </button>
         </div>
@@ -170,7 +190,7 @@
   </section>
 
   <!-- ============================================================
-       3. VIEW: CATALOG / SYMBOL DISCOVERY & UNWRAPPED MAP
+       3. VIEW: CATALOG / SYMBOL DISCOVERY & UNWRAPPED 5-LAYER MAP
        ============================================================ -->
   <section id="view-catalog" class="view-section">
     <div class="catalog-header">
@@ -181,7 +201,7 @@
           <span>📋 상징 도감 (카드형)</span>
         </button>
         <button class="view-mode-btn" id="tab-mode-unwrapped">
-          <span>🗺️ 전개도 상징 탐색 (공간형)</span>
+          <span>🗺️ 전개도 상징 탐색 (5대 층위 공간형)</span>
         </button>
       </div>
 
@@ -214,18 +234,15 @@
       <!-- Dynamically generated by app.js -->
     </div>
 
-    <!-- Container 2: Unwrapped Map Mode -->
-    <div class="unwrapped-map-container" id="unwrapped-map-container" style="display: none;">
-      <div class="unwrapped-map-header">
-        <span class="unwrapped-hint">💡 전개도 위에 은은하게 녹아든 상징 마커를 찾아 클릭해 보세요.</span>
+    <!-- Container 2: Unwrapped 5-Layers Space (Implementation Rule 7-1) -->
+    <div class="unwrapped-layers-wrapper" id="unwrapped-map-container" style="display: none;">
+      <div class="unwrapped-intro-guide">
+        <h3>🗺️ 금동대향로 5대 층위 전개도 공간 탐색</h3>
+        <p>전개도는 천상·하늘·육지·물가·바다의 다섯 세계로 나누어 펼쳐집니다. 각 층위의 배경 위 마커를 클릭하여 상세 콘텐츠로 진입하거나, 3D 메인화면과 상호 이동할 수 있습니다.</p>
       </div>
-      <div class="unwrapped-map-viewport" id="unwrapped-map-viewport">
-        <div class="unwrapped-canvas-wrapper" id="unwrapped-canvas-wrapper">
-          <img id="unwrapped-base-image" class="unwrapped-base-img" src="Asset/3. Exhibition/N_Panel/webp/unwrapped_map.webp" alt="금동대향로 전개도">
-          <div class="unwrapped-markers-layer" id="unwrapped-markers-layer">
-            <!-- 19 Markers injected dynamically by app.js -->
-          </div>
-        </div>
+
+      <div class="unwrapped-layers-list" id="unwrapped-layers-list">
+        <!-- 5 Layer blocks generated dynamically by app.js -->
       </div>
     </div>
 
@@ -243,7 +260,7 @@
   </section>
 
   <!-- ============================================================
-       4. VIEW: DETAIL (MULTI-PERSPECTIVE)
+       4. VIEW: DETAIL (3D ASSET EMBED + MULTI-PERSPECTIVE)
        ============================================================ -->
   <section id="view-detail" class="view-section">
     
@@ -258,19 +275,21 @@
 
     <div class="detail-main-layout">
       
-      <!-- Left Column: Image / 3D Model Viewer -->
+      <!-- Left Column: 3D Asset Embed Stage -->
       <div class="detail-stage-column">
         <div class="stage-viewer-wrap" id="detail-stage-wrap">
-          <img id="detail-panel-image" class="detail-image-fallback" src="Asset/Final.webp" alt="패널 이미지">
-          <div id="detail-3d-container" class="detail-3d-container" style="display: none;">
-            <canvas id="detail-3d-canvas"></canvas>
+          <!-- 3D Embed Container (Sketchfab iframe or Three.js GLB) -->
+          <div id="detail-3d-embed-wrap" class="detail-3d-embed-wrap">
+            <!-- Injected dynamically by app.js -->
           </div>
         </div>
+        
+        <!-- Controls & Docent Call under 3D Asset -->
         <div class="stage-controls">
-          <span class="stage-hint" id="detail-stage-hint">💡 유물 세부 도판 및 과학 패널을 자세히 관찰하세요</span>
+          <span class="stage-hint" id="detail-stage-hint">💡 마우스로 3D 모델을 회전/확대하여 관찰하세요</span>
           <button id="btn-detail-docent-direct" class="btn-detail-docent-call">
             <img src="Asset/4. Docent/explaining.webp" alt="해설사">
-            <span>래피드왜건 해설 듣기</span>
+            <span>🎙️ 래피드왜건 과학해설 듣기</span>
           </button>
         </div>
       </div>
@@ -302,13 +321,19 @@
           <p class="perspective-text" id="detail-culture-text"></p>
         </div>
 
-        <!-- Perspective 2: Science & Evolution Story -->
+        <!-- Perspective 2: Science & Evolution Story + N_Panel Image -->
         <div class="perspective-section" id="detail-science-section">
           <div class="perspective-header">
             <div class="perspective-icon icon-science">🔬</div>
             <h3 class="perspective-title">자연과학 · 진화적 관점</h3>
           </div>
           <p class="perspective-text" id="detail-science-text"></p>
+          
+          <!-- Science Panel Image Viewer -->
+          <div class="science-panel-viewer-box" id="detail-science-panel-wrap">
+            <div class="science-panel-label">🔬 연구 조사 과학 패널</div>
+            <img id="detail-science-panel-img" class="science-panel-img" src="Asset/3. Exhibition/N_Panel/webp/N_Panel01-1.webp" alt="과학 패널">
+          </div>
         </div>
 
         <!-- Perspective 3: Related Relics & Sources -->
@@ -407,10 +432,10 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/modelData.js?v=20260825"></script>
-  <script src="js/dialogueData.js?v=20260825"></script>
-  <script src="js/data.js?v=20260825"></script>
-  <script src="js/threeViewer.js?v=20260825"></script>
-  <script src="js/app.js?v=20260825"></script>
+  <script src="js/modelData.js?v=20260825_2"></script>
+  <script src="js/dialogueData.js?v=20260825_2"></script>
+  <script src="js/data.js?v=20260825_2"></script>
+  <script src="js/threeViewer.js?v=20260825_2"></script>
+  <script src="js/app.js?v=20260825_2"></script>
 </body>
 </html>

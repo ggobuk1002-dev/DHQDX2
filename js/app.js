@@ -13,15 +13,16 @@ class ExhibitionApp {
     // 과학해설사 (Docent) 엔진 상태
     this.docentState = {
       animalCode: '01',
-      currentQueue: [],
-      queueIndex: 0,
+      currentBranch: 'ROOT',
+      dialogueQueue: [],
+      queueIdx: 0,
       isTyping: false,
-      typewriterTimer: null,
-      fullText: '',
-      mode: 'INTRO' // 'INTRO' | 'CHOICE' | 'QUESTION' | 'RETURN'
+      typeTimer: null,
+      fullText: ''
     };
     
     this.viewer = null;
+    this.introVideoEnded = false;
     
     // 로컬 스토리지에서 발견된 상징 복원 (공통 상태 관리)
     this.discoveredAnimals = new Set();
@@ -41,7 +42,7 @@ class ExhibitionApp {
     this.initViewer();
     this.bindEvents();
     this.renderCatalog('all');
-    this.renderUnwrappedMap();
+    this.renderUnwrappedLayers();
     this.updateProgress();
     this.initIntroSequence();
   }
@@ -59,7 +60,7 @@ class ExhibitionApp {
         
         if (loadingText) {
           if (isError) {
-            loadingText.innerText = '전시 준비 완료 (2D 패널 모드)';
+            loadingText.innerText = '전시 준비 완료 (2D 모드)';
           } else {
             loadingText.innerText = isLoaded ? '전시 준비 완료' : '금동대향로 유물 로딩 중... ' + percent + '%';
           }
@@ -83,22 +84,30 @@ class ExhibitionApp {
      2. 이벤트 바인딩
      ============================================================ */
   bindEvents() {
-    // 네비게이션 버튼
+    // 헤더 네비게이션 버튼
     document.querySelectorAll('[data-nav]').forEach(btn => {
       btn.addEventListener('click', (e) => {
         let targetView = e.currentTarget.getAttribute('data-nav');
         if (!targetView) {
-           targetView = e.target.closest('[data-nav]')?.getAttribute('data-nav');
+          targetView = e.target.closest('[data-nav]')?.getAttribute('data-nav');
         }
         if (targetView === 'unwrapped') {
           this.switchView('catalog');
           this.setCatalogMode('unwrapped');
-        } else {
-          if (targetView === 'catalog') {
-            this.setCatalogMode('cards');
-          }
-          if (targetView) this.switchView(targetView);
+        } else if (targetView === 'catalog') {
+          this.switchView('catalog');
+          this.setCatalogMode('cards');
+        } else if (targetView) {
+          this.switchView(targetView);
         }
+      });
+    });
+
+    // 메인 스크롤 단계 내 전개도 층위 딥링크 버튼
+    document.querySelectorAll('[data-goto-unwrapped]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const layerId = e.currentTarget.getAttribute('data-goto-unwrapped');
+        this.goToUnwrappedLayer(layerId);
       });
     });
 
@@ -110,6 +119,14 @@ class ExhibitionApp {
       });
     }
 
+    // 인트로 비디오 다시보기 버튼
+    const btnReplay = document.getElementById('btn-replay-intro');
+    if (btnReplay) {
+      btnReplay.addEventListener('click', () => {
+        this.playIntroVideo();
+      });
+    }
+
     // 인트로 스킵 버튼
     const btnSkip = document.getElementById('btn-intro-skip');
     if (btnSkip) {
@@ -118,7 +135,7 @@ class ExhibitionApp {
       });
     }
 
-    // 도감 모드 전환 탭 (카드형 vs 전개도형)
+    // 도감 모드 전환 탭 (카드형 vs 전개도 5층위형)
     const btnModeCards = document.getElementById('tab-mode-cards');
     const btnModeUnwrapped = document.getElementById('tab-mode-unwrapped');
     if (btnModeCards) {
@@ -141,16 +158,25 @@ class ExhibitionApp {
     // 스크롤리텔링 옵저버
     this.initScrollyObserver();
 
-    // 도슨트 호출 버튼
+    // 헤더 과학해설사 버튼 (상세화면에서는 즉시 실행, 타 화면에서는 안내 또는 상세화면 이동)
     const btnDocentCall = document.getElementById('btn-docent-call');
     if (btnDocentCall) {
       btnDocentCall.addEventListener('click', () => {
-        const animal = EXHIBITION_DATA.animals[this.currentAnimalIndex] || EXHIBITION_DATA.animals[0];
-        this.openDocent(animal.code);
+        if (this.currentView === 'detail') {
+          const animal = EXHIBITION_DATA.animals[this.currentAnimalIndex] || EXHIBITION_DATA.animals[0];
+          this.openDocent(animal.code);
+        } else {
+          // 상세 화면이 아닐 때 안내 및 첫 번째 동물 상세로 진입
+          const animal = EXHIBITION_DATA.animals[this.currentAnimalIndex] || EXHIBITION_DATA.animals[0];
+          this.switchView('detail', animal.code);
+          setTimeout(() => {
+            this.openDocent(animal.code);
+          }, 300);
+        }
       });
     }
 
-    // 상세 화면 내 도슨트 호출 버튼
+    // 상세 화면 좌측 3D 영역 아래 도슨트 호출 버튼
     const btnDetailDocent = document.getElementById('btn-detail-docent-direct');
     if (btnDetailDocent) {
       btnDetailDocent.addEventListener('click', () => {
@@ -199,12 +225,10 @@ class ExhibitionApp {
   switchView(viewName, animalCode = null) {
     this.currentView = viewName;
 
-    // 모든 뷰 숨기기
     document.querySelectorAll('.view-section').forEach(sec => {
       sec.classList.remove('active');
     });
 
-    // 헤더 네비게이션 상태
     document.querySelectorAll('.nav-btn').forEach(btn => {
       const nav = btn.getAttribute('data-nav');
       btn.classList.toggle('active', nav === viewName || (viewName === 'catalog' && nav === this.catalogMode));
@@ -219,6 +243,18 @@ class ExhibitionApp {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     const canvasContainer = document.getElementById('scrolly-canvas-container');
+    const btnDocentHeader = document.getElementById('btn-docent-call');
+
+    // 과학해설사 버튼 활성화 제어 (상세 화면에서만 강조 활성화)
+    if (btnDocentHeader) {
+      if (viewName === 'detail') {
+        btnDocentHeader.classList.add('is-active-docent');
+        btnDocentHeader.title = '클릭하여 현재 동물의 래피드왜건 과학해설을 듣습니다';
+      } else {
+        btnDocentHeader.classList.remove('is-active-docent');
+        btnDocentHeader.title = '개별 동물 상세 화면에서 활성화됩니다';
+      }
+    }
 
     if (viewName === 'intro') {
       if (canvasContainer) {
@@ -226,6 +262,15 @@ class ExhibitionApp {
         canvasContainer.style.opacity = '1';
       }
       if (this.viewer) this.viewer.setCinematicIntro(true);
+      
+      // 인트로로 되돌아왔을 때 오버레이를 즉시 표시
+      const overlay = document.getElementById('intro-ui-overlay');
+      const blackout = document.getElementById('intro-blackout');
+      const skipBtn = document.getElementById('btn-intro-skip');
+      if (overlay) overlay.classList.add('visible');
+      if (blackout) blackout.style.opacity = '0';
+      if (skipBtn) skipBtn.style.display = 'none';
+      
     } else if (viewName === 'main') {
       if (canvasContainer) {
         canvasContainer.style.display = 'block';
@@ -238,7 +283,7 @@ class ExhibitionApp {
     } else if (viewName === 'catalog') {
       if (canvasContainer) canvasContainer.style.opacity = '0';
       this.renderCatalog(this.currentCategory);
-      this.renderUnwrappedMap();
+      this.renderUnwrappedLayers();
     } else if (viewName === 'detail') {
       if (canvasContainer) canvasContainer.style.opacity = '0';
       if (animalCode) {
@@ -271,9 +316,9 @@ class ExhibitionApp {
       if (grid) grid.style.display = 'none';
       if (unwrappedContainer) unwrappedContainer.style.display = 'block';
       if (catTabs) catTabs.style.display = 'none';
-      if (title) title.innerText = '향로의 세계: 전개도 상징 탐색';
-      if (desc) desc.innerText = '금동대향로 전개도 위에 은은하게 표현된 상징들을 클릭하여 백제 유물 속 생태 세계로 진입하세요.';
-      this.renderUnwrappedMap();
+      if (title) title.innerText = '향로의 세계: 5대 층위 전개도 상징 탐색';
+      if (desc) desc.innerText = '천상·하늘·육지·물가·바다의 각 층위 배경 위 마커를 클릭하여 유물 속 생태계를 탐구하세요. 3D 메인화면과 상호 이동할 수 있습니다.';
+      this.renderUnwrappedLayers();
     }
   }
 
@@ -290,9 +335,29 @@ class ExhibitionApp {
 
     const playPromise = video.play();
     if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        console.log('Video autoplay prevented');
+      playPromise.catch((err) => {
+        console.warn('Video autoplay prevented by browser:', err);
+        // 비디오 자동재생 실패 시 즉시 UI 노출
+        const overlay = document.getElementById('intro-ui-overlay');
+        if (overlay) overlay.classList.add('visible');
       });
+    }
+  }
+
+  playIntroVideo() {
+    const video = document.getElementById('intro-video');
+    const blackout = document.getElementById('intro-blackout');
+    const overlay = document.getElementById('intro-ui-overlay');
+    const skipBtn = document.getElementById('btn-intro-skip');
+
+    if (overlay) overlay.classList.remove('visible');
+    if (blackout) blackout.style.opacity = '0';
+    if (skipBtn) skipBtn.style.display = 'block';
+
+    if (video) {
+      video.currentTime = 0;
+      video.style.opacity = '1';
+      video.play().catch(e => console.warn(e));
     }
   }
 
@@ -302,13 +367,16 @@ class ExhibitionApp {
     const overlay = document.getElementById('intro-ui-overlay');
     const skipBtn = document.getElementById('btn-intro-skip');
 
-    if (video) video.pause();
+    if (video) {
+      video.pause();
+      video.style.opacity = '0';
+    }
     if (skipBtn) skipBtn.style.display = 'none';
 
     if (blackout) {
       blackout.style.opacity = '1';
       setTimeout(() => {
-        if (overlay) overlay.classList.add('active');
+        if (overlay) overlay.classList.add('visible');
         if (this.viewer) {
           this.viewer.setCinematicIntro(true);
         }
@@ -317,7 +385,7 @@ class ExhibitionApp {
         }, 600);
       }, 500);
     } else {
-      if (overlay) overlay.classList.add('active');
+      if (overlay) overlay.classList.add('visible');
     }
   }
 
@@ -353,16 +421,36 @@ class ExhibitionApp {
           }
         }
       });
-    }, {
-      root: null,
-      threshold: 0.6
-    });
+    }, { threshold: 0.5 });
 
     steps.forEach(step => observer.observe(step));
   }
 
+  // 메인 스크롤 단계로 바로 이동 (전개도에서 메인으로 상호 이동)
+  goToMainLayer(layerId) {
+    this.switchView('main');
+    setTimeout(() => {
+      const stepElem = document.querySelector(`.scrolly-step[data-step-id="${layerId}"]`);
+      if (stepElem) {
+        stepElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 200);
+  }
+
+  // 전개도 특정 층위로 바로 이동 (메인에서 전개도로 상호 이동)
+  goToUnwrappedLayer(layerId) {
+    this.switchView('catalog');
+    this.setCatalogMode('unwrapped');
+    setTimeout(() => {
+      const layerCard = document.getElementById('unwrapped-layer-' + layerId);
+      if (layerCard) {
+        layerCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 200);
+  }
+
   /* ============================================================
-     6. 상징 도감 렌더링 (카드형 19종)
+     6. 상징 도감 (카드 모드) 렌더링
      ============================================================ */
   renderCatalog(category = 'all') {
     this.currentCategory = category;
@@ -371,10 +459,9 @@ class ExhibitionApp {
 
     grid.innerHTML = '';
 
-    const filtered = EXHIBITION_DATA.animals.filter(item => {
-      if (category === 'all') return true;
-      return item.layer === category;
-    });
+    const filtered = category === 'all'
+      ? EXHIBITION_DATA.animals
+      : EXHIBITION_DATA.animals.filter(a => a.layer === category || (category === 'sky' && a.layer === 'celestial'));
 
     filtered.forEach(animal => {
       const isDiscovered = this.discoveredAnimals.has(animal.code);
@@ -386,9 +473,7 @@ class ExhibitionApp {
 
       card.innerHTML = `
         <div class="card-thumb-wrap">
-          <div class="card-icon-container">
-            <img class="card-icon-img" src="${iconSrc}" alt="${animal.name}" loading="lazy">
-          </div>
+          <img class="card-icon-img" src="${iconSrc}" alt="${animal.name}" loading="lazy">
         </div>
         <div class="card-body">
           <div class="card-meta">
@@ -415,40 +500,97 @@ class ExhibitionApp {
   }
 
   /* ============================================================
-     7. 전개도 상징 탐색 렌더링 (19개 은은한 마커 레이어)
+     7. 전개도 5대 층위 공간 렌더링 (구현 규칙 7-1)
+     - 각 층위별 bg_XXXX.webp 배경 적용
+     - 5의 메인화면과 상호 이동 버튼
+     - 해당 층위 상징 마커 레이어
      ============================================================ */
-  renderUnwrappedMap() {
-    const layer = document.getElementById('unwrapped-markers-layer');
-    if (!layer) return;
+  renderUnwrappedLayers() {
+    const container = document.getElementById('unwrapped-layers-list');
+    if (!container) return;
 
-    layer.innerHTML = '';
+    container.innerHTML = '';
 
-    EXHIBITION_DATA.animals.forEach(animal => {
-      const isDiscovered = this.discoveredAnimals.has(animal.code);
-      const coords = animal.mapCoords || { x: 50, y: 50 };
-
-      const marker = document.createElement('div');
-      marker.className = `unwrapped-marker ${isDiscovered ? 'is-discovered' : 'is-undiscovered'}`;
-      marker.style.left = `${coords.x}%`;
-      marker.style.top = `${coords.y}%`;
-
-      const iconSrc = isDiscovered ? animal.icon : animal.iconDark;
-
-      marker.innerHTML = `
-        <img class="unwrapped-marker-icon" src="${iconSrc}" alt="${animal.name}">
-        <div class="marker-tooltip">${animal.code} ${animal.name} ${isDiscovered ? '★' : ''}</div>
-      `;
-
-      marker.addEventListener('click', () => {
-        this.switchView('detail', animal.code);
+    EXHIBITION_DATA.layers.forEach(layer => {
+      const layerAnimals = EXHIBITION_DATA.animals.filter(a => {
+        if (layer.id === 'celestial') return a.layer === 'celestial';
+        if (layer.id === 'sky') return false;
+        if (layer.id === 'land') return a.layer === 'land';
+        if (layer.id === 'water') return a.layer === 'water';
+        if (layer.id === 'sea') return a.layer === 'sea';
+        return false;
       });
 
-      layer.appendChild(marker);
+      const layerCard = document.createElement('div');
+      layerCard.className = 'unwrapped-layer-card';
+      layerCard.id = 'unwrapped-layer-' + layer.id;
+
+      // 층위 헤더 + 메인 스크롤 화면 상호 이동 버튼
+      const headerHtml = `
+        <div class="layer-card-header">
+          <div class="layer-header-left">
+            <span class="layer-badge">${layer.shortName}</span>
+            <h4 class="layer-card-title">${layer.name}</h4>
+          </div>
+          <button class="btn-layer-goto-main" data-goto-main="${layer.id}">
+            <span>🔍 3D 메인화면에서 이 층위 보기</span>
+            <span>→</span>
+          </button>
+        </div>
+      `;
+
+      // 층위 뷰포트 (bg_XXXX.webp 배경 + 상징 마커)
+      let markersHtml = '';
+      layerAnimals.forEach(animal => {
+        const isDiscovered = this.discoveredAnimals.has(animal.code);
+        const coords = animal.layerCoords || { x: 50, y: 50 };
+        const iconSrc = isDiscovered ? animal.icon : animal.iconDark;
+
+        markersHtml += `
+          <div class="layer-symbol-marker ${isDiscovered ? 'is-discovered' : 'is-undiscovered'}" 
+               style="left: ${coords.x}%; top: ${coords.y}%;" 
+               data-animal-code="${animal.code}">
+            <div class="marker-pin-wrap">
+              <img class="marker-pin-img" src="${iconSrc}" alt="${animal.name}">
+            </div>
+            <div class="marker-hover-tooltip">${animal.code} ${animal.name} ${isDiscovered ? '★' : ''}</div>
+          </div>
+        `;
+      });
+
+      const stageHtml = `
+        <div class="layer-stage-viewport">
+          <img class="layer-bg-img" src="${layer.bg}" alt="${layer.name} 배경">
+          <div class="layer-markers-overlay">
+            ${markersHtml}
+          </div>
+        </div>
+      `;
+
+      layerCard.innerHTML = headerHtml + stageHtml;
+
+      // 메인 층위 이동 이벤트
+      const btnGotoMain = layerCard.querySelector('[data-goto-main]');
+      if (btnGotoMain) {
+        btnGotoMain.addEventListener('click', () => {
+          this.goToMainLayer(layer.id);
+        });
+      }
+
+      // 동물 마커 클릭 이벤트
+      layerCard.querySelectorAll('.layer-symbol-marker').forEach(marker => {
+        marker.addEventListener('click', (e) => {
+          const code = e.currentTarget.getAttribute('data-animal-code');
+          if (code) this.switchView('detail', code);
+        });
+      });
+
+      container.appendChild(layerCard);
     });
   }
 
   /* ============================================================
-     8. 상세 전시 화면 렌더링
+     8. 상세 전시 화면 렌더링 (3D 에셋 Embed + N_Panel 패널)
      ============================================================ */
   renderDetail(animalCode) {
     const animalIndex = EXHIBITION_DATA.animals.findIndex(a => a.code === animalCode);
@@ -472,286 +614,305 @@ class ExhibitionApp {
     if (title) title.innerText = animal.name;
     if (simpleDesc) simpleDesc.innerText = animal.simpleDesc;
 
-    // 좌측 무대 이미지 / 3D 패널
-    const panelImg = document.getElementById('detail-panel-image');
-    if (panelImg) {
-      panelImg.src = animal.panelImg || 'Asset/Final.webp';
-      panelImg.alt = animal.name;
+    // [핵심] 좌측 무대: con_Mapping.md의 3D 에셋 Embed (Sketchfab iframe or GLB)
+    const embedWrap = document.getElementById('detail-3d-embed-wrap');
+    if (embedWrap) {
+      if (animal.embedHtml) {
+        embedWrap.innerHTML = animal.embedHtml;
+      } else if (animal.glb) {
+        embedWrap.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--accent-gold);"><p>3D 모델: ${animal.name}</p></div>`;
+      }
     }
 
-    // 3 관찰 포인트
-    const featList = document.getElementById('detail-features-list');
-    if (featList && animal.features) {
-      featList.innerHTML = animal.features.map(f => `<li>${f}</li>`).join('');
+    // 3가지 핵심 관찰 포인트
+    const featuresList = document.getElementById('detail-features-list');
+    if (featuresList && animal.features) {
+      featuresList.innerHTML = animal.features.map(f => `<li>${f}</li>`).join('');
     }
 
-    // 자연과학 관점
-    const sciSec = document.getElementById('detail-science-section');
-    const sciText = document.getElementById('detail-science-text');
-    if (sciText && animal.scienceStory) {
-      sciText.innerText = animal.scienceStory;
-      if (sciSec) sciSec.style.display = 'block';
+    // 사회·문화적 관점 (dialogueData or references)
+    const cultureText = document.getElementById('detail-culture-text');
+    if (cultureText) {
+      const vnData = (typeof DIALOGUE_DATA !== 'undefined' && DIALOGUE_DATA[animal.code]) ? DIALOGUE_DATA[animal.code] : null;
+      cultureText.innerText = vnData ? vnData.cultureStory : `${animal.name}은 백제 금동대향로에 정교하게 새겨져 당시 사람들의 이상세계와 자연관을 대변합니다.`;
     }
 
-    // 사회·문화 관점 (데이터 존재 시 표시, 미완성 시 안내)
-    const cultSec = document.getElementById('detail-culture-section');
-    const cultText = document.getElementById('detail-culture-text');
-    if (animal.cultureStory) {
-      if (cultText) cultText.innerText = animal.cultureStory;
-      if (cultSec) cultSec.style.display = 'block';
-    } else {
-      if (cultSec) cultSec.style.display = 'none';
+    // 자연과학·진화적 관점
+    const scienceText = document.getElementById('detail-science-text');
+    if (scienceText) {
+      scienceText.innerText = animal.scienceStory;
+    }
+
+    // 우측 과학 패널 (N_Panel 이미지)
+    const sciencePanelImg = document.getElementById('detail-science-panel-img');
+    if (sciencePanelImg) {
+      sciencePanelImg.src = animal.panelImg || 'Asset/Final.webp';
+      sciencePanelImg.alt = `${animal.name} 과학 조사 패널`;
     }
 
     // 관련 유물 및 출처
-    const relicSec = document.getElementById('detail-relic-section');
     const relicText = document.getElementById('detail-relic-text');
-    const srcCredit = document.getElementById('detail-source-credit');
-    if (animal.relicStory) {
-      if (relicText) relicText.innerText = animal.relicStory;
-    } else {
-      if (relicText) relicText.innerText = '금동대향로 능산리사지 출토 원본 유물 도판과 연계되어 있습니다.';
+    const sourceCredit = document.getElementById('detail-source-credit');
+    if (relicText) {
+      relicText.innerText = `백제 부여 능산리사지 출토 백제금동대향로(국보) 본체 조각에 표현된 도상 도판`;
     }
-    if (srcCredit) {
-      srcCredit.innerText = animal.sourceText || '출처: 국립부여박물관 소장 백제금동대향로 학술조사자료';
-    }
-    if (relicSec) relicSec.style.display = 'block';
-
-    // OX 퀴즈 (데이터가 있는 경우에만 표시)
-    const quizBox = document.getElementById('detail-quiz-box');
-    if (quizBox) {
-      if (animal.quiz) {
-        quizBox.style.display = 'block';
-        quizBox.innerHTML = `
-          <span class="quiz-badge">참여형 퀴즈</span>
-          <div class="quiz-question">${animal.quiz.question}</div>
-          <div class="quiz-actions">
-            <button class="btn-quiz-opt" onclick="window.app.checkQuiz(true)">O (그렇다)</button>
-            <button class="btn-quiz-opt" onclick="window.app.checkQuiz(false)">X (아니다)</button>
-          </div>
-          <div id="quiz-result-panel" class="quiz-result-panel">
-            <div id="quiz-result-title" class="quiz-result-title"></div>
-            <div id="quiz-result-exp" class="quiz-result-exp"></div>
-          </div>
-        `;
-      } else {
-        quizBox.style.display = 'none';
-      }
+    if (sourceCredit) {
+      sourceCredit.innerText = animal.sourceText || '출처: 국립부여박물관';
     }
 
-    this.updateProgress();
+    // OX 퀴즈 렌더링
+    this.renderQuiz(animal.code);
   }
 
+  /* ============================================================
+     9. OX 퀴즈 모듈
+     ============================================================ */
+  renderQuiz(animalCode) {
+    const quizBox = document.getElementById('detail-quiz-box');
+    if (!quizBox) return;
+
+    const vnData = (typeof DIALOGUE_DATA !== 'undefined') ? DIALOGUE_DATA[animalCode] : null;
+    const quiz = vnData ? vnData.quiz : null;
+
+    if (!quiz) {
+      quizBox.style.display = 'none';
+      return;
+    }
+
+    quizBox.style.display = 'block';
+    quizBox.innerHTML = `
+      <div class="quiz-header">
+        <span class="quiz-badge">💡 자연사 탐구 OX 퀴즈</span>
+        <h4 class="quiz-question">${quiz.question}</h4>
+      </div>
+      <div class="quiz-options-row">
+        <button class="btn-quiz-opt" data-answer="O">O (그렇다)</button>
+        <button class="btn-quiz-opt" data-answer="X">X (아니다)</button>
+      </div>
+      <div class="quiz-result-feedback" id="quiz-feedback" style="display: none;"></div>
+    `;
+
+    quizBox.querySelectorAll('.btn-quiz-opt').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const choice = e.currentTarget.getAttribute('data-answer');
+        const feedback = document.getElementById('quiz-feedback');
+        if (!feedback) return;
+
+        const isCorrect = (choice === quiz.answer);
+        feedback.style.display = 'block';
+        feedback.className = `quiz-result-feedback ${isCorrect ? 'correct' : 'wrong'}`;
+        feedback.innerHTML = `
+          <strong>${isCorrect ? '🎉 정답입니다!' : '🤔 아쉽습니다!'}</strong>
+          <p>${quiz.explanation}</p>
+        `;
+      });
+    });
+  }
+
+  /* ============================================================
+     10. 상세 화면 탐색 네비게이션
+     ============================================================ */
   navigateDetail(direction) {
+    const total = EXHIBITION_DATA.animals.length;
     let nextIndex = this.currentAnimalIndex + direction;
-    if (nextIndex < 0) nextIndex = EXHIBITION_DATA.animals.length - 1;
-    if (nextIndex >= EXHIBITION_DATA.animals.length) nextIndex = 0;
+    if (nextIndex < 0) nextIndex = total - 1;
+    if (nextIndex >= total) nextIndex = 0;
 
     const nextAnimal = EXHIBITION_DATA.animals[nextIndex];
     this.renderDetail(nextAnimal.code);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  markAnimalDiscovered(animalCode) {
-    if (!this.discoveredAnimals.has(animalCode)) {
-      this.discoveredAnimals.add(animalCode);
+  /* ============================================================
+     11. 발견 상태 저장 & 진척도
+     ============================================================ */
+  markAnimalDiscovered(code) {
+    if (!this.discoveredAnimals.has(code)) {
+      this.discoveredAnimals.add(code);
       try {
         localStorage.setItem('discovered_animals_v2', JSON.stringify(Array.from(this.discoveredAnimals)));
-      } catch (e) {
-        console.warn('Cannot save to localStorage:', e);
-      }
+      } catch (e) {}
       this.updateProgress();
     }
   }
 
   updateProgress() {
+    const count = this.discoveredAnimals.size;
     const total = EXHIBITION_DATA.animals.length || 19;
-    const discovered = this.discoveredAnimals.size;
-    const percent = Math.round((discovered / total) * 100);
+    const percent = Math.round((count / total) * 100);
 
     const label = document.getElementById('discovery-progress-label');
     const bar = document.getElementById('discovery-progress-bar');
-    if (label) label.innerText = `${discovered} / ${total} 개 발견 (${percent}%)`;
-    if (bar) bar.style.width = `${percent}%`;
+    const banner = document.getElementById('final-completion-banner');
 
-    // 19개 모두 발견 시 최종 완료 배너 노출
-    const completionBanner = document.getElementById('final-completion-banner');
-    if (completionBanner) {
-      completionBanner.style.display = discovered >= total ? 'block' : 'none';
+    if (label) label.innerText = `${count} / ${total} 개 발견 (${percent}%)`;
+    if (bar) bar.style.width = percent + '%';
+
+    if (banner) {
+      banner.style.display = (count >= total) ? 'block' : 'none';
     }
   }
 
   /* ============================================================
-     9. 과학해설사 (Docent 래피드왜건) 비주얼 노벨 엔진
+     12. 과학해설사 (Docent) 비주얼 노벨 실행기
      ============================================================ */
   openDocent(animalCode) {
-    const dialogueData = (typeof DOCENT_DIALOGUES !== 'undefined') ? DOCENT_DIALOGUES[animalCode] : null;
-    if (!dialogueData) {
-      console.warn('No dialogue data for:', animalCode);
-      return;
-    }
+    const modal = document.getElementById('docent-modal');
+    if (!modal) return;
 
     this.docentState.animalCode = animalCode;
-    const modal = document.getElementById('docent-modal');
-    if (modal) modal.classList.add('active');
+    const animal = EXHIBITION_DATA.animals.find(a => a.code === animalCode) || EXHIBITION_DATA.animals[0];
+    const vnData = (typeof DIALOGUE_DATA !== 'undefined') ? DIALOGUE_DATA[animalCode] : null;
 
-    // 상단 뱃지
     const animalTag = document.getElementById('docent-animal-tag');
     const themeText = document.getElementById('docent-theme-text');
-    if (animalTag) animalTag.innerText = `${dialogueData.code} ${dialogueData.name}`;
-    if (themeText) themeText.innerText = dialogueData.theme || '과학적 탐구와 해설';
+    if (animalTag) animalTag.innerText = `${animal.code} ${animal.name}`;
+    if (themeText) themeText.innerText = animal.panelTheme;
 
-    // [START] 도입 대사 시작
-    this.startDocentIntro(dialogueData);
-  }
+    modal.style.display = 'flex';
 
-  startDocentIntro(dialogueData) {
-    this.docentState.mode = 'INTRO';
-    this.docentState.currentQueue = [...dialogueData.start.lines];
-    this.docentState.queueIndex = 0;
-
-    const optFooter = document.getElementById('docent-options-footer');
-    if (optFooter) optFooter.style.display = 'none';
-
-    this.playNextDocentLine();
-  }
-
-  playNextDocentLine() {
-    const queue = this.docentState.currentQueue;
-    const index = this.docentState.queueIndex;
-
-    if (index >= queue.length) {
-      // 대사 큐 종료 시
-      if (this.docentState.mode === 'INTRO' || this.docentState.mode === 'QUESTION') {
-        this.showDocentChoices();
-      }
-      return;
-    }
-
-    const currentItem = queue[index];
-    this.docentState.queueIndex++;
-
-    // 캐릭터 표정 및 초상화 교체
-    this.updateDocentEmotion(currentItem.emotion);
-
-    // 화자 이름
-    const speakerEl = document.getElementById('docent-speaker-name');
-    const emotionEl = document.getElementById('docent-emotion-tag');
-    if (speakerEl) speakerEl.innerText = currentItem.speaker || '래피드왜건';
-    if (emotionEl) emotionEl.innerText = currentItem.emotion || 'neutral';
-
-    // 타이프라이터 효과로 대사 출력
-    this.typewriterText(currentItem.text);
-  }
-
-  updateDocentEmotion(emotion = 'neutral') {
-    const portrait = document.getElementById('docent-character-portrait');
-    if (!portrait) return;
-
-    const emotionMap = {
-      neutral: 'Asset/4. Docent/neutral.webp',
-      explaining: 'Asset/4. Docent/explaining.webp',
-      thinking: 'Asset/4. Docent/thinking.webp',
-      surprised: 'Asset/4. Docent/surprised.webp',
-      excited: 'Asset/4. Docent/excited.webp',
-      enlightened: 'Asset/4. Docent/enlightened.webp'
-    };
-
-    const targetSrc = emotionMap[emotion.toLowerCase()] || emotionMap.neutral;
-    portrait.style.opacity = '0.7';
-    setTimeout(() => {
-      portrait.src = targetSrc;
-      portrait.style.opacity = '1';
-    }, 100);
-  }
-
-  typewriterText(text) {
-    const chatBody = document.getElementById('docent-chat-body');
-    if (!chatBody) return;
-
-    if (this.docentState.typewriterTimer) {
-      clearInterval(this.docentState.typewriterTimer);
-    }
-
-    this.docentState.isTyping = true;
-    this.docentState.fullText = text;
-    chatBody.innerHTML = '';
-
-    let charIndex = 0;
-    this.docentState.typewriterTimer = setInterval(() => {
-      if (charIndex < text.length) {
-        chatBody.innerHTML += text.charAt(charIndex);
-        charIndex++;
-      } else {
-        clearInterval(this.docentState.typewriterTimer);
-        this.docentState.isTyping = false;
-      }
-    }, 25);
-  }
-
-  handleDocentClick() {
-    if (this.docentState.isTyping) {
-      // 타이핑 중 클릭 시 전체 문장 즉시 출력
-      clearInterval(this.docentState.typewriterTimer);
-      const chatBody = document.getElementById('docent-chat-body');
-      if (chatBody) chatBody.innerHTML = this.docentState.fullText;
-      this.docentState.isTyping = false;
+    if (vnData && vnData.dialogueTree) {
+      this.startDocentBranch('ROOT', vnData.dialogueTree);
     } else {
-      // 다음 대사 재생
-      if (this.docentState.mode === 'INTRO' || this.docentState.mode === 'QUESTION') {
-        this.playNextDocentLine();
-      }
+      this.startDocentFallback(animal);
     }
-  }
-
-  showDocentChoices() {
-    this.docentState.mode = 'CHOICE';
-    const optFooter = document.getElementById('docent-options-footer');
-    const optList = document.getElementById('docent-options-list');
-    const dialogueData = DOCENT_DIALOGUES[this.docentState.animalCode];
-
-    if (!optFooter || !optList || !dialogueData) return;
-
-    optList.innerHTML = '';
-    const choices = dialogueData.start.choices || [];
-
-    choices.forEach(ch => {
-      const btn = document.createElement('button');
-      btn.className = 'btn-docent-choice';
-      btn.innerHTML = `<span>💬 ${ch.text}</span><span>→</span>`;
-      btn.addEventListener('click', () => {
-        this.selectDocentQuestion(ch.id);
-      });
-      optList.appendChild(btn);
-    });
-
-    optFooter.style.display = 'block';
-  }
-
-  selectDocentQuestion(qId) {
-    const dialogueData = DOCENT_DIALOGUES[this.docentState.animalCode];
-    if (!dialogueData || !dialogueData.questions[qId]) return;
-
-    const qData = dialogueData.questions[qId];
-    this.docentState.mode = 'QUESTION';
-    this.docentState.currentQueue = [...qData.lines];
-    this.docentState.queueIndex = 0;
-
-    const optFooter = document.getElementById('docent-options-footer');
-    if (optFooter) optFooter.style.display = 'none';
-
-    this.playNextDocentLine();
   }
 
   closeDocent() {
     const modal = document.getElementById('docent-modal');
-    if (modal) modal.classList.remove('active');
-    if (this.docentState.typewriterTimer) {
-      clearInterval(this.docentState.typewriterTimer);
+    if (modal) modal.style.display = 'none';
+    if (this.docentState.typeTimer) clearTimeout(this.docentState.typeTimer);
+    this.docentState.isTyping = false;
+  }
+
+  startDocentBranch(branchKey, dialogueTree) {
+    this.docentState.currentBranch = branchKey;
+    const branch = dialogueTree[branchKey] || dialogueTree['ROOT'];
+    if (!branch) return;
+
+    this.docentState.dialogueQueue = [...branch.lines];
+    this.docentState.queueIdx = 0;
+    this.displayNextDocentLine(branch);
+  }
+
+  displayNextDocentLine(branch) {
+    const queue = this.docentState.dialogueQueue;
+    const idx = this.docentState.queueIdx;
+    const optionsFooter = document.getElementById('docent-options-footer');
+    const clickHint = document.getElementById('docent-click-hint');
+
+    if (optionsFooter) optionsFooter.style.display = 'none';
+
+    if (idx < queue.length) {
+      const line = queue[idx];
+      this.docentState.queueIdx++;
+      if (clickHint) clickHint.style.display = 'inline';
+
+      this.typewriteDocentText(line.text, line.speaker || '래피드왜건', line.emotion || 'neutral', () => {
+        if (this.docentState.queueIdx >= queue.length && branch.options && branch.options.length > 0) {
+          this.showDocentOptions(branch.options);
+          if (clickHint) clickHint.style.display = 'none';
+        }
+      });
+    } else {
+      if (branch.options && branch.options.length > 0) {
+        this.showDocentOptions(branch.options);
+        if (clickHint) clickHint.style.display = 'none';
+      } else {
+        this.closeDocent();
+      }
+    }
+  }
+
+  handleDocentClick() {
+    if (this.docentState.isTyping) {
+      // 타이핑 즉시 완료
+      clearTimeout(this.docentState.typeTimer);
+      this.docentState.isTyping = false;
+      const chatBody = document.getElementById('docent-chat-body');
+      if (chatBody) chatBody.innerText = this.docentState.fullText;
+      return;
+    }
+
+    const vnData = (typeof DIALOGUE_DATA !== 'undefined') ? DIALOGUE_DATA[this.docentState.animalCode] : null;
+    if (vnData && vnData.dialogueTree) {
+      const branch = vnData.dialogueTree[this.docentState.currentBranch];
+      if (branch) {
+        this.displayNextDocentLine(branch);
+      }
+    }
+  }
+
+  typewriteDocentText(text, speaker, emotion, callback) {
+    const speakerElem = document.getElementById('docent-speaker-name');
+    const emotionElem = document.getElementById('docent-emotion-tag');
+    const chatBody = document.getElementById('docent-chat-body');
+    const portrait = document.getElementById('docent-character-portrait');
+
+    if (speakerElem) speakerElem.innerText = speaker;
+    if (emotionElem) emotionElem.innerText = emotion;
+    if (portrait) {
+      const emoMap = {
+        'happy': 'Asset/4. Docent/explaining.webp',
+        'surprised': 'Asset/4. Docent/explaining.webp',
+        'neutral': 'Asset/4. Docent/neutral.webp'
+      };
+      portrait.src = emoMap[emotion] || 'Asset/4. Docent/neutral.webp';
+    }
+
+    this.docentState.fullText = text;
+    this.docentState.isTyping = true;
+    if (chatBody) chatBody.innerHTML = '';
+
+    let i = 0;
+    const speed = 20;
+
+    const typeNextChar = () => {
+      if (i < text.length) {
+        if (chatBody) chatBody.innerHTML += text.charAt(i);
+        i++;
+        this.docentState.typeTimer = setTimeout(typeNextChar, speed);
+      } else {
+        this.docentState.isTyping = false;
+        if (callback) callback();
+      }
+    };
+
+    typeNextChar();
+  }
+
+  showDocentOptions(options) {
+    const footer = document.getElementById('docent-options-footer');
+    const list = document.getElementById('docent-options-list');
+    if (!footer || !list) return;
+
+    list.innerHTML = '';
+    footer.style.display = 'block';
+
+    const vnData = (typeof DIALOGUE_DATA !== 'undefined') ? DIALOGUE_DATA[this.docentState.animalCode] : null;
+
+    options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'btn-docent-option';
+      btn.innerText = `▶ ${opt.label}`;
+      btn.addEventListener('click', () => {
+        if (vnData && vnData.dialogueTree) {
+          this.startDocentBranch(opt.next, vnData.dialogueTree);
+        }
+      });
+      list.appendChild(btn);
+    });
+  }
+
+  startDocentFallback(animal) {
+    const chatBody = document.getElementById('docent-chat-body');
+    if (chatBody) {
+      chatBody.innerText = `안녕하세요! 백제금동대향로의 ${animal.name}에 대해 궁금한 점이 있으신가요? ${animal.scienceStory}`;
     }
   }
 }
 
-// Global App Instance
+// 애플리케이션 시작
 window.addEventListener('DOMContentLoaded', () => {
   window.app = new ExhibitionApp();
 });

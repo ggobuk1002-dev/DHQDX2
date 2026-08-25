@@ -3,608 +3,515 @@
  * Source of Truth: MD문서/con_Mapping.md, main.md, references.md
  */
 const EXHIBITION_DATA = {
-  "metadata": {
-    "title": "금동대향로 자연사박물관",
-    "subtitle": "자세히 보아야 예쁘다. 너도 그렇다.",
-    "team": "향로 없는 향로팀",
-    "theme": "금동대향로로 본 인류사",
-    "sourceInfo": "소장처: 국립부여박물관 | 국가유산포털 | 한국학중앙연구원",
-    "description": "백제금동대향로는 1993년 부여 능산리 절터에서 기적처럼 온전한 모습으로 출토되었습니다. 뚜껑에는 첩첩산중과 악사·동물들이, 몸체에는 연꽃과 수중 생물들이, 받침에는 용이 용틀임하고 있습니다. 본 전시는 문화유산 속에 담긴 생명과 자연을 매개로 인류와 생태계의 역사를 함께 탐색합니다."
+  metadata: {
+    title: '금동대향로 자연사박물관',
+    subtitle: '자세히 보아야 예쁘다. 너도 그렇다.',
+    team: '향로 없는 향로팀',
+    theme: '금동대향로로 본 인류사',
+    sourceInfo: '소장처: 국립부여박물관 | 국가유산포털 | 한국학중앙연구원',
+    description: '백제금동대향로는 1993년 부여 능산리 절터에서 기적처럼 온전한 모습으로 출토되었습니다. 뚜껑에는 첩첩산중과 악사·동물들이, 몸체에는 연꽃과 수중 생물들이, 받침에는 용이 용틀임하고 있습니다. 본 전시는 문화유산 속에 담긴 생명과 자연을 매개로 인류와 생태계의 역사를 함께 탐색합니다.'
   },
-  "layers": [
+  layers: [
     {
-      "id": "intro",
-      "name": "향로 전체",
-      "title": "하나의 유물을 마주하다",
-      "desc": "높이 61.8cm, 무게 11.8kg의 웅장한 백제 금속공예의 정수. 금동대향로가 품은 수많은 세계로 안내합니다.",
-      "bg": null,
-      "cameraPos": {
-        "x": 0,
-        "y": 0.1,
-        "z": 2.3
-      },
-      "target": {
-        "x": 0,
-        "y": 0,
-        "z": 0
-      },
-      "align": "center"
+      id: 'celestial',
+      layerIndex: 1,
+      name: '1층위 · 천상 (봉황)',
+      shortName: '천상',
+      category: 'sky',
+      title: '하늘을 품은 날갯짓, 봉황',
+      desc: '향로 정상에서 목과 부리로 여의주를 품고 날개를 활짝 편 봉황. 백제인이 꿈꾸었던 가장 높은 이상세계의 시작입니다.',
+      bg: 'Asset/2. Main/bg/bg_celestial.webp',
+      animalCodes: ['18']
     },
     {
-      "id": "celestial",
-      "name": "1. 천상 (봉황)",
-      "category": "sky",
-      "title": "하늘을 품은 날갯짓, 봉황",
-      "desc": "향로 정상에서 목과 부리로 여의주를 품고 날개를 활짝 편 봉황. 백제인이 꿈꾸었던 가장 높은 이상세계의 시작입니다.",
-      "bg": "Asset/2. Main/bg/bg_celestial.webp",
-      "cameraPos": {
-        "x": -0.35,
-        "y": 0.75,
-        "z": 1.1
-      },
-      "target": {
-        "x": 0,
-        "y": 0.55,
-        "z": 0
-      },
-      "align": "left"
+      id: 'sky',
+      layerIndex: 2,
+      name: '2층위 · 하늘 (신선 세계)',
+      shortName: '하늘',
+      category: 'sky',
+      title: '음악이 흐르는 신선의 산',
+      desc: '피리, 소비파, 현금, 북을 연주하는 5인의 악사와 하늘을 노니는 선인들. 자연과 인간이 조화를 이루는 영적 공간입니다.',
+      bg: 'Asset/2. Main/bg/bg_sky.webp',
+      animalCodes: []
     },
     {
-      "id": "sky",
-      "name": "2. 하늘 (신선 세계)",
-      "category": "sky",
-      "title": "음악이 흐르는 신선의 산",
-      "desc": "피리, 소비파, 현금, 북을 연주하는 5인의 악사와 하늘을 노니는 선인들. 자연과 인간이 조화를 이루는 영적 공간입니다.",
-      "bg": "Asset/2. Main/bg/bg_sky.webp",
-      "cameraPos": {
-        "x": 0.4,
-        "y": 0.45,
-        "z": 1.0
-      },
-      "target": {
-        "x": 0,
-        "y": 0.35,
-        "z": 0
-      },
-      "align": "right"
+      id: 'land',
+      layerIndex: 3,
+      name: '3층위 · 육지 (산악 세계)',
+      shortName: '육지',
+      category: 'land',
+      title: '첩첩산중 생명의 터전',
+      desc: '23개의 겹겹이 솟은 산봉우리 사이에 호랑이, 사슴, 멧돼지, 말 등 11종의 동물들과 기마수렵상이 살아 숨 쉽니다.',
+      bg: 'Asset/2. Main/bg/bg_land.webp',
+      animalCodes: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11']
     },
     {
-      "id": "land",
-      "name": "3. 육지 (산악 세계)",
-      "category": "land",
-      "title": "첩첩산중 생명의 터전",
-      "desc": "23개의 겹겹이 솟은 산봉우리 사이에 호랑이, 사슴, 멧돼지, 말 등 11종의 동물들과 기마수렵상이 살아 숨 쉽니다.",
-      "bg": "Asset/2. Main/bg/bg_land.webp",
-      "cameraPos": {
-        "x": -0.45,
-        "y": 0.2,
-        "z": 1.2
-      },
-      "target": {
-        "x": 0,
-        "y": 0.15,
-        "z": 0
-      },
-      "align": "left"
+      id: 'water',
+      layerIndex: 4,
+      name: '4층위 · 물가 (연꽃 몸체)',
+      shortName: '물가',
+      category: 'water',
+      title: '피어나는 연꽃과 수중 생태',
+      desc: '활짝 피어난 3단의 연꽃잎 사이로 악어, 물고기, 수달, 물범, 백로 등 6종의 동물들이 노니는 생명의 물가가 펼쳐집니다.',
+      bg: 'Asset/2. Main/bg/bg_waterside.webp',
+      animalCodes: ['12', '13', '14', '15', '16', '17']
     },
     {
-      "id": "water",
-      "name": "4. 물가 (연꽃 몸체)",
-      "category": "water",
-      "title": "피어나는 연꽃과 수중 생태",
-      "desc": "활짝 피어난 3단의 연꽃잎 사이로 악어, 물고기, 수달, 물범, 백로 등 6종의 동물들이 노니는 생명의 물가가 펼쳐집니다.",
-      "bg": "Asset/2. Main/bg/bg_waterside.webp",
-      "cameraPos": {
-        "x": 0.45,
-        "y": -0.15,
-        "z": 1.1
-      },
-      "target": {
-        "x": 0,
-        "y": -0.15,
-        "z": 0
-      },
-      "align": "right"
-    },
-    {
-      "id": "sea",
-      "name": "5. 바다 (용 받침)",
-      "category": "sea",
-      "title": "기운을 뿜어 올리는 용",
-      "desc": "한 다리를 치켜들고 물을 박차며 하늘로 솟구치듯 연꽃 몸체를 입으로 떠받치고 있는 용. 바다를 다스리는 신이자 백제의 역동적 기운을 상징합니다.",
-      "bg": "Asset/2. Main/bg/bg_sea.webp",
-      "cameraPos": {
-        "x": 0,
-        "y": -0.45,
-        "z": 1.2
-      },
-      "target": {
-        "x": 0,
-        "y": -0.4,
-        "z": 0
-      },
-      "align": "center"
+      id: 'sea',
+      layerIndex: 5,
+      name: '5층위 · 바다 (용 받침)',
+      shortName: '바다',
+      category: 'sea',
+      title: '기운을 뿜어 올리는 용',
+      desc: '한 다리를 치켜들고 물을 박차며 하늘로 솟구치듯 연꽃 몸체를 입으로 떠받치고 있는 용. 바다를 다스리는 신이자 백제의 역동적 기운을 상징합니다.',
+      bg: 'Asset/2. Main/bg/bg_sea.webp',
+      animalCodes: ['19']
     }
   ],
-  "animals": [
+  animals: [
     {
-      "id": 1,
-      "code": "01",
-      "name": "말",
-      "layer": "land",
-      "layerName": "육지 (산악)",
-      "panelTheme": "말의 이동과 발가락의 진화",
-      "simpleDesc": "단단한 땅을 빠르게 달리는 인간의 오랜 동반자이자 기마문화의 상징.",
-      "glb": "Asset/3. Exhibition/glb/01.glb",
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel01-1.webp",
-      "panelImg2": "Asset/3. Exhibition/N_Panel/webp/N_Panel01-2.webp",
-      "icon": "Asset/2. Main/icon/01.webp",
-      "iconDark": "Asset/2. Main/icon_dark/01_dark.webp",
-      "features": [
-        "세 굽에서 하나의 외발굽으로 진화한 발가락",
-        "초원 환경에 적응한 길고 강력한 다리 구조",
-        "등자와 편자의 발명을 통해 확장된 인류 이동의 역사"
+      id: 1,
+      code: '01',
+      name: '말',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 18, y: 45 },
+      panelTheme: '말의 이동과 발가락의 진화',
+      simpleDesc: '단단한 땅을 빠르게 달리는 인간의 오랜 동반자이자 기마문화의 상징.',
+      assetType: 'glb',
+      glb: 'Asset/3. Exhibition/glb/01.glb',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Horse" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/b279685790ac4194b51707df5cd245d4/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel01-1.webp',
+      panelImg2: 'Asset/3. Exhibition/N_Panel/webp/N_Panel01-2.webp',
+      icon: 'Asset/2. Main/icon/01.webp',
+      iconDark: 'Asset/2. Main/icon_dark/01_dark.webp',
+      features: [
+        '세 굽에서 하나의 외발굽으로 진화한 발가락',
+        '초원 환경에 적응한 길고 강력한 다리 구조',
+        '등자와 편자의 발명을 통해 확장된 인류 이동의 역사'
       ],
-      "scienceStory": "말의 조상인 에오히푸스는 네 개에서 세 개의 발가락을 가졌으나, 초원 환경이 확장되면서 단단한 지면을 빠르게 달리기 위해 가운뎃발가락 하나만 남은 외발굽(Ungula)으로 진화했습니다. 이는 기회주의적 영양 섭취 및 인류의 기마 수렵 문화와 깊게 연계됩니다.",
-      "sourceCode": "REF_01_HORSE",
-      "sourceText": "출처: 국립부여박물관 소장 백제금동대향로 도판 | 한국자연사학회 포유류 진화 계통 연구",
-      "mapCoords": {
-        "x": 22.5,
-        "y": 48.0
-      }
+      scienceStory: '말의 조상인 에오히푸스는 네 개에서 세 개의 발가락을 가졌으나, 초원 환경이 확장되면서 단단한 지면을 빠르게 달리기 위해 가운뎃발가락 하나만 남은 외발굽(Ungula)으로 진화했습니다. 이는 기회주의적 영양 섭취 및 인류의 기마 수렵 문화와 깊게 연계됩니다.',
+      sourceCode: 'REF_01_HORSE',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 한국자연사학회 포유류 진화 계통 연구'
     },
     {
-      "id": 2,
-      "code": "02",
-      "name": "호랑이",
-      "layer": "land",
-      "layerName": "육지 (산악)",
-      "panelTheme": "맹수의 위용과 먹이사슬의 정점",
-      "simpleDesc": "백제의 깊은 산악을 다스리는 최상위 포식자이자 벽사의 상징.",
-      "glb": "Asset/3. Exhibition/glb/02.glb",
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel02.webp",
-      "icon": "Asset/2. Main/icon/02.webp",
-      "iconDark": "Asset/2. Main/icon_dark/02_dark.webp",
-      "features": [
-        "산봉우리 사이에서 먹이를 응시하는 역동적인 자세",
-        "날카로운 송곳니와 근육질의 앞다리 표현",
-        "백제 산악 생태계의 최고 정점 포식자"
+      id: 2,
+      code: '02',
+      name: '호랑이',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 26, y: 35 },
+      panelTheme: '최상위 포식자의 위용과 단독 사냥 전략',
+      simpleDesc: '산중을 지배하는 맹수이자 한반도 생태계의 정점에 선 최상위 포식자.',
+      assetType: 'glb',
+      glb: 'Asset/3. Exhibition/glb/02.glb',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Tiger" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/b279685790ac4194b51707df5cd245d4/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel02.webp',
+      icon: 'Asset/2. Main/icon/02.webp',
+      iconDark: 'Asset/2. Main/icon_dark/02_dark.webp',
+      features: [
+        '울창한 산림에 완벽히 은폐되는 줄무늬 위장색',
+        '숨죽여 다가가 단숨에 제압하는 발톱과 송곳니',
+        '단독 생활에 최적화된 넓은 행동권과 영역 표시'
       ],
-      "scienceStory": "호랑이는 고양이과 최상위 포식자로서 강력한 악력과 신축성 있는 척추 구조를 통해 산악 지형을 은밀하게 이동하며 사냥합니다. 백제 장인은 향로 뚜껑의 험준한 산악 지형 속에 호랑이를 배치하여 생태계의 긴장감과 입체감을 완성했습니다.",
-      "sourceCode": "REF_02_TIGER",
-      "sourceText": "출처: 국립부여박물관 도록 | 한반도 포유류 생태 도감",
-      "mapCoords": {
-        "x": 28.0,
-        "y": 42.0
-      }
+      scienceStory: '호랑이는 산악 지형의 수풀 속에서 몸을 숨기기 위해 세로 줄무늬를 발달시켰습니다. 사자와 달리 단독 사냥을 하므로 폭발적인 단거리 질주 근력과 척추의 유연성을 갖추고 있습니다.',
+      sourceCode: 'REF_02_TIGER',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 국립생물자원관 포유류 생태 연구'
     },
     {
-      "id": 3,
-      "code": "03",
-      "name": "사자",
-      "layer": "land",
-      "layerName": "육지 (산악)",
-      "panelTheme": "서역에서 전래된 백수의 왕",
-      "simpleDesc": "실크로드를 건너 백제에 전해진 위엄과 불교적 수호의 상징.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel03.webp",
-      "icon": "Asset/2. Main/icon/03.webp",
-      "iconDark": "Asset/2. Main/icon_dark/03_dark.webp",
-      "features": [
-        "풍성한 갈기와 웅크린 채 포효하는 듯한 조형미",
-        "서역과 중국을 거쳐 백제에 수용된 외래 맹수의 이미지",
-        "수호와 불교 사상을 융합한 독창적 표현"
+      id: 3,
+      code: '03',
+      name: '사자',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 34, y: 55 },
+      panelTheme: '무리 사냥과 갈기의 사회적 신호',
+      simpleDesc: '개방된 초원에서 무리를 지어 협력하는 백수의 왕이자 불교의 수호자.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Lion" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/b279685790ac4194b51707df5cd245d4/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel03.webp',
+      icon: 'Asset/2. Main/icon/03.webp',
+      iconDark: 'Asset/2. Main/icon_dark/03_dark.webp',
+      features: [
+        '우두머리 수컷의 체급과 건강을 과시하는 풍성한 갈기',
+        '암수 간의 뚜렷한 성적이형성(Sexual Dimorphism)',
+        '사바나 개활지에서 프라이드(무리)를 이뤄 조직적으로 사냥'
       ],
-      "scienceStory": "사자는 아프리카와 서아시아가 원산지인 맹수로, 한반도에는 서역과의 활발한 대외 교류를 통해 문화적 도상으로 전래되었습니다. 백제 금속공예가는 전해 들은 사자의 특징(갈기, 웅장한 체구)을 토대로 고유의 상상력을 더해 조형화했습니다.",
-      "sourceCode": "REF_03_LION",
-      "sourceText": "출처: 국립부여박물관 | 백제의 대외교류사 연구",
-      "mapCoords": {
-        "x": 35.5,
-        "y": 45.0
-      }
+      scienceStory: '사자는 개활지 초원에서 시야가 트인 환경 때문에 단독 은폐가 어려워 무리(Pride)를 형성했습니다. 수컷의 어두운 갈기는 테스토스테론 수치와 영양 상태를 암컷과 경쟁자에게 전달하는 시각적 신호입니다.',
+      sourceCode: 'REF_03_LION',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 스미스소니언 자연사박물관 생물학 총서'
     },
     {
-      "id": 4,
-      "code": "04",
-      "name": "족제비",
-      "layer": "land",
-      "layerName": "육지 (산악)",
-      "panelTheme": "날렵한 몸과 뛰어난 적응력",
-      "simpleDesc": "바위틈과 굴을 자유자재로 누비는 민첩한 소형 포식자.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel04.webp",
-      "icon": "Asset/2. Main/icon/04.webp",
-      "iconDark": "Asset/2. Main/icon_dark/04_dark.webp",
-      "features": [
-        "바위와 수풀 사이를 날렵하게 지나가는 유연한 몸체",
-        "작은 틈새도 파고드는 체형과 호기심 어린 시선",
-        "산악 생태계의 중간 포식자로서의 생태적 역할"
+      id: 4,
+      code: '04',
+      name: '족제비',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 42, y: 40 },
+      panelTheme: '원통형 체형과 기동성 높은 사냥',
+      simpleDesc: '좁은 굴과 덤불 속을 자유자재로 누비는 민첩한 소형 육식동물.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Mink (Lowpoly)" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/18b390f0dcc943288cc0971e5328159f/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel04.webp',
+      icon: 'Asset/2. Main/icon/04.webp',
+      iconDark: 'Asset/2. Main/icon_dark/04_dark.webp',
+      features: [
+        '설치류의 굴속으로 침투하기 유리한 길고 유연한 체형',
+        '짧은 다리와 높은 기초대사율에 맞춘 잦은 사냥 습성',
+        '위기 상황에서 분비하는 항문선의 강력한 화학 방어 물질'
       ],
-      "scienceStory": "족제비과 동물은 가늘고 긴 유선형 체형과 짧은 다리를 지녀 좁은 구멍이나 바위틈에 숨은 설치류를 사냥하는 데 완벽히 적응했습니다. 향로의 산악 묘사에서도 사실적인 생태 관찰이 돋보입니다.",
-      "sourceCode": "REF_04_WEASEL",
-      "sourceText": "출처: 국립부여박물관 도록 | 한국 생태도감",
-      "mapCoords": {
-        "x": 41.0,
-        "y": 50.0
-      }
+      scienceStory: '족제비과 동물은 원통형의 길쭉한 신체 구조를 통해 지중 터널이나 바위틈에 서식하는 먹이를 효과적으로 추적합니다. 표면적 대비 부피가 커 체온 손실이 빠르므로 지속적인 에너지 섭취가 필요합니다.',
+      sourceCode: 'REF_04_WEASEL',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 한국자연사학회 식육목 생태'
     },
     {
-      "id": 5,
-      "code": "05",
-      "name": "원숭이",
-      "layer": "land",
-      "layerName": "육지 (산악)",
-      "panelTheme": "나무를 타는 지혜로운 영장류",
-      "simpleDesc": "나무 위에서 도구를 다루듯 지혜롭고 영민한 산림의 거주자.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel05.webp",
-      "icon": "Asset/2. Main/icon/05.webp",
-      "iconDark": "Asset/2. Main/icon_dark/05_dark.webp",
-      "features": [
-        "나뭇가지를 쥐고 균형을 잡는 손발 구조",
-        "입체적인 얼굴 표정과 영민한 눈망울",
-        "산림 수관층(Canopy)을 오가는 입체적 공간 활용"
+      id: 5,
+      code: '05',
+      name: '원숭이',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 50, y: 60 },
+      panelTheme: '마주보는 엄지손가락과 수상 생활 적응',
+      simpleDesc: '입체적 시야와 정교한 손놀림으로 수관층을 자유롭게 이동하는 영장류.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Monkey 3D animal" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/90df1c6b146749f1ba1f3346831a2f57/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel05.webp',
+      icon: 'Asset/2. Main/icon/05.webp',
+      iconDark: 'Asset/2. Main/icon_dark/05_dark.webp',
+      features: [
+        '나뭇가지를 쥐는 마주보는 엄지(Opposable Thumb)',
+        '양안시를 통한 정밀한 3차원 거리 측정 능력',
+        '복잡한 사회적 상호작용과 도구 활용 지능'
       ],
-      "scienceStory": "원숭이는 맞설 수 있는 엄지손가락(대지대립성)과 뛰어난 입체 시각을 통해 복잡한 나뭇가지 사이를 3차원적으로 이동합니다. 고대 동아시아에서 원숭이는 재앙을 쫓고 지혜를 가져다주는 상징으로 여겨졌습니다.",
-      "sourceCode": "REF_05_MONKEY",
-      "sourceText": "출처: 국립부여박물관 | 동아시아 고대 영장류 도상사",
-      "mapCoords": {
-        "x": 47.0,
-        "y": 38.0
-      }
+      scienceStory: '원숭이를 비롯한 영장류는 숲의 수관층에서 입체적으로 나뭇가지를 잡고 건너뛰기 위해 엄지손가락의 대립성과 안면 전면 배치 안구를 진화시켰습니다. 이는 도구 사용과 대뇌 피질 발달의 시초가 되었습니다.',
+      sourceCode: 'REF_05_MONKEY',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 진화인류학 및 영장류학 연구'
     },
     {
-      "id": 6,
-      "code": "06",
-      "name": "사슴",
-      "layer": "land",
-      "layerName": "육지 (산악)",
-      "panelTheme": "우아한 뿔과 신선의 동반자",
-      "simpleDesc": "신선의 세계와 장수를 상징하는 온순하고 우아한 초식동물.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel06.webp",
-      "icon": "Asset/2. Main/icon/06.webp",
-      "iconDark": "Asset/2. Main/icon_dark/06_dark.webp",
-      "features": [
-        "매년 탈락하고 새로 자라나는 가지 친 뿔(Antler)",
-        "경계심을 품고 귀를 쫑긋 세운 우아한 실루엣",
-        "신선과 함께 이상향을 노니는 평화로운 상징"
+      id: 6,
+      code: '06',
+      name: '사슴',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 58, y: 35 },
+      panelTheme: '매년 재생되는 골질 뿔과 초식 반추 시스템',
+      simpleDesc: '맑은 눈망울과 우아한 뿔을 지닌 숲의 전령이자 장수를 상징하는 길조.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Deer Family" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/00dd0126dcc0483392afa0a396d05f92/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel06.webp',
+      icon: 'Asset/2. Main/icon/06.webp',
+      iconDark: 'Asset/2. Main/icon_dark/06_dark.webp',
+      features: [
+        '피부(녹용)에서 완전한 뼈로 매년 탈락 및 재생되는 뿔(Antler)',
+        '섬유질 식물을 분해하는 4개의 방으로 나뉜 반추위',
+        '포식자를 감시하기 위해 좌우로 넓게 배치된 수평 타원형 동공'
       ],
-      "scienceStory": "사슴의 뿔은 뼈 조직으로 매년 봄 새로 자라 가을에 완성되며, 이는 생명력과 부활, 장수를 상징합니다. 짝수 발가락(우제목)을 지녀 숲속과 경사지를 안정감 있게 뛰어다닙니다.",
-      "sourceCode": "REF_06_DEER",
-      "sourceText": "출처: 국립부여박물관 | 한국의 척추동물학",
-      "mapCoords": {
-        "x": 53.0,
-        "y": 46.0
-      }
+      scienceStory: '사슴의 뿔은 소의 영구적인 뿔(Horn)과 달리 매년 자라고 떨어지는 골질 조직으로, 포유류 중 가장 빠른 줄기세포 기반 조직 재생 능력을 보여줍니다. 또한 넓은 시야각의 동공은 수풀 속 포식자를 조기에 발견합니다.',
+      sourceCode: 'REF_06_DEER',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 국립생물자원관 척추동물 도감'
     },
     {
-      "id": 7,
-      "code": "07",
-      "name": "멧돼지",
-      "layer": "land",
-      "layerName": "육지 (산악)",
-      "panelTheme": "땅을 일구는 강인한 엄니",
-      "simpleDesc": "땅속 뿌리와 먹이를 찾아 파헤치는 강인한 산림의 개척자.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel07.webp",
-      "icon": "Asset/2. Main/icon/07.webp",
-      "iconDark": "Asset/2. Main/icon_dark/07_dark.webp",
-      "features": [
-        "위로 솟구친 강력한 엄니와 다부진 체구",
-        "두꺼운 가죽과 목 근육의 사실적인 입체 묘사",
-        "사냥꾼의 화살을 피해 돌진하는 역동적 긴장감"
+      id: 7,
+      code: '07',
+      name: '멧돼지',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 66, y: 55 },
+      panelTheme: '굴토 습성과 숲의 토양 생태계 교란자',
+      simpleDesc: '강인한 주둥이와 엄니로 흙을 파헤치는 산림 생태계의 엔지니어.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Boar Realistic" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/e2761cb2839447b6beb0b4ed132b0895/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel07.webp',
+      icon: 'Asset/2. Main/icon/07.webp',
+      iconDark: 'Asset/2. Main/icon_dark/07_dark.webp',
+      features: [
+        '단단한 토양과 바위를 뒤집는 연골성 주둥이 디스크',
+        '위아래가 맞물리며 지속적으로 날카로워지는 자가 연마 엄니',
+        '진흙 목욕을 통한 체온 조절 및 외부 기생충 방제'
       ],
-      "scienceStory": "멧돼지의 엄니는 지속적으로 자라나는 송곳니로, 숲의 흙을 파헤쳐 토양을 순환시키고 식물의 발아를 돕는 핵심 생태계 엔지니어 역할을 수행합니다.",
-      "sourceCode": "REF_07_BOAR",
-      "sourceText": "출처: 국립부여박물관 | 한국 야생동물 생태학",
-      "mapCoords": {
-        "x": 59.0,
-        "y": 52.0
-      }
+      scienceStory: '멧돼지는 후각이 극도로 발달하여 땅속 20cm 깊이의 뿌리와 구근을 찾아냅니다. 멧돼지가 땅을 갈아엎는 행위(Rooting)는 산림 토양에 산소를 공급하고 식물 종자의 발아를 돕는 핵심 생태계 서비스 역할을 합니다.',
+      sourceCode: 'REF_07_BOAR',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 산림청 국립산림과학원 생태 연구'
     },
     {
-      "id": 8,
-      "code": "08",
-      "name": "코끼리",
-      "layer": "land",
-      "layerName": "육지 (산악)",
-      "panelTheme": "지상 최대의 거구와 신비로운 코",
-      "simpleDesc": "남방과 서역의 상상력이 더해진 거대하고 신비로운 지혜의 동물.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel08.webp",
-      "icon": "Asset/2. Main/icon/08.webp",
-      "iconDark": "Asset/2. Main/icon_dark/08_dark.webp",
-      "features": [
-        "자유자재로 휘어지는 긴 코와 부채꼴 모양의 귀",
-        "신선이 타고 있는 독특하고 신비로운 구도",
-        "불교 전래와 함께 성스러운 동물로 인식된 도상"
+      id: 8,
+      code: '08',
+      name: '코끼리',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 74, y: 40 },
+      panelTheme: '수만 개 근육의 코와 골격 생체역학',
+      simpleDesc: '거대한 몸체와 정교한 코를 지닌 지혜로운 거인.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="African Elephant, skeleton" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/0a7cb290616442c88f89107d9a11f8f0/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel08.webp',
+      icon: 'Asset/2. Main/icon/08.webp',
+      iconDark: 'Asset/2. Main/icon_dark/08_dark.webp',
+      features: [
+        '뼈 없이 4만 개 이상의 근육 다발로 구성된 코(Proboscis)',
+        '수 톤의 하중을 분산하는 발바닥의 두터운 쿠션 패드',
+        '초저주파를 이용해 수 킬로미터 밖과 소통하는 청각 체계'
       ],
-      "scienceStory": "코끼리의 코는 4만 개 이상의 근육으로 이루어진 정밀한 감각 및 조작 기관입니다. 백제 금동대향로에는 신선이 코끼리를 타고 산길을 가는 모습이 새겨져 있어 동서 문물 교류의 흔적을 엿볼 수 있습니다.",
-      "sourceCode": "REF_08_ELEPHANT",
-      "sourceText": "출처: 국립부여박물관 | 백제와 인도·서역 문화교류사",
-      "mapCoords": {
-        "x": 65.0,
-        "y": 40.0
-      }
+      scienceStory: '코끼리의 코는 코와 윗입술이 융합 진화한 기관으로, 무거운 통나무를 들면서도 바닥의 쌀알을 집을 수 있을 만큼 섬세합니다. 직립 기둥 형태의 다리 뼈 구조는 최소한의 근육 에너지로 거대한 체중을 지탱합니다.',
+      sourceCode: 'REF_08_ELEPHANT',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 런던 자연사박물관 고생물 골격학'
     },
     {
-      "id": 9,
-      "code": "09",
-      "name": "이상한 부리를 가진 새",
-      "layer": "land",
-      "layerName": "육지 (산악)",
-      "panelTheme": "독특한 부리 형태와 조류의 다양성",
-      "simpleDesc": "기이하게 굽은 부리로 산림 생태계의 틈새를 공략하는 신비의 새.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel09.webp",
-      "icon": "Asset/2. Main/icon/09.webp",
-      "iconDark": "Asset/2. Main/icon_dark/09_dark.webp",
-      "features": [
-        "먹이 사냥에 특화된 과장되고 독특한 부리 곡선",
-        "산봉우리 바위 위에 웅크린 날카로운 눈매",
-        "현실과 상상의 경계에 서 있는 조류의 묘사"
+      id: 9,
+      code: '09',
+      name: '이상한 부리를 가진 새',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 82, y: 58 },
+      panelTheme: '먹이 자원에 따른 부리의 형태적 방산적응',
+      simpleDesc: '특이한 곡선 부리를 지녀 자연의 다양한 먹이에 적응한 조류.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Finches Birds (Lowpoly)" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/1c27c1bec5f6440981a2673db56d0c11/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel09.webp',
+      icon: 'Asset/2. Main/icon/09.webp',
+      iconDark: 'Asset/2. Main/icon_dark/09_dark.webp',
+      features: [
+        '특정 식물의 꿀, 씨앗, 곤충을 채취하기 위해 특화된 부리 곡률',
+        '비행 에너지를 줄이기 위한 경량화된 두개골과 케라틴 부리 표면',
+        '다윈의 핀치새로 대표되는 진화론적 적응방산(Adaptive Radiation)'
       ],
-      "scienceStory": "새의 부리는 먹이의 종류와 섭식 방식에 따라 놀라울 정도로 다양하게 적응 방산(Adaptive Radiation)합니다. 향로의 독특한 부리 형태는 코뿔새(Hornbill)나 왜가리류의 관찰에서 영감을 얻었을 가능성을 시사합니다.",
-      "sourceCode": "REF_09_STRANGE_BIRD",
-      "sourceText": "출처: 국립부여박물관 | 조류 진화와 부리 형태학 연구",
-      "mapCoords": {
-        "x": 71.0,
-        "y": 35.0
-      }
+      scienceStory: '새의 부리는 손이 없는 조류에게 만능 도구입니다. 서식지의 먹이 종류에 따라 부리의 길이, 두께, 곡률이 극적으로 분화하여 생태적 지위를 분할합니다.',
+      sourceCode: 'REF_09_STRANGE_BIRD',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 조류 계통분류학 및 진화생물학 저널'
     },
     {
-      "id": 10,
-      "code": "10",
-      "name": "뱀을 물고 있는 야수",
-      "layer": "land",
-      "layerName": "육지 (산악)",
-      "panelTheme": "파충류와 포식자의 숙명적 대결",
-      "simpleDesc": "독사를 제압하며 먹이사슬의 균형을 유지하는 용맹한 맹수.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel10.webp",
-      "icon": "Asset/2. Main/icon/10.webp",
-      "iconDark": "Asset/2. Main/icon_dark/10_dark.webp",
-      "features": [
-        "꿈틀거리는 뱀을 입에 단단히 문 긴장감 넘치는 구도",
-        "포식자의 근육과 뱀의 비늘이 맞부딪히는 역동성",
-        "악을 물리치고 사악한 기운을 쫓는 벽사의 의미"
+      id: 10,
+      code: '10',
+      name: '뱀을 물고 있는 야수',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 89, y: 38 },
+      panelTheme: '독성 파충류에 대한 면역성과 포식자-피식자 공진화',
+      simpleDesc: '맹독의 뱀을 제압하여 물고 있는 백제의 신비로운 맹수.',
+      assetType: 'gif',
+      embedHtml: '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#05070a;"><img src="Asset/3. Exhibition/Asset/cramorant-gorging.gif" style="max-width:90%;max-height:85%;object-fit:contain;border-radius:12px;box-shadow:0 0 30px rgba(0,0,0,0.8);" alt="뱀을 물고 있는 야수"></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel10.webp',
+      icon: 'Asset/2. Main/icon/10.webp',
+      iconDark: 'Asset/2. Main/icon_dark/10_dark.webp',
+      features: [
+        '신경독에 저항성을 갖는 니코틴성 아세틸콜린 수용체 변이',
+        '뱀의 공격 속도를 능가하는 반사신경과 두터운 털가죽',
+        '뱀의 머리를 정확히 타격하여 무력화시키는 사냥 기술'
       ],
-      "scienceStory": "몽구스, 오소리, 맹금류 등 일부 포식자들은 독사에 대한 신경독 저항성이나 날렵한 반사신경을 진화시켜 독사를 포식합니다. 이는 자연 생태계의 개체수 조절에 필수적입니다.",
-      "sourceCode": "REF_10_BEAST_SNAKE",
-      "sourceText": "출처: 국립부여박물관 도록 | 동물 행동 진화학",
-      "mapCoords": {
-        "x": 76.5,
-        "y": 48.0
-      }
+      scienceStory: '라텔이나 몽구스 같은 동물들은 맹독성 뱀을 사냥하기 위해 아세틸콜린 수용체 구조를 변형시켜 독소가 결합하지 못하도록 진화시켰습니다.',
+      sourceCode: 'REF_10_BEAST_SNAKE',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 진화면역학 및 동물생태학 연구'
     },
     {
-      "id": 11,
-      "code": "11",
-      "name": "볏을 가진 새",
-      "layer": "land",
-      "layerName": "육지 (산악)",
-      "panelTheme": "화려한 머리 볏과 성 선택",
-      "simpleDesc": "머리 위에 화려한 장식 볏을 뽐내며 영역을 지키는 숲의 새.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel11.webp",
-      "icon": "Asset/2. Main/icon/11.webp",
-      "iconDark": "Asset/2. Main/icon_dark/11_dark.webp",
-      "features": [
-        "머리 위에 높이 솟은 부채꼴 모양의 화려한 볏",
-        "날개를 살짝 펴고 깃털을 가다듬는 섬세한 자세",
-        "산림 수풀 속에서 눈에 띄는 화려한 도상"
+      id: 11,
+      code: '11',
+      name: '볏을 가진 새',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 95, y: 55 },
+      panelTheme: '성선택(Sexual Selection)과 화려한 장식 깃의 진화',
+      simpleDesc: '머리 위에 화려한 볏을 세우고 구애하는 우아한 조류.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Great Argus (NHMW-ZOO-VS-70946 &amp; 70947)" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/e3827c13a3364e8084797531b58c6ed6/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel11.webp',
+      icon: 'Asset/2. Main/icon/11.webp',
+      iconDark: 'Asset/2. Main/icon_dark/11_dark.webp',
+      features: [
+        '포식자에게 눈에 띄는 위험을 감수하고 번식 경쟁을 위해 발달한 머리 볏',
+        '구애 의식 시 펼쳐지는 부채꼴 형태의 시각 디스플레이',
+        '자비의 원리(Handicap Principle)에 기반한 우수한 유전자 증명'
       ],
-      "scienceStory": "조류의 볏(Crest)은 성 선택(Sexual Selection)과 신호 전달의 핵심 장치로, 짝을 유혹하거나 경쟁자를 위협할 때 세워 크기를 과시합니다. 후투티나 댕기물떼새 등의 도상학적 기원을 가집니다.",
-      "sourceCode": "REF_11_CRESTED_BIRD",
-      "sourceText": "출처: 국립부여박물관 | 조류 생태 행동도감",
-      "mapCoords": {
-        "x": 82.0,
-        "y": 37.0
-      }
+      scienceStory: '화려한 볏과 꼬리 깃털은 생존에는 불리하지만, 짝짓기 선택에서 건강함과 면역력을 증명하는 핸디캡 이론의 대표적 산물입니다.',
+      sourceCode: 'REF_11_CRESTED_BIRD',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 동물행동학 및 조류 진화학'
     },
     {
-      "id": 12,
-      "code": "12",
-      "name": "악어",
-      "layer": "water",
-      "layerName": "물가 (연꽃 몸체)",
-      "panelTheme": "고대 파충류의 생존 전략과 갑옷",
-      "simpleDesc": "물속에 은밀히 잠복하다 기습하는 수중 생태계의 강력한 포식자.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel12.webp",
-      "icon": "Asset/2. Main/icon/12.webp",
-      "iconDark": "Asset/2. Main/icon_dark/12_dark.webp",
-      "features": [
-        "골편(Osteoderm)으로 뒤덮인 단단한 등가죽 표현",
-        "수면 위로 눈과 콧구멍만 내놓을 수 있는 두개골 구조",
-        "연꽃잎 몸체에서 물가로 이어지는 경계부 배치"
+      id: 12,
+      code: '12',
+      name: '악어',
+      layer: 'water',
+      layerName: '물가 (연꽃 몸체)',
+      layerCoords: { x: 20, y: 50 },
+      panelTheme: '반수생 잠복 사냥과 원시 파충류 골판 방어갑',
+      simpleDesc: '수면 아래 숨어 눈과 콧구멍만 내놓고 사냥하는 수중의 절대 강자.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Australian Freshwater Crocodile ( underwater )" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/d87d75c454554ca78ac582c6a130e7cb/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Pane12.webp',
+      icon: 'Asset/2. Main/icon/12.webp',
+      iconDark: 'Asset/2. Main/icon_dark/12_dark.webp',
+      features: [
+        '머리 상단에 일직선으로 배치되어 잠수 중에도 호흡과 감시가 가능한 감각기관',
+        '피부 아래에 골화된 판(Osteoderms)으로 이루어진 천연 방탄 갑옷',
+        '물속에서 먹이를 찢어 삼키는 데스 롤(Death Roll) 회전력'
       ],
-      "scienceStory": "악어는 중생대부터 거의 형태를 바꾸지 않고 살아남은 살아있는 화석입니다. 강력한 꼬리와 턱 힘, 그리고 체온 조절을 돕는 골편 가죽은 물과 육지를 오가는 반수생 생활에 최적화되어 있습니다.",
-      "sourceCode": "REF_12_CROCODILE",
-      "sourceText": "출처: 국립부여박물관 | 양서파충류학 논총",
-      "mapCoords": {
-        "x": 25.0,
-        "y": 72.0
-      }
+      scienceStory: '악어는 중생대부터 신체 설계를 거의 바꾸지 않은 살아있는 화석입니다. 눈, 귀, 콧구멍이 두개골 최상단에 수평으로 배치되어 몸 전체를 수중에 숨긴 채 완벽한 기습을 감행합니다.',
+      sourceCode: 'REF_12_CROCODILE',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 고생물학 및 척추동물 진화사'
     },
     {
-      "id": 13,
-      "code": "13",
-      "name": "물고기",
-      "layer": "water",
-      "layerName": "물가 (연꽃 몸체)",
-      "panelTheme": "유선형 몸체와 유영의 미학",
-      "simpleDesc": "활짝 핀 연꽃잎 사이를 헤엄치며 풍요와 다산을 상징하는 어류.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel13.webp",
-      "icon": "Asset/2. Main/icon/13.webp",
-      "iconDark": "Asset/2. Main/icon_dark/13_dark.webp",
-      "features": [
-        "부드럽게 휘어진 유선형 몸통과 지느러미의 율동",
-        "물살을 가르는 비늘의 세밀한 음각 표현",
-        "연꽃 줄기와 수중 공간의 평화로운 조화"
+      id: 13,
+      code: '13',
+      name: '물고기 (실러캔스/육기어류)',
+      layer: 'water',
+      layerName: '물가 (연꽃 몸체)',
+      layerCoords: { x: 35, y: 40 },
+      panelTheme: '지느러미에서 사지동물의 다리로의 진화적 가교',
+      simpleDesc: '수중에서 육지로 진출한 척추동물의 위대한 도약을 품은 존재.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="coelacanth (genus Latimeria)" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/162ba6f0282c453789c77a4fa2f84e6e/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel13.webp',
+      icon: 'Asset/2. Main/icon/13.webp',
+      iconDark: 'Asset/2. Main/icon_dark/13_dark.webp',
+      features: [
+        '근육질 줄기와 뼈대가 내장되어 다리처럼 작동하는 육질 지느러미(Lobe-fin)',
+        '물속 흐름과 전기장을 감지하는 측선(Lateral Line) 감각계',
+        '데본기 육상 척추동물(사지류)의 직접적 조상 형태 보존'
       ],
-      "scienceStory": "어류의 유선형 체형과 측선(옆줄) 감각기관은 수압과 진동을 감지하여 물속에서 저항을 최소화하고 민첩하게 이동할 수 있게 합니다. 고대 동아시아에서 물고기는 다산과 풍요의 대표적 상징입니다.",
-      "sourceCode": "REF_13_FISH",
-      "sourceText": "출처: 국립부여박물관 | 한국 담수어류 도감",
-      "mapCoords": {
-        "x": 36.0,
-        "y": 78.0
-      }
+      scienceStory: '실러캔스와 같은 육기어류의 지느러미 내부에는 인간의 팔다리와 상동 구조인 상완골, 요골, 척골의 원형 뼈대가 존재합니다.',
+      sourceCode: 'REF_13_FISH_COELACANTH',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 고생물학 및 비교해부학 총서'
     },
     {
-      "id": 14,
-      "code": "14",
-      "name": "물범",
-      "layer": "water",
-      "layerName": "물가 (연꽃 몸체)",
-      "panelTheme": "해양 포유류의 지느러미발 진화",
-      "simpleDesc": "육지 포유류에서 바다로 돌아가 지느러미발을 갖추게 된 수생 포유류.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/N_Panel14.jpg",
-      "icon": "Asset/2. Main/icon/14.webp",
-      "iconDark": "Asset/2. Main/icon_dark/14_dark.webp",
-      "features": [
-        "매끄러운 방추형 몸매와 둥근 머리",
-        "물속에서 추진력을 얻는 지느러미 형태의 다리",
-        "백제 서해안 연안 생태계와의 밀접한 연관성"
+      id: 14,
+      code: '14',
+      name: '물범',
+      layer: 'water',
+      layerName: '물가 (연꽃 몸체)',
+      layerCoords: { x: 50, y: 58 },
+      panelTheme: '육상 식육류의 해양 복귀와 유선형 지느러미발 진화',
+      simpleDesc: '두터운 지방층과 지느러미발로 차가운 물살을 가르는 해양 포유류.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="seal" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/38dc4e92f17e444597274bff6be913c2/embed?autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/jpg/N_Panel14.jpg',
+      icon: 'Asset/2. Main/icon/14.webp',
+      iconDark: 'Asset/2. Main/icon_dark/14_dark.webp',
+      features: [
+        '발가락 사이에 물갈퀴가 발달하여 변형된 지느러미발(Flipper)',
+        '극저온의 물속에서도 체온을 유지하는 두꺼운 피하지방층(Blubber)',
+        '잠수 중 산소를 효율적으로 저장하는 미오글로빈 농식 근육'
       ],
-      "scienceStory": "물범(기각류)은 육상 식육목 조상에서 갈라져 나와 체온을 유지하는 두꺼운 피하지방층과 지느러미발(Flipper)을 진화시켜 해양 생활에 완벽히 적응했습니다.",
-      "sourceCode": "REF_14_SEAL",
-      "sourceText": "출처: 국립부여박물관 도록 | 국립수산과학원 해양포유류 연구",
-      "mapCoords": {
-        "x": 47.0,
-        "y": 74.0
-      }
+      scienceStory: '물범과 물개 등의 기각류는 곰이나 족제비와 공통 조상을 공유하는 육상 포유류였으나 바다로 복귀하여 사지가 지느러미발로 진화했습니다.',
+      sourceCode: 'REF_14_SEAL',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 해양포유류 진화생물학 연구'
     },
     {
-      "id": 15,
-      "code": "15",
-      "name": "수달",
-      "layer": "water",
-      "layerName": "물가 (연꽃 몸체)",
-      "panelTheme": "물가 생태계의 건강성을 알리는 지표종",
-      "simpleDesc": "물속을 자유자재로 유영하며 물고기를 사냥하는 영리한 수생 족제비과 동물.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel15.webp",
-      "icon": "Asset/2. Main/icon/15.webp",
-      "iconDark": "Asset/2. Main/icon_dark/15_dark.webp",
-      "features": [
-        "발가락 사이의 물갈퀴와 방수성이 뛰어난 이중 털",
-        "물고기를 물고 바위 위로 올라오는 특유의 동작",
-        "맑은 하천과 연안 생태계의 건강성을 상징"
+      id: 15,
+      code: '15',
+      name: '수달',
+      layer: 'water',
+      layerName: '물가 (연꽃 몸체)',
+      layerCoords: { x: 65, y: 38 },
+      panelTheme: '방수 털 구조와 수중 진동 감지 수염(Vibrissae)',
+      simpleDesc: '물과 육지를 오가며 하천 생태계의 건강성을 대변하는 지표종.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Sea Otter Mammal (Endangered)" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/188d7264dc354c7195cf47f4540bf252/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel15.webp',
+      icon: 'Asset/2. Main/icon/15.webp',
+      iconDark: 'Asset/2. Main/icon_dark/15_dark.webp',
+      features: [
+        '공기층을 가두어 물이 피부에 닿지 않게 하는 이중 구조 방수 모피',
+        '탁한 물속에서도 먹이 물고기의 미세 진동을 포착하는 입가의 감각수염',
+        '수중에서 방향을 전환하는 노 역할을 하는 유연한 근육질 꼬리'
       ],
-      "scienceStory": "수달은 발가락 사이의 물갈퀴와 물속에서 방향을 조절하는 노 역할을 하는 두꺼운 꼬리를 지녀 물속에서 최고의 기동성을 발휘합니다. 맑은 물에만 서식하는 대표적 환경 지표종입니다.",
-      "sourceCode": "REF_15_OTTER",
-      "sourceText": "출처: 국립부여박물관 | 한국수달보호협회 생태자료",
-      "mapCoords": {
-        "x": 58.0,
-        "y": 76.0
-      }
+      scienceStory: '수달의 털은 제곱센티미터당 수만 가닥의 치밀한 솜털로 이루어져 공기 방울을 포획합니다. 이를 통해 수중 저체온증을 방지합니다.',
+      sourceCode: 'REF_15_OTTER',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 국립생태원 수생태계 연구'
     },
     {
-      "id": 16,
-      "code": "16",
-      "name": "백로",
-      "layer": "water",
-      "layerName": "물가 (연꽃 몸체)",
-      "panelTheme": "긴 다리와 부리로 물가를 거니는 왜가리과",
-      "simpleDesc": "연못가 얕은 물을 조용히 걸으며 먹이를 낚아채는 청초한 섭금류.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel16-1.webp",
-      "panelImg2": "Asset/3. Exhibition/N_Panel/webp/N_Panel16-2.webp",
-      "icon": "Asset/2. Main/icon/16.webp",
-      "iconDark": "Asset/2. Main/icon_dark/16_dark.webp",
-      "features": [
-        "물에 젖지 않고 걸을 수 있는 길쭉한 목과 다리",
-        "연꽃 잎사귀 사이에서 먹이를 응시하는 고요한 자세",
-        "동양화와 공예에서 청렴과 고결함을 뜻하는 전통 상징"
+      id: 16,
+      code: '16',
+      name: '백로',
+      layer: 'water',
+      layerName: '물가 (연꽃 몸체)',
+      layerCoords: { x: 80, y: 52 },
+      panelTheme: '물 굴절 보정과 경추 굽힘을 통한 정밀 작살 사냥',
+      simpleDesc: '물가에 고요히 서서 날렵하게 물고기를 낚아채는 청결의 상징.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Realistic Heron 3D Model" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/95a74fb41f1a46f0acec81a2d6c85093/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel16-1.webp',
+      panelImg2: 'Asset/3. Exhibition/N_Panel/webp/N_Panel16-2.webp',
+      icon: 'Asset/2. Main/icon/16.webp',
+      iconDark: 'Asset/2. Main/icon_dark/16_dark.webp',
+      features: [
+        'S자로 접혔다 탄성으로 튀어나가는 특수 변형 경추(목뼈) 구조',
+        '빛의 굴절각을 시각 신경망에서 실시간 보정하는 시각 연산',
+        '펄이나 얕은 여울에 발이 빠지지 않도록 넓게 벌어지는 긴 발가락'
       ],
-      "scienceStory": "백로는 긴 다리(경골·족근골)로 얕은 물을 거닐며 S자로 굽어진 목을 순식간에 뻗어 물고기를 작살처럼 낚아챕니다. 연꽃 습지 생태계의 대표적인 조류입니다.",
-      "sourceCode": "REF_16_EGRET",
-      "sourceText": "출처: 국립부여박물관 | 한국의 섭금류 생태도감",
-      "mapCoords": {
-        "x": 69.0,
-        "y": 70.0
-      }
+      scienceStory: '백로는 물 표면에서 발생하는 빛의 굴절을 뇌 시각 피질에서 계산하여, 실제 위치보다 떠 보이는 물고기를 정확하게 작살처럼 내리꽂아 포획합니다.',
+      sourceCode: 'REF_16_HERON',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 조류 생체역학 및 생태학 저널'
     },
     {
-      "id": 17,
-      "code": "17",
-      "name": "달리는 새",
-      "layer": "water",
-      "layerName": "물가 (연꽃 몸체)",
-      "panelTheme": "지상 주행에 특화된 튼튼한 다리",
-      "simpleDesc": "날기보다 물가 펄과 풀밭을 빠르게 질주하는 강인한 주행 조류.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel18.webp",
-      "icon": "Asset/2. Main/icon/17.webp",
-      "iconDark": "Asset/2. Main/icon_dark/17_dark.webp",
-      "features": [
-        "날개를 뒤로 젖히고 긴 보폭으로 달리는 역동적 형상",
-        "강인하게 발달한 허벅지와 발가락 관절",
-        "습지와 초원을 가로지르는 속도감 넘치는 조형"
+      id: 17,
+      code: '17',
+      name: '달리는 새 (주조류)',
+      layer: 'water',
+      layerName: '물가 (연꽃 몸체)',
+      layerCoords: { x: 92, y: 44 },
+      panelTheme: '비행 포기와 지상 질주 골격으로의 역행 진화',
+      simpleDesc: '날개를 접고 대지를 힘차게 질주하는 지상 적응 조류.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Little Spotted Kiwi" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/b61466de53d24988835bb755dc2f73da/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel18.webp',
+      panelImg2: 'Asset/3. Exhibition/N_Panel/webp/N_Panel19.webp',
+      icon: 'Asset/2. Main/icon/17.webp',
+      iconDark: 'Asset/2. Main/icon_dark/17_dark.webp',
+      features: [
+        '비행 근육이 부착되던 용골봉(Keel)의 소실 및 편평한 흉골',
+        '강력한 추진력을 제공하는 발달된 대퇴골과 두툼한 건(Tendon)',
+        '단단한 땅과의 마찰을 줄이기 위해 감소된 발가락 수'
       ],
-      "scienceStory": "타조나 뜸부기류처럼 일부 조류는 비행 근육 대신 다리 골격과 건(Tendon)을 강화하여 지상 주행에 에너지를 집중하는 방향으로 진화했습니다.",
-      "sourceCode": "REF_17_RUNNING_BIRD",
-      "sourceText": "출처: 국립부여박물관 | 조류 생체역학 연구",
-      "mapCoords": {
-        "x": 80.0,
-        "y": 74.0
-      }
+      scienceStory: '타조, 키위 같은 주조류는 날기 위해 드는 막대한 에너지 대사 대신 지상 질주력을 극대화하는 방향으로 진화했습니다.',
+      sourceCode: 'REF_17_RUNNING_BIRD',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 척추동물 고생물학 및 조류 진화'
     },
     {
-      "id": 18,
-      "code": "18",
-      "name": "금시조 (봉황)",
-      "layer": "sky",
-      "layerName": "천상 · 하늘 (뚜껑 정상)",
-      "panelTheme": "태평성대를 알리는 신성한 이상세계의 정점",
-      "simpleDesc": "향로 정상에서 목과 부리로 여의주를 품고 날개를 활짝 편 이상향의 상징.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel19.webp",
-      "icon": "Asset/2. Main/icon/18.webp",
-      "iconDark": "Asset/2. Main/icon_dark/18_dark.webp",
-      "features": [
-        "턱 밑과 부리에 여의주를 품고 힘차게 펼친 양 날개",
-        "백제 특유의 부드럽고 우아하게 치켜 올라간 꼬리 깃",
-        "가슴 윗부분에 뚫려 향 연기를 뿜어내는 신성한 기운"
+      id: 18,
+      code: '18',
+      name: '봉황 (금시조)',
+      layer: 'celestial',
+      layerName: '천상 (정상)',
+      layerCoords: { x: 50, y: 45 },
+      panelTheme: '태양 숭배와 조류의 궁극적 이상화 형태',
+      simpleDesc: '향로 정상에서 여의주를 품고 날개를 펴 태평성대를 알리는 신조.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="food (pes) rooster" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/778006bf99114fde8898b61104bc43d4/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel20.webp',
+      icon: 'Asset/2. Main/icon/18.webp',
+      iconDark: 'Asset/2. Main/icon_dark/18_dark.webp',
+      features: [
+        '닭의 머리, 뱀의 목, 제비의 턱, 공작의 꼬리가 융합된 복합 상징',
+        '목과 부리 사이에 둥근 여의주를 품은 백제 특유의 조형미',
+        '가슴과 날개깃에 설계된 향 연기 분출 통로'
       ],
-      "scienceStory": "봉황은 동아시아 신화에서 닭의 머리, 뱀의 목, 제비의 턱, 공작의 꼬리 등 실존하는 여러 아름다운 새들의 특징을 결합하여 창조한 궁극의 성스러운 도상입니다.",
-      "sourceCode": "REF_18_PHOENIX",
-      "sourceText": "출처: 국립부여박물관 | 삼국시대 봉황 및 환두대도 문양 연구",
-      "mapCoords": {
-        "x": 50.0,
-        "y": 14.0
-      }
+      scienceStory: '봉황은 꿩, 공작, 맹금류의 가장 강력하고 화려한 해부학적 형질들이 결합된 상징적 생명체입니다.',
+      sourceCode: 'REF_18_PHOENIX',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 한국미술사학회 고대 금속공예 연구'
     },
     {
-      "id": 19,
-      "code": "19",
-      "name": "용",
-      "layer": "sea",
-      "layerName": "바다 · 해저 (받침대)",
-      "panelTheme": "물을 박차고 솟구쳐 세계를 떠받치는 힘",
-      "simpleDesc": "바다를 다스리며 하늘로 솟구치듯 연꽃 몸체를 입으로 떠받든 역동적 신수.",
-      "glb": null,
-      "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel20.webp",
-      "icon": "Asset/2. Main/icon/19.webp",
-      "iconDark": "Asset/2. Main/icon_dark/19_dark.webp",
-      "features": [
-        "한 다리를 번쩍 치켜들고 연꽃 밑부분을 입으로 문 역동적 자태",
-        "연화당초문으로 휘감긴 투조(透彫) 몸통과 꼬리의 생동감",
-        "하늘과 땅, 물을 연결하는 백제 금속공예 최고의 조형력"
+      id: 19,
+      code: '19',
+      name: '용',
+      layer: 'sea',
+      layerName: '바다 (받침)',
+      layerCoords: { x: 50, y: 50 },
+      panelTheme: '수생 파충류의 역동성과 유체역학적 투조 기법',
+      simpleDesc: '용틀임하며 물을 박차고 솟아올라 향로 전체를 떠받치는 신성한 용.',
+      assetType: 'embed',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Animated Realistic Lowpoly Chinese Dragon" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/d942a0d167594169b3f037f562458d38/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/unwrapped_map.webp',
+      icon: 'Asset/2. Main/icon/19.webp',
+      iconDark: 'Asset/2. Main/icon_dark/19_dark.webp',
+      features: [
+        '한 다리를 치켜들고 용틀임하는 역동적 3차원 입체 투조 주조',
+        '뱀의 몸체, 물고기 비늘, 사슴 뿔, 독수리 발톱이 결합된 수신(水神)',
+        '하부의 하중을 분산하면서도 부유감을 극대화한 구조역학적 설계'
       ],
-      "scienceStory": "용은 뱀의 몸, 물고기 비늘, 사슴 뿔, 독수리 발톱 등 물과 육지, 하늘의 강인한 생명체들이 융합된 수신(水神)이자 제왕의 상징으로, 거대한 향로 전체의 하중을 분산하며 균형을 잡는 공학적 지지대 역할을 수행합니다.",
-      "sourceCode": "REF_19_DRAGON",
-      "sourceText": "출처: 국립부여박물관 | 백제 금동대향로 주조기술과 용 도상학",
-      "mapCoords": {
-        "x": 50.0,
-        "y": 88.0
-      }
+      scienceStory: '용의 도상은 고대인들이 거대 악어, 비단뱀 등을 관찰하며 물을 다스리는 궁극의 생명체로 승화시킨 것입니다.',
+      sourceCode: 'REF_19_DRAGON',
+      sourceText: '출처: 국립부여박물관 소장 백제금동대향로 도판 | 국립문화재연구원 고대 주조공학 분석'
     }
-  ],
-  "unwrappedMap": "Asset/3. Exhibition/N_Panel/webp/unwrapped_map.webp",
-  "finalEmblem": "Asset/Final.webp"
+  ]
 };
+
+window.EXHIBITION_DATA = EXHIBITION_DATA;
