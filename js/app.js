@@ -471,8 +471,11 @@ class ExhibitionApp {
       if (unwrappedContainer) unwrappedContainer.style.display = 'block';
       if (catTabs) catTabs.style.display = 'none';
       if (title) title.innerText = '향로의 세계: 5대 층위 전개도 상징 탐색';
-      if (desc) desc.innerText = '천상·하늘·육지·물가·바다의 각 층위 배경 위 마커를 클릭하여 유물 속 생태계를 탐구하세요. 3D 메인화면과 상호 이동할 수 있습니다.';
+      if (desc) desc.innerText = '천상·하늘·삼신산·연꽃과 물가·바다의 각 층위 배경 위 마커를 클릭하여 유물 속 생태계를 탐구하세요. 3D 메인화면과 상호 이동할 수 있습니다.';
       this.renderUnwrappedLayers();
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      const discoveryView = document.getElementById('discovery-view');
+      if (discoveryView) discoveryView.scrollTop = 0;
     }
 
     if (this.currentView === 'catalog') {

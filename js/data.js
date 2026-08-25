@@ -3,7 +3,7 @@
  * EXHIBITION DATA ARCHIVE (Source of Truth)
  * 19 Animals & 5 Sacred Layers of Baekje Incense Burner
  * 100% Robust JSON-Serialized Pure JavaScript Data
- * Verified 100% with Local Disk Asset Paths
+ * Genuine Sketchfab 3D Embeds Restored from con_Mapping.md
  * ============================================================
  */
 
@@ -322,7 +322,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/KCBU"
         }
       ],
-      "embedHtml": "<iframe title=\"사자 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/2f7cda12f602492fbfef91702f2324dc/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"사자 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/b279685790ac4194b51707df5cd245d4/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C03.webp",
         "visualGuide": "사자상 및 석조 유물",
@@ -390,7 +390,7 @@ const EXHIBITION_DATA = {
           "text": "[https://skfb.ly/oKByZ](https://skfb.ly/oKByZ)"
         }
       ],
-      "embedHtml": "<iframe title=\"족제비 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/30efae36a6cf497bbf69e120d58ba9bb/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"족제비 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/18b390f0dcc943288cc0971e5328159f/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "panelImg3": null
     },
     {
@@ -450,7 +450,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/pMuOH"
         }
       ],
-      "embedHtml": "<iframe title=\"원숭이 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/4d2d48348b6c41dd84ba24aa0b18fa90/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"원숭이 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/90df1c6b146749f1ba1f3346831a2f57/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C05.webp",
         "visualGuide": "원숭이 토우 및 십이지상",
@@ -538,7 +538,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/6BHXp"
         }
       ],
-      "embedHtml": "<iframe title=\"사슴 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/6f6ff39665bc484ba3cb67b66df0fe9d/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"사슴 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/00dd0126dcc0483392afa0a396d05f92/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C06.webp",
         "visualGuide": "사슴 장식 토기 및 금관 유물",
@@ -622,7 +622,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/oSyL7"
         }
       ],
-      "embedHtml": "<iframe title=\"멧돼지 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/788ee54eb1304d9c8fa37d35368a5ae7/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"멧돼지 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/e2761cb2839447b6beb0b4ed132b0895/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "panelImg3": null
     },
     {
@@ -690,7 +690,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/QWCR"
         }
       ],
-      "embedHtml": "<iframe title=\"코끼리 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/8ecad4742fe04523a6f1947b0a72ad4c/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"코끼리 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/0a7cb290616442c88f89107d9a11f8f0/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C08.webp",
         "visualGuide": "코끼리 관련 불교 공예품",
@@ -762,7 +762,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/oLDKA"
         }
       ],
-      "embedHtml": "<iframe title=\"이상한 부리를 가진 새 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/9b7f58a71d87453f86e58dc1804f5e7a/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"이상한 부리를 가진 새 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/1c27c1bec5f6440981a2673db56d0c11/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "panelImg3": null
     },
     {
@@ -822,7 +822,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/6XUDU"
         }
       ],
-      "embedHtml": "<iframe title=\"뱀을 물고 있는 야수 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/a1e5057a66b744038a8e1df1e2ca3b3b/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"뱀을 물고 있는 야수 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/18b390f0dcc943288cc0971e5328159f/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "panelImg3": null
     },
     {
@@ -898,7 +898,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/o7yPD"
         }
       ],
-      "embedHtml": "<iframe title=\"볏을 가진 새 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/b3a1a1f0a2e5421fa7e1d52a2ca4c84a/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"볏을 가진 새 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/e3827c13a3364e8084797531b58c6ed6/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1\"></iframe>",
       "panelImg3": null
     },
     {
@@ -974,7 +974,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/pAot9"
         }
       ],
-      "embedHtml": "<iframe title=\"악어 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/c5e7e1f70d5843a59ca3f5c1d68a9f6a/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"악어 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/d87d75c454554ca78ac582c6a130e7cb/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C12.webp",
         "visualGuide": "악어형 상상동물 도판",
@@ -1046,7 +1046,7 @@ const EXHIBITION_DATA = {
           "text": "[https://skfb.ly/oEuLR](https://skfb.ly/oEuLR)"
         }
       ],
-      "embedHtml": "<iframe title=\"물고기 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/d1a2a3a4a5a64b7b8c9d0e1f2a3b4c5d/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"물고기 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/162ba6f0282c453789c77a4fa2f84e6e/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C13.webp",
         "visualGuide": "어문 토기 및 청동기 유물",
@@ -1122,7 +1122,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/6SPy7"
         }
       ],
-      "embedHtml": "<iframe title=\"물범 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/e2b3c4d5e6f74890a1b2c3d4e5f6a7b8/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"물범 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/38dc4e92f17e444597274bff6be913c2/embed?autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C14.webp",
         "visualGuide": "기각류 및 해양 동물 도상",
@@ -1202,7 +1202,7 @@ const EXHIBITION_DATA = {
           "text": "https://sketchfab.com/models/57b88c7e30c74b588f28102177849397"
         }
       ],
-      "embedHtml": "<iframe title=\"수달 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/4d8c6b758b9f4a56a6ec1544321288e7/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"수달 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/188d7264dc354c7195cf47f4540bf252/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "panelImg3": null
     },
     {
@@ -1258,7 +1258,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/pvzLN"
         }
       ],
-      "embedHtml": "<iframe title=\"백로 / 왜가리 / 두루미 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/f3c4d5e6f7a84901b2c3d4e5f6a7b8c9/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"백로 / 왜가리 / 두루미 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/95a74fb41f1a46f0acec81a2d6c85093/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "panelImg3": null
     },
     {
@@ -1330,7 +1330,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/onu6x"
         }
       ],
-      "embedHtml": "<iframe title=\"달리는 새 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/a1b2c3d4e5f647890123456789abcdef/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"달리는 새 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/b61466de53d24988835bb755dc2f73da/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1\"></iframe>",
       "panelImg3": "Asset/3. Exhibition/N_Panel/webp/N_Panel17-3.webp"
     },
     {
@@ -1390,7 +1390,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/6TWAv"
         }
       ],
-      "embedHtml": "<iframe title=\"봉황 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/b2c3d4e5f6a74890123456789abcdef0/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"봉황 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/778006bf99114fde8898b61104bc43d4/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C18.webp",
         "visualGuide": "봉황무늬 벽돌 및 금속공예품",
@@ -1466,7 +1466,7 @@ const EXHIBITION_DATA = {
           "text": "https://skfb.ly/pyzur"
         }
       ],
-      "embedHtml": "<iframe title=\"용 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/c3d4e5f6a7b8490123456789abcdef01/embed\"></iframe>",
+      "embedHtml": "<iframe title=\"용 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/d942a0d167594169b3f037f562458d38/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C19.webp",
         "visualGuide": "용무늬 은제 허리띠 및 벽화",

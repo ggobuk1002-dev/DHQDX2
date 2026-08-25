@@ -1702,14 +1702,14 @@ img {
 }
 
 .character-name-badge {
-  display: none;
+  display: inline-block;
   background: linear-gradient(135deg, var(--accent-gold), #b89728);
   color: #000;
   font-weight: 800;
-  font-size: 0.72rem;
-  padding: 0.2rem 0.55rem;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+  font-size: 0.78rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.45);
   margin-top: 0.35rem;
   margin-bottom: 0;
   text-align: center;
@@ -1785,21 +1785,7 @@ img {
 }
 
 .vn-speaker-row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.vn-speaker-name {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 1.15rem;
-  color: var(--accent-gold-light);
-  background: rgba(212, 175, 55, 0.15);
-  padding: 0.2rem 0.75rem;
-  border-radius: 8px;
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  display: none !important;
 }
 
 .vn-emotion-tag {
