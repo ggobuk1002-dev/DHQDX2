@@ -1,43 +1,51 @@
 # -*- coding: utf-8 -*-
-import re, os
+import sys, re, os
 
-with open('index.html', 'r', encoding='utf-8') as f:
-    html = f.read()
+def read_file(path):
+    with open(path, 'r', encoding='utf-8') as f:
+        return f.read()
 
-sections = re.findall(r'<section[^>]*id=["\']([^"\']+)["\']', html)
-print('Sections found in index.html:', sections)
+con_map = read_file('MD문서/con_Mapping.md')
+culture = read_file('MD문서/culture.md')
+summary = read_file('MD문서/summary.md')
+ox_quiz = read_file('MD문서/OX_quiz.md')
+main_doc = read_file('MD문서/main.md')
+refs = read_file('MD문서/references.md')
+reply = read_file('MD문서/reply.md')
+docent = read_file('MD문서/docent.md')
 
-cat_match = re.search(r'<section[^>]*id=["\']view-catalog["\'][^>]*>(.*?)</section>', html, re.DOTALL)
-if cat_match:
-    cat_inner = cat_match.group(1)
-    print('animal-grid in view-catalog:', 'id="animal-grid"' in cat_inner)
-    print('unwrapped-map-container in view-catalog:', 'id="unwrapped-map-container"' in cat_inner)
-    print('unwrapped-layers-list in view-catalog:', 'id="unwrapped-layers-list"' in cat_inner)
-else:
-    print('view-catalog section NOT properly closed!')
+with open('analysis_report.txt', 'w', encoding='utf-8') as out:
+    out.write("=====================================================\n")
+    out.write("1. SUMMARY.MD ANIMALS\n")
+    out.write("=====================================================\n")
+    s_matches = re.findall(r'\*\*(\d{1,2})\.\s*([^\*\n]+)\*\*', summary)
+    for c, n in s_matches:
+        out.write(f"[{c.zfill(2)}] {n.strip()}\n")
 
-with open('js/data.js', 'r', encoding='utf-8') as f:
-    data_js = f.read()
+    out.write("\n=====================================================\n")
+    out.write("2. CULTURE.MD ANIMALS\n")
+    out.write("=====================================================\n")
+    c_matches = re.findall(r'##\s*(\d{1,2})\.\s*([^\n]+)', culture)
+    for c, n in c_matches:
+        out.write(f"[{c.zfill(2)}] {n.strip()}\n")
 
-print('animals in EXHIBITION_DATA:', 'animals: [' in data_js)
-print('layers in EXHIBITION_DATA:', 'layers: [' in data_js)
+    out.write("\n=====================================================\n")
+    out.write("3. OX_QUIZ.MD ANIMALS\n")
+    out.write("=====================================================\n")
+    ox_matches = re.findall(r'###\s*(\d{1,2})\.\s*([^\n]+)', ox_quiz)
+    for c, n in ox_matches:
+        out.write(f"[{c.zfill(2)}] {n.strip()}\n")
+
+    out.write("\n=====================================================\n")
+    out.write("4. CON_MAPPING.MD PANELS & ASSETS\n")
+    out.write("=====================================================\n")
+    for line in con_map.split('\n'):
+        if any(k in line for k in ['###', 'Panel', 'glb', 'embed', 'gif', 'jpg', 'webp', 'mp4']):
+            out.write(line + '\n')
+
+print("Comparison written to analysis_report.txt successfully!")
 os._exit(0)
 
-
-  // 02 호랑이
-  '02': [
-    {
-      id: 'cmt-02-1',
-      name: '강○○',
-      text: '호랑이의 세로 줄무늬가 숲속에서 완벽한 위장색이 된다는 게 신기해요! 🐯',
-      likes: 31,
-      createdAt: 1714512000000,
-      replies: [
-        {
-          id: 'cmt-02-1-1',
-          name: '윤○○',
-          text: '사자는 무리 사냥을 하지만 호랑이는 단독 사냥에 특화되어 근력이 엄청나대요.',
-          likes: 16,
           createdAt: 1714515000000,
           replies: []
         }

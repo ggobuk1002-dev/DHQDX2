@@ -649,7 +649,7 @@ class ExhibitionApp {
 
     const filtered = category === 'all'
       ? EXHIBITION_DATA.animals
-      : EXHIBITION_DATA.animals.filter(a => a.layer === category || (category === 'sky' && a.layer === 'celestial'));
+      : EXHIBITION_DATA.animals.filter(a => a.layer === category);
 
     filtered.forEach(animal => {
       const isDiscovered = this.discoveredAnimals && this.discoveredAnimals.has(animal.code);
@@ -726,7 +726,8 @@ class ExhibitionApp {
             <h4 class="layer-card-title">${layer.name}</h4>
           </div>
           <button class="btn-layer-goto-main" data-goto-main="${layer.id}">
-            <span>🔍 3D 메인화면에서 이 층위 보기</span>
+            <span class="btn-text-desktop">🔍 3D 메인화면에서 이 층위 보기</span>
+            <span class="btn-text-mobile">3D 보기</span>
             <span>→</span>
           </button>
         </div>
@@ -863,12 +864,34 @@ class ExhibitionApp {
     const sourceCredit = document.getElementById('detail-source-credit');
     
     if (relicText) {
-      relicText.innerHTML = `
+      let relicHtml = `
         <div style="margin-bottom: 0.85rem;">
           <strong style="color: #fff; display: block; margin-bottom: 0.25rem;">🏛️ 출토 유물 도판</strong>
           <span>백제 부여 능산리 절터 출토 백제금동대향로(국보) 본체에 조각된 ${animal.name} 도상</span>
         </div>
       `;
+      if (animal.culturalData) {
+        relicHtml += `
+          <div style="margin-top: 0.8rem; background: rgba(212,175,55,0.1); border: 1px solid var(--accent-gold); border-radius: 8px; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 1.2rem;">🏺</span>
+              <span style="font-size: 0.85rem; color: #fff; font-weight: 600;">연결 유산 실물 도판 및 3D 데이터가 준비되어 있습니다!</span>
+            </div>
+            <button id="btn-goto-culture-tab" class="btn-artifact-link" style="padding: 0.4rem 0.9rem; font-size: 0.82rem; cursor: pointer;">
+              <span>유물 보러가기 →</span>
+            </button>
+          </div>
+        `;
+      }
+      relicText.innerHTML = relicHtml;
+
+      const btnGotoCulture = document.getElementById('btn-goto-culture-tab');
+      if (btnGotoCulture) {
+        btnGotoCulture.addEventListener('click', () => {
+          const cultureTabBtn = document.getElementById('tab-btn-culture');
+          if (cultureTabBtn) cultureTabBtn.click();
+        });
+      }
     }
 
     if (sourceCredit) {
@@ -903,8 +926,142 @@ class ExhibitionApp {
     // OX 퀴즈 렌더링
     this.renderQuiz(animal.code);
 
+    // [신규] 사회문화 유물 탭 & 뷰포트 렌더링 (culture.md 13종 연동)
+    this.renderCulturalTab(animal);
+
+    // [신규] 상세 정보 탭 전환 컨트롤러 (과학패널 / 사회문화유물 / OX퀴즈)
+    this.initDetailTabs(animal);
+
     // [신규] 관람객의 한마디 (동물별 댓글 및 무제한 대댓글 시스템)
     this.renderComments(animal.code);
+  }
+
+  /* ============================================================
+     8-1. 상세 탭 전환 컨트롤러
+     ============================================================ */
+  initDetailTabs(animal) {
+    const tabBtns = document.querySelectorAll('.detail-tab-btn');
+    const tabPanels = document.querySelectorAll('.detail-tab-panel');
+    const cultureBtn = document.getElementById('tab-btn-culture');
+
+    // 사회문화 데이터 유무에 따른 탭 표시/숨김 (13종 4개 탭, 6종 3개 탭)
+    if (cultureBtn) {
+      cultureBtn.style.display = (animal.culturalData) ? 'inline-flex' : 'none';
+    }
+
+    // 항상 첫 번째 과학 탭으로 초기화
+    tabBtns.forEach(b => b.classList.remove('active'));
+    tabPanels.forEach(p => p.classList.remove('active'));
+
+    const defaultBtn = document.querySelector('.detail-tab-btn[data-detail-tab="science"]');
+    const defaultPanel = document.getElementById('detail-tab-content-science');
+    if (defaultBtn) defaultBtn.classList.add('active');
+    if (defaultPanel) defaultPanel.classList.add('active');
+
+    // 탭 클릭 이벤트 바인딩
+    tabBtns.forEach(btn => {
+      btn.onclick = (e) => {
+        const tabKey = e.currentTarget.getAttribute('data-detail-tab');
+        tabBtns.forEach(b => b.classList.remove('active'));
+        tabPanels.forEach(p => p.classList.remove('active'));
+
+        e.currentTarget.classList.add('active');
+        const targetPanel = document.getElementById(`detail-tab-content-${tabKey}`);
+        if (targetPanel) targetPanel.classList.add('active');
+      };
+    });
+  }
+
+  /* ============================================================
+     8-2. 사회문화 유물 탭 & 뷰포트 렌더링 (culture.md)
+     - 유물 3D/임베드/에셋 배치 공간 마련
+     - 사회문화적 관점 해설 텍스트 및 박물관 연계 데이터 리스트
+     ============================================================ */
+  renderCulturalTab(animal) {
+    const wrapper = document.getElementById('detail-cultural-wrapper');
+    if (!wrapper) return;
+
+    if (!animal.culturalData) {
+      return;
+    }
+
+    const cdata = animal.culturalData;
+    const guideTag = document.getElementById('cultural-artifact-guide-tag');
+    const embedWrap = document.getElementById('cultural-artifact-embed-wrap');
+    const storyText = document.getElementById('detail-culture-story-text');
+    const artifactsList = document.getElementById('detail-cultural-artifacts-list');
+
+    // 유물 가이드 태그
+    if (guideTag) guideTag.innerText = cdata.visualGuide || '유물 시각자료';
+
+    // 사회문화적 관점 해설 텍스트
+    if (storyText) storyText.innerText = cdata.story;
+
+    // 유물 뷰포트 공간 (3D 임베드 / 경량화 WebP 유물 이미지 / 플레이스홀더)
+    if (embedWrap) {
+      const primaryArtifact = (cdata.artifacts && cdata.artifacts.length > 0) ? cdata.artifacts[0] : null;
+      if (cdata.embedHtml) {
+        embedWrap.innerHTML = `
+          <div class="artifact-3d-embed-box" style="width: 100%; height: 380px; position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.8);">
+            ${cdata.embedHtml}
+          </div>
+        `;
+      } else if (cdata.image) {
+        embedWrap.innerHTML = `
+          <div class="artifact-image-container" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+            <div style="width: 100%; max-height: 420px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.8);">
+              <img src="${cdata.image}" alt="${primaryArtifact ? primaryArtifact.title : cdata.visualGuide}" style="max-width: 100%; max-height: 420px; object-fit: contain;">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 0.5rem;">
+              <span style="font-size: 0.88rem; color: #cbd5e1; font-weight: 600;">🏺 ${primaryArtifact ? primaryArtifact.title : cdata.visualGuide}</span>
+              ${primaryArtifact ? `
+                <a href="${primaryArtifact.url}" target="_blank" rel="noopener" class="btn-artifact-link" style="padding: 0.45rem 1rem; font-size: 0.82rem;">
+                  <span>🏛️ ${primaryArtifact.museum} 소장 정보</span>
+                  <span>↗</span>
+                </a>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      } else {
+        embedWrap.innerHTML = `
+          <div class="artifact-placeholder-card">
+            <div class="artifact-placeholder-icon">🏺</div>
+            <h3 class="artifact-placeholder-title">${primaryArtifact ? primaryArtifact.title : cdata.visualGuide}</h3>
+            <p class="artifact-placeholder-desc">
+              🏛️ <strong>[백제 및 세계 연결 유산 3D / 미디어 에셋 공간]</strong><br>
+              현재 박물관 공식 소장 데이터가 연계되어 있으며, 추후 3D 모델 및 인터랙티브 미디어가 이 공간에 바로 임베드됩니다.
+            </p>
+            ${primaryArtifact ? `
+              <a href="${primaryArtifact.url}" target="_blank" rel="noopener" class="btn-artifact-link" style="padding: 0.6rem 1.4rem; font-size: 0.88rem; margin-top: 0.5rem;">
+                <span>🔍 ${primaryArtifact.museum} 소장 데이터 바로가기</span>
+                <span>↗</span>
+              </a>
+            ` : ''}
+          </div>
+        `;
+      }
+    }
+
+    // 연결 유산 및 소장 박물관 링크 리스트
+    if (artifactsList && cdata.artifacts) {
+      let aHtml = '';
+      cdata.artifacts.forEach(item => {
+        aHtml += `
+          <div class="cultural-artifact-item">
+            <div class="artifact-item-info">
+              <span class="artifact-item-title">${item.title}</span>
+              <span class="artifact-item-museum">🏛️ ${item.museum}</span>
+            </div>
+            <a href="${item.url}" target="_blank" rel="noopener" class="btn-artifact-link">
+              <span>공식 소장처 보기</span>
+              <span>↗</span>
+            </a>
+          </div>
+        `;
+      });
+      artifactsList.innerHTML = aHtml;
+    }
   }
 
   /* ============================================================
@@ -1193,31 +1350,65 @@ class ExhibitionApp {
   }
 
   /* ============================================================
-     9. OX 퀴즈 모듈
+     9. OX 퀴즈 & 알고 계셨나요? 모듈 (Source of Truth: OX_quiz.md)
      ============================================================ */
   renderQuiz(animalCode) {
     const quizBox = document.getElementById('detail-quiz-box');
+    const quizTabBtn = document.getElementById('tab-btn-quiz');
     if (!quizBox) return;
 
-    const vnData = (typeof DOCENT_DIALOGUES !== 'undefined') ? DOCENT_DIALOGUES[animalCode] : null;
-    const quiz = vnData ? vnData.quiz : null;
+    const animal = (typeof EXHIBITION_DATA !== 'undefined' && EXHIBITION_DATA.animals) 
+      ? EXHIBITION_DATA.animals.find(a => a.code === animalCode) 
+      : null;
+
+    const quiz = (animal && animal.quizData) 
+      ? animal.quizData 
+      : ((typeof DOCENT_DIALOGUES !== 'undefined' && DOCENT_DIALOGUES[animalCode]) ? DOCENT_DIALOGUES[animalCode].quiz : null);
 
     if (!quiz) {
-      quizBox.style.display = 'none';
+      if (quizTabBtn) quizTabBtn.style.display = 'none';
+      quizBox.innerHTML = `
+        <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+          <p>해당 상징에 대한 OX 퀴즈가 준비 중입니다.</p>
+        </div>
+      `;
       return;
     }
 
+    if (quizTabBtn) quizTabBtn.style.display = 'inline-flex';
+
     quizBox.style.display = 'block';
     quizBox.innerHTML = `
-      <div class="quiz-header">
-        <span class="quiz-badge">💡 자연사 탐구 OX 퀴즈</span>
-        <h4 class="quiz-question">${quiz.question}</h4>
+      <!-- 1. 알고 계셨나요? 배경 지식 카드 -->
+      <div class="did-you-know-card" style="background: rgba(15, 23, 42, 0.85); border: 1px solid var(--accent-gold); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;">
+          <span style="font-size: 1.3rem;">💡</span>
+          <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--accent-gold); margin: 0;">알고 계셨나요?</h4>
+        </div>
+        <h5 style="font-size: 1.05rem; color: #fff; margin-bottom: 0.5rem;">${quiz.didYouKnowTitle || '흥미로운 자연사 이야기'}</h5>
+        <p style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.7; margin: 0;">${quiz.didYouKnowDesc || ''}</p>
       </div>
-      <div class="quiz-options-row">
-        <button class="btn-quiz-opt" data-answer="O">O (그렇다)</button>
-        <button class="btn-quiz-opt" data-answer="X">X (아니다)</button>
+
+      <!-- 2. OX 퀴즈 질문 카드 -->
+      <div class="quiz-question-card" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.75rem;">
+        <div class="quiz-header" style="margin-bottom: 1.25rem;">
+          <span class="quiz-badge" style="background: linear-gradient(135deg, var(--accent-gold), #b89728); color: #000; font-weight: 700; font-size: 0.8rem; padding: 0.25rem 0.75rem; border-radius: 12px; display: inline-block; margin-bottom: 0.5rem;">🧠 탐구력 쑥쑥! OX 퀴즈</span>
+          <h3 class="quiz-question" style="font-family: var(--font-serif); font-size: 1.35rem; color: #fff; line-height: 1.5;">${quiz.question}</h3>
+        </div>
+
+        <!-- O / X 선택 버튼 -->
+        <div class="quiz-options-row" style="display: flex; gap: 1.5rem; margin-bottom: 1.25rem;">
+          <button class="btn-quiz-opt" data-answer="O" style="flex: 1; padding: 1.2rem; font-size: 1.4rem; font-weight: 900; border-radius: 16px; background: rgba(34, 197, 94, 0.15); border: 2px solid #22c55e; color: #4ade80; cursor: pointer; transition: all 0.2s ease;">
+            ⭕ O (그렇다)
+          </button>
+          <button class="btn-quiz-opt" data-answer="X" style="flex: 1; padding: 1.2rem; font-size: 1.4rem; font-weight: 900; border-radius: 16px; background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; color: #f87171; cursor: pointer; transition: all 0.2s ease;">
+            ❌ X (아니다)
+          </button>
+        </div>
+
+        <!-- 정답 피드백 및 학술 근거 -->
+        <div class="quiz-result-feedback" id="quiz-feedback" style="display: none; padding: 1.5rem; border-radius: 12px; margin-top: 1rem;"></div>
       </div>
-      <div class="quiz-result-feedback" id="quiz-feedback" style="display: none;"></div>
     `;
 
     quizBox.querySelectorAll('.btn-quiz-opt').forEach(btn => {
@@ -1228,10 +1419,25 @@ class ExhibitionApp {
 
         const isCorrect = (choice === quiz.answer);
         feedback.style.display = 'block';
-        feedback.className = `quiz-result-feedback ${isCorrect ? 'correct' : 'wrong'}`;
+        feedback.style.background = isCorrect ? 'rgba(34, 197, 94, 0.18)' : 'rgba(239, 68, 68, 0.18)';
+        feedback.style.border = isCorrect ? '1.5px solid #22c55e' : '1.5px solid #ef4444';
+        
         feedback.innerHTML = `
-          <strong>${isCorrect ? '🎉 정답입니다!' : '🤔 아쉽습니다!'}</strong>
-          <p>${quiz.explanation}</p>
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+            <span style="font-size: 1.4rem;">${isCorrect ? '🎉' : '💡'}</span>
+            <strong style="font-size: 1.15rem; color: ${isCorrect ? '#4ade80' : '#f87171'};">
+              ${isCorrect ? '정답입니다!' : `아쉽습니다! 정답은 [ ${quiz.answer} ] 입니다.`}
+            </strong>
+          </div>
+          <p style="font-size: 0.95rem; color: #fff; line-height: 1.7; margin-bottom: 1rem;">${quiz.explanation}</p>
+          
+          ${quiz.reference ? `
+            <div style="background: rgba(0,0,0,0.4); border-left: 3px solid var(--accent-gold); padding: 0.6rem 0.9rem; border-radius: 6px; font-size: 0.82rem;">
+              <span style="color: var(--accent-gold); font-weight: 700; display: block; margin-bottom: 0.2rem;">📜 학술 논문 및 출처 근거:</span>
+              <span style="color: #cbd5e1;">${quiz.reference}</span>
+              ${quiz.refRange ? `<span style="color: var(--text-muted); display: block; margin-top: 0.2rem;">(${quiz.refRange})</span>` : ''}
+            </div>
+          ` : ''}
         `;
       });
     });

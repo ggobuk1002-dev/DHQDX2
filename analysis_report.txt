@@ -1,0 +1,84 @@
+=====================================================
+1. SUMMARY.MD ANIMALS
+=====================================================
+[01] 말
+[02] 호랑이
+[03] 사자
+[04] 족제비
+[05] 원숭이
+[06] 사슴
+[07] 멧돼지
+[08] 코끼리
+[09] 이상한 부리를 가진 새
+[10] 뱀을 물고 있는 야수
+[11] 볏을 가진 새
+[12] 악어
+[13] 물고기
+[14] 물범
+[16] 백로·학과 닮은 물새
+[17] 달리는 듯한 새
+[18] 봉황
+[19] 용
+
+=====================================================
+2. CULTURE.MD ANIMALS
+=====================================================
+
+=====================================================
+3. OX_QUIZ.MD ANIMALS
+=====================================================
+
+=====================================================
+4. CON_MAPPING.MD PANELS & ASSETS
+=====================================================
+종이 디오라마 오프닝 영상 : opening.mp4  
+금동대향로 : GD\_lowpoly.glb
+ opening.mp4  
+ GD\_lowpoly.glb
+bg\_celestial.webp
+bg\_sky.webp
+bg\_land.webp
+bg\_waterside.webp
+bg\_sea.webp
+3D에셋 주소 : glb 폴더 내의 3D 에셋  
+과학패널 : N\_Panel 내 PNG  
+\- 3D 모델: 01.glb
+\- 과학 패널: N\_Panel01-1.webp, N\_Panel01-2.webp  
+\- 3D 모델: 02.glb
+\- 과학 패널: N\_Panel02.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Lion" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/b279685790ac4194b51707df5cd245d4/embed?autospin=1\&autostart=1\&transparent=1\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel03.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Mink (Lowpoly)" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/18b390f0dcc943288cc0971e5328159f/embed?autospin=1\&autostart=1\&transparent=1\&dnt=1"\> \</iframe\> \</div\>
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Model 96A \- North American Otter" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/57b88c7e30c74b588f28102177849397/embed?autospin=1\&autostart=1\&ui\_infos=0\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel04.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Monkey 3D animal" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/90df1c6b146749f1ba1f3346831a2f57/embed?autospin=1\&autostart=1\&transparent=1\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel05.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Deer Family" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/00dd0126dcc0483392afa0a396d05f92/embed?autospin=1\&autostart=1\&transparent=1\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel06.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Boar Realistic" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/e2761cb2839447b6beb0b4ed132b0895/embed?autospin=1\&autostart=1\&transparent=1\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel07.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="African Elephant, skeleton" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/0a7cb290616442c88f89107d9a11f8f0/embed?autospin=1\&autostart=1\&transparent=1\&ui\_infos=0\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel08.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Finches Birds (Lowpoly)" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/1c27c1bec5f6440981a2673db56d0c11/embed?autospin=1\&autostart=1\&transparent=1\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel09.webp  
+cramorant-gorging.gif
+\- 과학 패널: N\_Panel10.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Great Argus (NHMW-ZOO-VS-70946 \&amp; 70947)" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/e3827c13a3364e8084797531b58c6ed6/embed?autospin=1\&autostart=1\&transparent=1\&ui\_infos=0\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel11-1.webp, N\_Panel11-2.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Australian Freshwater Crocodile ( underwater )" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/d87d75c454554ca78ac582c6a130e7cb/embed?autospin=1\&autostart=1\&transparent=1\&ui\_infos=0\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Pane12.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="coelacanth (genus Latimeria)" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/162ba6f0282c453789c77a4fa2f84e6e/embed?autospin=1\&autostart=1\&transparent=1\&dnt=1"\> \</iframe\> \</div\>
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Wheel of Homology: Two worlds, One Forelimb" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/d26e5f9c3f544cc78e75bfe4df195acc/embed?autostart=1\&ui\_infos=0\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel13.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="seal" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/38dc4e92f17e444597274bff6be913c2/embed?autostart=1\&transparent=1\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel14.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Sea Otter Mammal (Endangered)" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/188d7264dc354c7195cf47f4540bf252/embed?autospin=1\&autostart=1\&transparent=1\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel15.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Realistic Heron 3D Model" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/95a74fb41f1a46f0acec81a2d6c85093/embed?autospin=1\&autostart=1\&transparent=1\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel16.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Little Spotted Kiwi" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/b61466de53d24988835bb755dc2f73da/embed?autospin=1\&autostart=1\&transparent=1\&ui\_infos=0\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel17-1.webp, N\_Panel17-2.webp, N\_Panel17-3.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="food (pes) rooster" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/778006bf99114fde8898b61104bc43d4/embed?autospin=1\&autostart=1\&transparent=1\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel18.webp  
+\<div class="sketchfab-embed-wrapper"\> \<iframe title="Animated Realistic Lowpoly Chinese Dragon" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/d942a0d167594169b3f037f562458d38/embed?autospin=1\&autostart=1\&transparent=1\&dnt=1"\> \</iframe\> \</div\>
+\- 과학 패널: N\_Panel19.webp  
