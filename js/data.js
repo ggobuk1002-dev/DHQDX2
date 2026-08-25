@@ -334,7 +334,7 @@ const EXHIBITION_DATA = {
       simpleDesc: '수면 아래 숨어 눈과 콧구멍만 내놓고 사냥하는 수중의 절대 강자.',
       assetType: 'embed',
       embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Australian Freshwater Crocodile ( underwater )" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/d87d75c454554ca78ac582c6a130e7cb/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1"></iframe></div>',
-      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Pane12.webp',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel12.webp',
       icon: 'Asset/2. Main/icon/12.webp',
       iconDark: 'Asset/2. Main/icon_dark/12_dark.webp',
       features: [
@@ -380,7 +380,7 @@ const EXHIBITION_DATA = {
       simpleDesc: '두터운 지방층과 지느러미발로 차가운 물살을 가르는 해양 포유류.',
       assetType: 'embed',
       embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="seal" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/38dc4e92f17e444597274bff6be913c2/embed?autostart=1&transparent=1&dnt=1"></iframe></div>',
-      panelImg: 'Asset/3. Exhibition/N_Panel/jpg/N_Panel14.jpg',
+      panelImg: 'Asset/3. Exhibition/N_Panel/N_Panel14.jpg',
       icon: 'Asset/2. Main/icon/14.webp',
       iconDark: 'Asset/2. Main/icon_dark/14_dark.webp',
       features: [
@@ -450,8 +450,8 @@ const EXHIBITION_DATA = {
       simpleDesc: '날개를 접고 대지를 힘차게 질주하는 지상 적응 조류.',
       assetType: 'embed',
       embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Little Spotted Kiwi" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/b61466de53d24988835bb755dc2f73da/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1"></iframe></div>',
-      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel18.webp',
-      panelImg2: 'Asset/3. Exhibition/N_Panel/webp/N_Panel19.webp',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel17-1.webp',
+      panelImg2: 'Asset/3. Exhibition/N_Panel/webp/N_Panel17-2.webp',
       icon: 'Asset/2. Main/icon/17.webp',
       iconDark: 'Asset/2. Main/icon_dark/17_dark.webp',
       features: [
@@ -474,7 +474,8 @@ const EXHIBITION_DATA = {
       simpleDesc: '향로 정상에서 여의주를 품고 날개를 펴 태평성대를 알리는 신조.',
       assetType: 'embed',
       embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="food (pes) rooster" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/778006bf99114fde8898b61104bc43d4/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
-      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel20.webp',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel17-1.webp',
+      panelImg2: 'Asset/3. Exhibition/N_Panel/webp/N_Panel17-2.webp',
       icon: 'Asset/2. Main/icon/18.webp',
       iconDark: 'Asset/2. Main/icon_dark/18_dark.webp',
       features: [
@@ -497,7 +498,7 @@ const EXHIBITION_DATA = {
       simpleDesc: '용틀임하며 물을 박차고 솟아올라 향로 전체를 떠받치는 신성한 용.',
       assetType: 'embed',
       embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Animated Realistic Lowpoly Chinese Dragon" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/d942a0d167594169b3f037f562458d38/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>',
-      panelImg: 'Asset/3. Exhibition/N_Panel/webp/unwrapped_map.webp',
+      panelImg: 'Asset/3. Exhibition/N_Panel/webp/N_Panel19.webp',
       icon: 'Asset/2. Main/icon/19.webp',
       iconDark: 'Asset/2. Main/icon_dark/19_dark.webp',
       features: [

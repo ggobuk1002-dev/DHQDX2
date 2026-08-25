@@ -13,7 +13,8 @@ class ExhibitionApp {
     // 과학해설사 (Docent) 엔진 상태
     this.docentState = {
       animalCode: '01',
-      currentBranch: 'ROOT',
+      currentMode: 'START', // 'START' | 'QUESTION' | 'RETURN'
+      currentQuestionId: null,
       dialogueQueue: [],
       queueIdx: 0,
       isTyping: false,
@@ -22,7 +23,8 @@ class ExhibitionApp {
     };
     
     this.viewer = null;
-    this.introVideoEnded = false;
+    this.isSnapping = false;
+    this.currentStepIdx = 0;
     
     // 로컬 스토리지에서 발견된 상징 복원 (공통 상태 관리)
     this.discoveredAnimals = new Set();
@@ -45,6 +47,11 @@ class ExhibitionApp {
     this.renderUnwrappedLayers();
     this.updateProgress();
     this.initIntroSequence();
+    this.initScrollyObserver();
+    this.initWheelSnapController();
+
+    // 항상 인트로 화면에서 첫 시작!
+    this.switchView('intro');
   }
 
   /* ============================================================
@@ -84,6 +91,14 @@ class ExhibitionApp {
      2. 이벤트 바인딩
      ============================================================ */
   bindEvents() {
+    // 헤더 로고 및 브랜드 타이틀 클릭 시 인트로로 이동
+    const brandTitle = document.querySelector('.brand-title');
+    if (brandTitle) {
+      brandTitle.addEventListener('click', () => {
+        this.switchView('intro');
+      });
+    }
+
     // 헤더 네비게이션 버튼
     document.querySelectorAll('[data-nav]').forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -111,7 +126,7 @@ class ExhibitionApp {
       });
     });
 
-    // 인트로 시작 버튼
+    // 인트로 시작 버튼 -> 메인 뷰로 이동
     const btnStart = document.getElementById('btn-start-exhibition');
     if (btnStart) {
       btnStart.addEventListener('click', () => {
@@ -155,24 +170,18 @@ class ExhibitionApp {
       });
     });
 
-    // 스크롤리텔링 옵저버
-    this.initScrollyObserver();
-    this.initWheelSnapController();
-
     // 헤더 과학해설사 버튼 (상세화면에서는 즉시 실행, 타 화면에서는 안내 또는 상세화면 이동)
     const btnDocentCall = document.getElementById('btn-docent-call');
     if (btnDocentCall) {
       btnDocentCall.addEventListener('click', () => {
+        const animal = EXHIBITION_DATA.animals[this.currentAnimalIndex] || EXHIBITION_DATA.animals[0];
         if (this.currentView === 'detail') {
-          const animal = EXHIBITION_DATA.animals[this.currentAnimalIndex] || EXHIBITION_DATA.animals[0];
           this.openDocent(animal.code);
         } else {
-          // 상세 화면이 아닐 때 안내 및 첫 번째 동물 상세로 진입
-          const animal = EXHIBITION_DATA.animals[this.currentAnimalIndex] || EXHIBITION_DATA.animals[0];
           this.switchView('detail', animal.code);
           setTimeout(() => {
             this.openDocent(animal.code);
-          }, 300);
+          }, 350);
         }
       });
     }
@@ -246,7 +255,7 @@ class ExhibitionApp {
     const canvasContainer = document.getElementById('scrolly-canvas-container');
     const btnDocentHeader = document.getElementById('btn-docent-call');
 
-    // 과학해설사 버튼 활성화 제어 (상세 화면에서만 강조 활성화)
+    // 과학해설사 버튼 활성화 제어 (상세 화면에서만 골드 펄스로 강조 활성화)
     if (btnDocentHeader) {
       if (viewName === 'detail') {
         btnDocentHeader.classList.add('is-active-docent');
@@ -259,18 +268,9 @@ class ExhibitionApp {
 
     if (viewName === 'intro') {
       if (canvasContainer) {
-        canvasContainer.style.display = 'block';
-        canvasContainer.style.opacity = '1';
+        canvasContainer.style.display = 'none';
       }
-      if (this.viewer) this.viewer.setCinematicIntro(true);
-      
-      // 인트로로 되돌아왔을 때 오버레이를 즉시 표시
-      const overlay = document.getElementById('intro-ui-overlay');
-      const blackout = document.getElementById('intro-blackout');
-      const skipBtn = document.getElementById('btn-intro-skip');
-      if (overlay) overlay.classList.add('visible');
-      if (blackout) blackout.style.opacity = '0';
-      if (skipBtn) skipBtn.style.display = 'none';
+      this.playIntroVideo();
       
     } else if (viewName === 'main') {
       if (canvasContainer) {
@@ -324,7 +324,9 @@ class ExhibitionApp {
   }
 
   /* ============================================================
-     4. 인트로 비디오 및 3D 시네마틱 전환
+     4. 인트로 비디오 및 메인 전시 자동 전환
+     - 영상 재생부터 끝날 때까지가 온전한 인트로!
+     - 영상 종료 / 건너뛰기 시 3D 메인 전시관람으로 자동 전환
      ============================================================ */
   initIntroSequence() {
     const video = document.getElementById('intro-video');
@@ -334,13 +336,10 @@ class ExhibitionApp {
       this.finishIntroVideo();
     });
 
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch((err) => {
-        console.warn('Video autoplay prevented by browser:', err);
-        // 비디오 자동재생 실패 시 즉시 UI 노출
-        const overlay = document.getElementById('intro-ui-overlay');
-        if (overlay) overlay.classList.add('visible');
+    const skipBtn = document.getElementById('btn-intro-skip');
+    if (skipBtn) {
+      skipBtn.addEventListener('click', () => {
+        this.finishIntroVideo();
       });
     }
   }
@@ -351,21 +350,25 @@ class ExhibitionApp {
     const overlay = document.getElementById('intro-ui-overlay');
     const skipBtn = document.getElementById('btn-intro-skip');
 
-    if (overlay) overlay.classList.remove('visible');
+    if (overlay) overlay.style.display = 'none';
     if (blackout) blackout.style.opacity = '0';
-    if (skipBtn) skipBtn.style.display = 'block';
+    if (skipBtn) skipBtn.style.display = 'inline-flex';
 
     if (video) {
       video.currentTime = 0;
       video.style.opacity = '1';
-      video.play().catch(e => console.warn(e));
+      video.muted = true;
+      video.playsInline = true;
+      video.play().catch(e => {
+        console.warn('Video autoplay prevented:', e);
+        // 브라우저 차단 시 건너뛰기 버튼 강조
+      });
     }
   }
 
   finishIntroVideo() {
     const video = document.getElementById('intro-video');
     const blackout = document.getElementById('intro-blackout');
-    const overlay = document.getElementById('intro-ui-overlay');
     const skipBtn = document.getElementById('btn-intro-skip');
 
     if (video) {
@@ -374,19 +377,17 @@ class ExhibitionApp {
     }
     if (skipBtn) skipBtn.style.display = 'none';
 
+    // 영상 종료 시 암전 페이드아웃 후 곧바로 메인 전시로 전환!
     if (blackout) {
       blackout.style.opacity = '1';
       setTimeout(() => {
-        if (overlay) overlay.classList.add('visible');
-        if (this.viewer) {
-          this.viewer.setCinematicIntro(true);
-        }
+        this.switchView('main');
         setTimeout(() => {
           blackout.style.opacity = '0';
-        }, 600);
-      }, 500);
+        }, 500);
+      }, 400);
     } else {
-      if (overlay) overlay.classList.add('visible');
+      this.switchView('main');
     }
   }
 
@@ -434,6 +435,80 @@ class ExhibitionApp {
     }, { threshold: 0.5 });
 
     steps.forEach(step => observer.observe(step));
+  }
+
+  /* ============================================================
+     5-1. 한 번에 훅훅 넘어가는 스크롤 스냅 휠 컨트롤러
+     ============================================================ */
+  initWheelSnapController() {
+    this.isSnapping = false;
+    this.currentStepIdx = 0;
+    const steps = Array.from(document.querySelectorAll('.scrolly-step'));
+    if (!steps.length) return;
+
+    window.addEventListener('wheel', (e) => {
+      if (this.currentView !== 'main') return;
+      if (this.isSnapping) {
+        e.preventDefault();
+        return;
+      }
+
+      // 휠 델타 감지 (살짝만 굴려도 1스텝씩 훅훅 이동)
+      if (Math.abs(e.deltaY) > 15) {
+        e.preventDefault();
+        this.isSnapping = true;
+
+        if (e.deltaY > 0) {
+          if (this.currentStepIdx < steps.length - 1) {
+            this.currentStepIdx++;
+          }
+        } else {
+          if (this.currentStepIdx > 0) {
+            this.currentStepIdx--;
+          }
+        }
+
+        const targetStep = steps[this.currentStepIdx];
+        if (targetStep) {
+          targetStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        setTimeout(() => {
+          this.isSnapping = false;
+        }, 550);
+      }
+    }, { passive: false });
+
+    // 키보드 방향키 이동 지원
+    window.addEventListener('keydown', (e) => {
+      if (this.currentView !== 'main') return;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+        if (this.currentStepIdx < steps.length - 1) {
+          e.preventDefault();
+          this.currentStepIdx++;
+          steps[this.currentStepIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        if (this.currentStepIdx > 0) {
+          e.preventDefault();
+          this.currentStepIdx--;
+          steps[this.currentStepIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    });
+
+    // 층위 도트 네비게이션 클릭 이벤트
+    document.querySelectorAll('.layer-nav-dot').forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        const stepId = e.currentTarget.getAttribute('data-step-target');
+        const targetStep = document.querySelector(`.scrolly-step[data-step-id="${stepId}"]`);
+        if (targetStep) {
+          const idx = steps.indexOf(targetStep);
+          if (idx !== -1) this.currentStepIdx = idx;
+          targetStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    });
   }
 
   // 메인 스크롤 단계로 바로 이동 (전개도에서 메인으로 상호 이동)
@@ -600,7 +675,7 @@ class ExhibitionApp {
   }
 
   /* ============================================================
-     8. 상세 전시 화면 렌더링 (3D 에셋 Embed + N_Panel 패널)
+     8. 상세 전시 화면 렌더링 (3D 에셋 Embed / Three.js GLB)
      ============================================================ */
   renderDetail(animalCode) {
     const animalIndex = EXHIBITION_DATA.animals.findIndex(a => a.code === animalCode);
@@ -624,7 +699,7 @@ class ExhibitionApp {
     if (title) title.innerText = animal.name;
     if (simpleDesc) simpleDesc.innerText = animal.simpleDesc;
 
-    // [핵심] 좌측 무대: con_Mapping.md의 3D 에셋 Embed (Sketchfab iframe or GLB 뷰어)
+    // [핵심] 좌측 무대: con_Mapping.md의 3D 에셋 (GLB 전용 뷰어 또는 Sketchfab Embed iframe)
     const embedWrap = document.getElementById('detail-3d-embed-wrap');
     if (embedWrap) {
       if (animal.glb) {
@@ -640,11 +715,13 @@ class ExhibitionApp {
       featuresList.innerHTML = animal.features.map(f => `<li>${f}</li>`).join('');
     }
 
-    // 사회·문화적 관점 (dialogueData or references)
+    // 사회·문화적 관점 (DOCENT_DIALOGUES 연동)
     const cultureText = document.getElementById('detail-culture-text');
     if (cultureText) {
-      const vnData = (typeof DIALOGUE_DATA !== 'undefined' && DIALOGUE_DATA[animal.code]) ? DIALOGUE_DATA[animal.code] : null;
-      cultureText.innerText = vnData ? vnData.cultureStory : `${animal.name}은 백제 금동대향로에 정교하게 새겨져 당시 사람들의 이상세계와 자연관을 대변합니다.`;
+      const vnData = (typeof DOCENT_DIALOGUES !== 'undefined' && DOCENT_DIALOGUES[animal.code]) ? DOCENT_DIALOGUES[animal.code] : null;
+      cultureText.innerText = vnData && vnData.cultureStory 
+        ? vnData.cultureStory 
+        : `${animal.name}은 백제 금동대향로에 정교하게 조각되어 당시 백제인의 이상향과 생태관을 대변합니다.`;
     }
 
     // 자연과학·진화적 관점
@@ -664,14 +741,114 @@ class ExhibitionApp {
     const relicText = document.getElementById('detail-relic-text');
     const sourceCredit = document.getElementById('detail-source-credit');
     if (relicText) {
-      relicText.innerText = `백제 부여 능산리사지 출토 백제금동대향로(국보) 본체 조각에 표현된 도상 도판`;
+      relicText.innerText = `백제 부여 능산리 절터 출토 금동대향로(국보) 본체 조각에 표현된 도상 도판`;
     }
     if (sourceCredit) {
-      sourceCredit.innerText = animal.sourceText || '출처: 국립부여박물관';
+      sourceCredit.innerText = animal.sourceText || '출처: 국립부여박물관 소장 백제금동대향로 도판';
     }
 
     // OX 퀴즈 렌더링
     this.renderQuiz(animal.code);
+  }
+
+  /* ============================================================
+     8-1. GLB 3D 모델 전용 Three.js 뷰어 렌더링 (01.glb, 02.glb)
+     ============================================================ */
+  renderGLBViewer(container, glbUrl, animalName) {
+    container.innerHTML = '';
+    
+    const canvas = document.createElement('canvas');
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.display = 'block';
+    container.appendChild(canvas);
+
+    const loadingTip = document.createElement('div');
+    loadingTip.style.position = 'absolute';
+    loadingTip.style.bottom = '1rem';
+    loadingTip.style.left = '50%';
+    loadingTip.style.transform = 'translateX(-50%)';
+    loadingTip.style.color = 'var(--accent-gold)';
+    loadingTip.style.fontSize = '0.85rem';
+    loadingTip.style.background = 'rgba(8,9,13,0.85)';
+    loadingTip.style.padding = '0.35rem 0.9rem';
+    loadingTip.style.borderRadius = '14px';
+    loadingTip.style.border = '1px solid var(--border-color)';
+    loadingTip.innerText = `3D 모델 로딩 중: ${animalName}...`;
+    container.appendChild(loadingTip);
+
+    const width = container.clientWidth || 600;
+    const height = container.clientHeight || 520;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    camera.position.set(0, 0.6, 2.5);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+    renderer.outputEncoding = THREE.sRGBEncoding;
+
+    const controls = new THREE.OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 1.5;
+
+    // 조명 세팅
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+    scene.add(ambientLight);
+
+    const dirLight1 = new THREE.DirectionalLight(0xfffaed, 2.8);
+    dirLight1.position.set(3, 5, 3);
+    scene.add(dirLight1);
+
+    const dirLight2 = new THREE.DirectionalLight(0xd4af37, 2.0);
+    dirLight2.position.set(-3, -2, -3);
+    scene.add(dirLight2);
+
+    // GLB 로더 실행
+    const loader = new THREE.GLTFLoader();
+    loader.load(glbUrl, (gltf) => {
+      const model = gltf.scene;
+      const box = new THREE.Box3().setFromObject(model);
+      if (!box.isEmpty()) {
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = maxDim > 0 ? (1.8 / maxDim) : 1;
+        model.scale.set(scale, scale, scale);
+
+        const scaledBox = new THREE.Box3().setFromObject(model);
+        const center = scaledBox.getCenter(new THREE.Vector3());
+        model.position.x -= center.x;
+        model.position.y -= center.y;
+        model.position.z -= center.z;
+      }
+      scene.add(model);
+      loadingTip.innerText = `💡 마우스로 드래그하여 ${animalName} 3D 모델을 회전하세요`;
+    }, undefined, (err) => {
+      console.warn('GLB load error:', err);
+      loadingTip.innerText = `${animalName} 3D 모델 (로컬 파일 로드)`;
+    });
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    const onResize = () => {
+      if (!container) return;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+    window.addEventListener('resize', onResize);
   }
 
   /* ============================================================
@@ -681,7 +858,7 @@ class ExhibitionApp {
     const quizBox = document.getElementById('detail-quiz-box');
     if (!quizBox) return;
 
-    const vnData = (typeof DIALOGUE_DATA !== 'undefined') ? DIALOGUE_DATA[animalCode] : null;
+    const vnData = (typeof DOCENT_DIALOGUES !== 'undefined') ? DOCENT_DIALOGUES[animalCode] : null;
     const quiz = vnData ? vnData.quiz : null;
 
     if (!quiz) {
@@ -764,25 +941,34 @@ class ExhibitionApp {
   }
 
   /* ============================================================
-     12. 과학해설사 (Docent) 비주얼 노벨 실행기
+     12. 과학해설사 (Docent) 비주얼 노벨 실행기 (DOCENT_DIALOGUES 연동)
+     ============================================================ */
+  /* ============================================================
+     12. 과학해설사 (Docent) 비주얼 노벨 실행기 (DOCENT_DIALOGUES 연동)
      ============================================================ */
   openDocent(animalCode) {
     const modal = document.getElementById('docent-modal');
     if (!modal) return;
 
-    this.docentState.animalCode = animalCode;
-    const animal = EXHIBITION_DATA.animals.find(a => a.code === animalCode) || EXHIBITION_DATA.animals[0];
-    const vnData = (typeof DIALOGUE_DATA !== 'undefined') ? DIALOGUE_DATA[animalCode] : null;
+    // 코드 정규화 (1 -> '01')
+    const normalizedCode = String(animalCode || '01').padStart(2, '0');
+    this.docentState.animalCode = normalizedCode;
+
+    const animal = EXHIBITION_DATA.animals.find(a => a.code === normalizedCode) || EXHIBITION_DATA.animals[0];
+    const docentData = (typeof DOCENT_DIALOGUES !== 'undefined' && DOCENT_DIALOGUES[normalizedCode]) 
+      ? DOCENT_DIALOGUES[normalizedCode] 
+      : null;
 
     const animalTag = document.getElementById('docent-animal-tag');
     const themeText = document.getElementById('docent-theme-text');
     if (animalTag) animalTag.innerText = `${animal.code} ${animal.name}`;
-    if (themeText) themeText.innerText = animal.panelTheme;
+    if (themeText) themeText.innerText = (docentData && docentData.theme) ? docentData.theme : animal.panelTheme;
 
     modal.style.display = 'flex';
+    modal.style.zIndex = '9999';
 
-    if (vnData && vnData.dialogueTree) {
-      this.startDocentBranch('ROOT', vnData.dialogueTree);
+    if (docentData && docentData.start && docentData.start.lines && docentData.start.lines.length > 0) {
+      this.startDocent(docentData);
     } else {
       this.startDocentFallback(animal);
     }
@@ -795,17 +981,14 @@ class ExhibitionApp {
     this.docentState.isTyping = false;
   }
 
-  startDocentBranch(branchKey, dialogueTree) {
-    this.docentState.currentBranch = branchKey;
-    const branch = dialogueTree[branchKey] || dialogueTree['ROOT'];
-    if (!branch) return;
-
-    this.docentState.dialogueQueue = [...branch.lines];
+  startDocent(docentData) {
+    this.docentState.currentMode = 'START';
+    this.docentState.dialogueQueue = [...docentData.start.lines];
     this.docentState.queueIdx = 0;
-    this.displayNextDocentLine(branch);
+    this.displayNextDocentLine();
   }
 
-  displayNextDocentLine(branch) {
+  displayNextDocentLine() {
     const queue = this.docentState.dialogueQueue;
     const idx = this.docentState.queueIdx;
     const optionsFooter = document.getElementById('docent-options-footer');
@@ -819,24 +1002,44 @@ class ExhibitionApp {
       if (clickHint) clickHint.style.display = 'inline';
 
       this.typewriteDocentText(line.text, line.speaker || '래피드왜건', line.emotion || 'neutral', () => {
-        if (this.docentState.queueIdx >= queue.length && branch.options && branch.options.length > 0) {
-          this.showDocentOptions(branch.options);
-          if (clickHint) clickHint.style.display = 'none';
+        if (this.docentState.queueIdx >= queue.length) {
+          this.handleQueueEnd();
         }
       });
     } else {
-      if (branch.options && branch.options.length > 0) {
-        this.showDocentOptions(branch.options);
+      this.handleQueueEnd();
+    }
+  }
+
+  handleQueueEnd() {
+    const clickHint = document.getElementById('docent-click-hint');
+    const docentData = (typeof DOCENT_DIALOGUES !== 'undefined') ? DOCENT_DIALOGUES[this.docentState.animalCode] : null;
+    if (!docentData) return;
+
+    if (this.docentState.currentMode === 'START') {
+      if (docentData.start.choices && docentData.start.choices.length > 0) {
+        this.showDocentChoices(docentData.start.choices);
         if (clickHint) clickHint.style.display = 'none';
-      } else {
-        this.closeDocent();
       }
+    } else if (this.docentState.currentMode === 'QUESTION') {
+      const qObj = docentData.questions ? docentData.questions[this.docentState.currentQuestionId] : null;
+      if (qObj && qObj.return) {
+        this.docentState.currentMode = 'RETURN';
+        this.docentState.dialogueQueue = [{ speaker: '래피드왜건', emotion: 'explaining', text: qObj.return.text || '다른 궁금한 점이 있으신가요?' }];
+        this.docentState.queueIdx = 0;
+        this.displayNextDocentLine();
+      } else {
+        this.showDocentChoices(docentData.start.choices);
+        if (clickHint) clickHint.style.display = 'none';
+      }
+    } else if (this.docentState.currentMode === 'RETURN') {
+      this.showDocentChoices(docentData.start.choices);
+      if (clickHint) clickHint.style.display = 'none';
     }
   }
 
   handleDocentClick() {
     if (this.docentState.isTyping) {
-      // 타이핑 즉시 완료
       clearTimeout(this.docentState.typeTimer);
       this.docentState.isTyping = false;
       const chatBody = document.getElementById('docent-chat-body');
@@ -844,13 +1047,7 @@ class ExhibitionApp {
       return;
     }
 
-    const vnData = (typeof DIALOGUE_DATA !== 'undefined') ? DIALOGUE_DATA[this.docentState.animalCode] : null;
-    if (vnData && vnData.dialogueTree) {
-      const branch = vnData.dialogueTree[this.docentState.currentBranch];
-      if (branch) {
-        this.displayNextDocentLine(branch);
-      }
-    }
+    this.displayNextDocentLine();
   }
 
   typewriteDocentText(text, speaker, emotion, callback) {
@@ -865,6 +1062,9 @@ class ExhibitionApp {
       const emoMap = {
         'happy': 'Asset/4. Docent/explaining.webp',
         'surprised': 'Asset/4. Docent/explaining.webp',
+        'explaining': 'Asset/4. Docent/explaining.webp',
+        'thinking': 'Asset/4. Docent/neutral.webp',
+        'excited': 'Asset/4. Docent/explaining.webp',
         'neutral': 'Asset/4. Docent/neutral.webp'
       };
       portrait.src = emoMap[emotion] || 'Asset/4. Docent/neutral.webp';
@@ -891,7 +1091,7 @@ class ExhibitionApp {
     typeNextChar();
   }
 
-  showDocentOptions(options) {
+  showDocentChoices(choices) {
     const footer = document.getElementById('docent-options-footer');
     const list = document.getElementById('docent-options-list');
     if (!footer || !list) return;
@@ -899,19 +1099,34 @@ class ExhibitionApp {
     list.innerHTML = '';
     footer.style.display = 'block';
 
-    const vnData = (typeof DIALOGUE_DATA !== 'undefined') ? DIALOGUE_DATA[this.docentState.animalCode] : null;
+    const docentData = (typeof DOCENT_DIALOGUES !== 'undefined') ? DOCENT_DIALOGUES[this.docentState.animalCode] : null;
 
-    options.forEach(opt => {
+    choices.forEach(ch => {
       const btn = document.createElement('button');
       btn.className = 'btn-docent-option';
-      btn.innerText = `▶ ${opt.label}`;
+      btn.innerText = `💬 ${ch.text}`;
       btn.addEventListener('click', () => {
-        if (vnData && vnData.dialogueTree) {
-          this.startDocentBranch(opt.next, vnData.dialogueTree);
+        if (docentData && docentData.questions && docentData.questions[ch.id]) {
+          this.docentState.currentMode = 'QUESTION';
+          this.docentState.currentQuestionId = ch.id;
+          this.docentState.dialogueQueue = [...docentData.questions[ch.id].lines];
+          this.docentState.queueIdx = 0;
+          this.displayNextDocentLine();
         }
       });
       list.appendChild(btn);
     });
+
+    // 대화 종료 버튼 추가
+    const endBtn = document.createElement('button');
+    endBtn.className = 'btn-docent-option';
+    endBtn.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+    endBtn.style.color = 'var(--text-muted)';
+    endBtn.innerText = '✕ 대화 종료하고 전시품 계속 감상하기';
+    endBtn.addEventListener('click', () => {
+      this.closeDocent();
+    });
+    list.appendChild(endBtn);
   }
 
   startDocentFallback(animal) {
