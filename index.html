@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
   
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260825_final_v10">
+  <link rel="stylesheet" href="css/style.css?v=20260825_final_v16">
   
   <!-- Three.js & Loaders (CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -378,6 +378,48 @@
       </div>
 
     </div>
+
+    <!-- ============================================================
+         4-B. VISITOR COMMENTS SYSTEM (Source of Truth: reply.md)
+         ============================================================ -->
+    <div id="detail-comments-wrapper" class="detail-comments-wrapper">
+      <div class="comments-header">
+        <div class="comments-title-wrap">
+          <h3 class="comments-title">💬 관람객의 한마디</h3>
+          <p class="comments-subtitle">이 동물에 대해 어떤 점이 가장 신기했나요?</p>
+        </div>
+      </div>
+
+      <!-- Popular TOP 3 Comments Section -->
+      <div id="comments-popular-section" class="comments-popular-section" style="display: none;">
+        <div class="popular-section-title">⭐ 인기 댓글 TOP 3</div>
+        <div id="comments-popular-list" class="comments-popular-list">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- All Comments Section -->
+      <div class="comments-all-section">
+        <div class="all-section-title">💬 전체 댓글</div>
+        <div id="comments-empty-notice" class="comments-empty-notice" style="display: none;">
+          <p>아직 등록된 이야기가 없어요.<br>이 동물에 대한 첫 번째 이야기를 남겨보세요! 🌟</p>
+        </div>
+        <div id="comments-tree-list" class="comments-tree-list">
+          <!-- Dynamically populated with unlimited nested replies -->
+        </div>
+      </div>
+
+      <!-- New Root Comment Input Box -->
+      <div class="comment-create-box">
+        <div class="comment-input-header">
+          <input type="text" id="comment-author-input" class="comment-author-input" placeholder="이름 (익명 작성 가능)" maxlength="12">
+        </div>
+        <div class="comment-input-body">
+          <textarea id="comment-text-input" class="comment-textarea" placeholder="이 동물에 대한 생각을 남겨보세요." rows="3"></textarea>
+          <button id="btn-submit-comment" class="btn-submit-comment">등록</button>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================
@@ -446,10 +488,11 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/modelData.js?v=20260825_final_v10"></script>
-  <script src="js/dialogueData.js?v=20260825_final_v10"></script>
-  <script src="js/data.js?v=20260825_final_v10"></script>
-  <script src="js/threeViewer.js?v=20260825_final_v10"></script>
-  <script src="js/app.js?v=20260825_final_v10"></script>
+  <script src="js/modelData.js?v=20260825_final_v16"></script>
+  <script src="js/dialogueData.js?v=20260825_final_v16"></script>
+  <script src="js/data.js?v=20260825_final_v16"></script>
+  <script src="js/commentSystem.js?v=20260825_final_v16"></script>
+  <script src="js/threeViewer.js?v=20260825_final_v16"></script>
+  <script src="js/app.js?v=20260825_final_v16"></script>
 </body>
 </html>

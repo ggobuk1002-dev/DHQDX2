@@ -730,25 +730,258 @@ class ExhibitionApp {
       scienceText.innerText = animal.scienceStory;
     }
 
-    // 우측 과학 패널 (N_Panel 이미지)
-    const sciencePanelImg = document.getElementById('detail-science-panel-img');
-    if (sciencePanelImg) {
-      sciencePanelImg.src = animal.panelImg || 'Asset/Final.webp';
-      sciencePanelImg.alt = `${animal.name} 과학 조사 패널`;
+    // 우측 과학 패널 (N_Panel 이미지 동적 세로 스택)
+    const panelWrap = document.getElementById('detail-science-panel-wrap');
+    if (panelWrap) {
+      const panelList = [];
+      if (animal.panelImg) panelList.push(animal.panelImg);
+      if (animal.panelImg2) panelList.push(animal.panelImg2);
+      if (animal.panelImg3) panelList.push(animal.panelImg3);
+
+      if (panelList.length === 0) {
+        panelList.push('Asset/Final.webp');
+      }
+
+      let panelsHtml = `<div class="science-panel-label">🔬 연구 조사 과학 패널 (${panelList.length}부)</div><div class="science-panels-stack" style="display: flex; flex-direction: column; gap: 1.5rem;">`;
+      panelList.forEach((pUrl, pIdx) => {
+        panelsHtml += `<img class="science-panel-img" src="${pUrl}" alt="${animal.name} 과학 조사 패널 ${pIdx + 1}" style="width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">`;
+      });
+      panelsHtml += `</div>`;
+      panelWrap.innerHTML = panelsHtml;
     }
 
-    // 관련 유물 및 출처
+    // 관련 유물 및 학술 근거 (R/A 출처 코드 뱃지 및 서지정보)
     const relicText = document.getElementById('detail-relic-text');
     const sourceCredit = document.getElementById('detail-source-credit');
+    
     if (relicText) {
-      relicText.innerText = `백제 부여 능산리 절터 출토 금동대향로(국보) 본체 조각에 표현된 도상 도판`;
+      relicText.innerHTML = `
+        <div style="margin-bottom: 0.85rem;">
+          <strong style="color: #fff; display: block; margin-bottom: 0.25rem;">🏛️ 출토 유물 도판</strong>
+          <span>백제 부여 능산리 절터 출토 백제금동대향로(국보) 본체에 조각된 ${animal.name} 도상</span>
+        </div>
+      `;
     }
+
     if (sourceCredit) {
-      sourceCredit.innerText = animal.sourceText || '출처: 국립부여박물관 소장 백제금동대향로 도판';
+      let rHtml = '';
+      if (animal.referenceList && animal.referenceList.length > 0) {
+        rHtml += `<div class="credit-group" style="margin-bottom: 0.8rem;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 0.4rem;">🔬 과학 학술 참고문헌 (References)</div>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem;">`;
+        animal.referenceList.forEach(ref => {
+          rHtml += `<li style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5; background: rgba(255,255,255,0.03); padding: 0.4rem 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-gold);">
+            <span style="color: var(--accent-gold-light); font-weight: 700; margin-right: 0.4rem;">[${ref.code}]</span>${ref.text}
+          </li>`;
+        });
+        rHtml += `</ul></div>`;
+      }
+
+      if (animal.assetList && animal.assetList.length > 0) {
+        rHtml += `<div class="credit-group">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 0.4rem;">🎨 전시 에셋 및 3D 모델 출처 (Assets)</div>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem;">`;
+        animal.assetList.forEach(ast => {
+          rHtml += `<li style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5; background: rgba(255,255,255,0.03); padding: 0.4rem 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-cyan);">
+            <span style="color: var(--accent-cyan); font-weight: 700; margin-right: 0.4rem;">[${ast.code}]</span>${ast.text}
+          </li>`;
+        });
+        rHtml += `</ul></div>`;
+      }
+
+      sourceCredit.innerHTML = rHtml;
     }
 
     // OX 퀴즈 렌더링
     this.renderQuiz(animal.code);
+
+    // [신규] 관람객의 한마디 (동물별 댓글 및 무제한 대댓글 시스템)
+    this.renderComments(animal.code);
+  }
+
+  /* ============================================================
+     8-B. 관람객 댓글 및 무제한 대댓글 시스템 (Source of Truth: reply.md)
+     ============================================================ */
+  renderComments(animalCode) {
+    const code = String(animalCode || '01').padStart(2, '0');
+    if (!window.commentManager) return;
+
+    // 1. 인기 댓글 TOP 3
+    const popSection = document.getElementById('comments-popular-section');
+    const popList = document.getElementById('comments-popular-list');
+    const popularComments = window.commentManager.getTop3Popular(code);
+
+    if (popSection && popList) {
+      if (popularComments.length > 0) {
+        popSection.style.display = 'block';
+        const medals = ['🥇', '🥈', '🥉'];
+        popList.innerHTML = '';
+        popularComments.forEach((cmt, idx) => {
+          const card = document.createElement('div');
+          card.className = 'popular-card';
+          const isLiked = window.commentManager.isLiked(cmt.id);
+          card.innerHTML = `
+            <div class="popular-rank-badge">${medals[idx] || '⭐'}</div>
+            <div class="popular-content-wrap">
+              <div class="popular-meta">
+                <span class="popular-author">${cmt.name}</span>
+                <span style="font-size:0.75rem;color:var(--accent-gold);font-weight:700;">인기 ${idx + 1}위</span>
+              </div>
+              <div class="popular-text">${cmt.text}</div>
+              <div class="popular-actions">
+                <button class="btn-like-comment ${isLiked ? 'liked' : ''}" data-id="${cmt.id}">
+                  <span>👍</span>
+                  <span class="like-count">${cmt.likes}</span>
+                </button>
+              </div>
+            </div>
+          `;
+          const likeBtn = card.querySelector('.btn-like-comment');
+          likeBtn.addEventListener('click', () => {
+            window.commentManager.toggleLike(cmt.id);
+            this.renderComments(code);
+          });
+          popList.appendChild(card);
+        });
+      } else {
+        popSection.style.display = 'none';
+      }
+    }
+
+    // 2. 전체 댓글 트리 렌더링 (재귀적 렌더링)
+    const treeList = document.getElementById('comments-tree-list');
+    const emptyNotice = document.getElementById('comments-empty-notice');
+    const comments = window.commentManager.getComments(code);
+
+    if (treeList) {
+      treeList.innerHTML = '';
+      if (!comments || comments.length === 0) {
+        if (emptyNotice) emptyNotice.style.display = 'block';
+      } else {
+        if (emptyNotice) emptyNotice.style.display = 'none';
+        comments.forEach(cmt => {
+          treeList.appendChild(this.createCommentNode(cmt, code, 0));
+        });
+      }
+    }
+
+    // 3. 최상위 댓글 등록 이벤트 바인딩
+    this.bindCommentForm(code);
+  }
+
+  createCommentNode(comment, animalCode, depth = 0) {
+    const node = document.createElement('div');
+    node.className = 'comment-node';
+    const isLiked = window.commentManager.isLiked(comment.id);
+
+    const card = document.createElement('div');
+    card.className = 'comment-card';
+    card.innerHTML = `
+      <div class="comment-header">
+        <span class="comment-author">${comment.name}</span>
+        <span class="comment-date">${new Date(comment.createdAt).toLocaleDateString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+      </div>
+      <div class="comment-body">${comment.text}</div>
+      <div class="comment-actions">
+        <button class="btn-like-comment ${isLiked ? 'liked' : ''}" data-id="${comment.id}">
+          <span>👍</span>
+          <span class="like-count">${comment.likes}</span>
+        </button>
+        <button class="btn-reply-toggle" data-id="${comment.id}">답글</button>
+      </div>
+      <div class="reply-inline-form-container" style="display:none;"></div>
+    `;
+
+    // 추천 버튼 이벤트
+    const likeBtn = card.querySelector('.btn-like-comment');
+    likeBtn.addEventListener('click', () => {
+      window.commentManager.toggleLike(comment.id);
+      this.renderComments(animalCode);
+    });
+
+    // 답글 버튼 이벤트 (인라인 답글 작성창 토글)
+    const replyToggleBtn = card.querySelector('.btn-reply-toggle');
+    const replyContainer = card.querySelector('.reply-inline-form-container');
+
+    replyToggleBtn.addEventListener('click', () => {
+      if (replyContainer.style.display === 'none') {
+        replyContainer.style.display = 'block';
+        replyContainer.innerHTML = `
+          <div class="reply-inline-form">
+            <input type="text" class="comment-author-input reply-name-input" placeholder="이름 (익명 가능)" maxlength="12" style="width:160px;margin-bottom:0.4rem;">
+            <textarea class="reply-inline-textarea" placeholder="이 댓글에 답글을 남겨보세요."></textarea>
+            <div class="reply-inline-actions">
+              <button class="btn-reply-cancel">취소</button>
+              <button class="btn-reply-submit">등록</button>
+            </div>
+          </div>
+        `;
+
+        const submitBtn = replyContainer.querySelector('.btn-reply-submit');
+        const cancelBtn = replyContainer.querySelector('.btn-reply-cancel');
+        const textarea = replyContainer.querySelector('.reply-inline-textarea');
+        const nameInput = replyContainer.querySelector('.reply-name-input');
+
+        textarea.focus();
+
+        cancelBtn.addEventListener('click', () => {
+          replyContainer.style.display = 'none';
+          replyContainer.innerHTML = '';
+        });
+
+        submitBtn.addEventListener('click', () => {
+          const text = textarea.value.trim();
+          if (!text) {
+            textarea.focus();
+            return;
+          }
+          window.commentManager.addReply(animalCode, comment.id, text, nameInput.value);
+          this.renderComments(animalCode);
+        });
+      } else {
+        replyContainer.style.display = 'none';
+        replyContainer.innerHTML = '';
+      }
+    });
+
+    node.appendChild(card);
+
+    // 자식 답글들 재귀적 렌더링 (depth 무제한)
+    if (comment.replies && comment.replies.length > 0) {
+      const repliesList = document.createElement('div');
+      repliesList.className = 'comment-replies-list';
+      comment.replies.forEach(reply => {
+        repliesList.appendChild(this.createCommentNode(reply, animalCode, depth + 1));
+      });
+      node.appendChild(repliesList);
+    }
+
+    return node;
+  }
+
+  bindCommentForm(animalCode) {
+    const submitBtn = document.getElementById('btn-submit-comment');
+    const textInput = document.getElementById('comment-text-input');
+    const authorInput = document.getElementById('comment-author-input');
+
+    if (!submitBtn || !textInput) return;
+
+    // Remove old listeners by cloning
+    const newBtn = submitBtn.cloneNode(true);
+    submitBtn.parentNode.replaceChild(newBtn, submitBtn);
+
+    newBtn.addEventListener('click', () => {
+      const text = textInput.value.trim();
+      if (!text) {
+        textInput.focus();
+        return;
+      }
+      const author = authorInput ? authorInput.value : '';
+      window.commentManager.addComment(animalCode, text, author);
+      textInput.value = '';
+      if (authorInput) authorInput.value = '';
+      this.renderComments(animalCode);
+    });
   }
 
   /* ============================================================
@@ -1052,22 +1285,35 @@ class ExhibitionApp {
 
   typewriteDocentText(text, speaker, emotion, callback) {
     const speakerElem = document.getElementById('docent-speaker-name');
-    const emotionElem = document.getElementById('docent-emotion-tag');
     const chatBody = document.getElementById('docent-chat-body');
     const portrait = document.getElementById('docent-character-portrait');
 
-    if (speakerElem) speakerElem.innerText = speaker;
-    if (emotionElem) emotionElem.innerText = emotion;
+    if (speakerElem) {
+      speakerElem.innerText = speaker || '래피드왜건';
+      if (speaker === '나 (관람객)') {
+        speakerElem.style.color = '#38bdf8';
+        speakerElem.style.background = 'rgba(56, 189, 248, 0.15)';
+        speakerElem.style.borderColor = 'rgba(56, 189, 248, 0.4)';
+      } else {
+        speakerElem.style.color = 'var(--accent-gold-light)';
+        speakerElem.style.background = 'rgba(212, 175, 55, 0.15)';
+        speakerElem.style.borderColor = 'rgba(212, 175, 55, 0.3)';
+      }
+    }
+
     if (portrait) {
       const emoMap = {
-        'happy': 'Asset/4. Docent/explaining.webp',
-        'surprised': 'Asset/4. Docent/explaining.webp',
+        'happy': 'Asset/4. Docent/excited.webp',
+        'excited': 'Asset/4. Docent/excited.webp',
         'explaining': 'Asset/4. Docent/explaining.webp',
-        'thinking': 'Asset/4. Docent/neutral.webp',
-        'excited': 'Asset/4. Docent/explaining.webp',
-        'neutral': 'Asset/4. Docent/neutral.webp'
+        'thinking': 'Asset/4. Docent/thinking.webp',
+        'surprised': 'Asset/4. Docent/surprised.webp',
+        'enlightened': 'Asset/4. Docent/enlightened.webp',
+        'neutral': 'Asset/4. Docent/neutral.webp',
+        'curious': 'Asset/4. Docent/thinking.webp'
       };
       portrait.src = emoMap[emotion] || 'Asset/4. Docent/neutral.webp';
+      portrait.style.opacity = (speaker === '나 (관람객)') ? '0.7' : '1';
     }
 
     this.docentState.fullText = text;
@@ -1104,12 +1350,24 @@ class ExhibitionApp {
     choices.forEach(ch => {
       const btn = document.createElement('button');
       btn.className = 'btn-docent-option';
-      btn.innerText = `💬 ${ch.text}`;
+      btn.innerText = `💬 "${ch.text}"`;
       btn.addEventListener('click', () => {
         if (docentData && docentData.questions && docentData.questions[ch.id]) {
+          footer.style.display = 'none';
           this.docentState.currentMode = 'QUESTION';
           this.docentState.currentQuestionId = ch.id;
-          this.docentState.dialogueQueue = [...docentData.questions[ch.id].lines];
+
+          // 관람객(나)의 질문 발화를 큐의 첫 번째로 추가하여 실제 묻고 답하는 대화로 연출!
+          const userSpeech = {
+            speaker: '나 (관람객)',
+            emotion: 'curious',
+            text: `${ch.text}`
+          };
+
+          this.docentState.dialogueQueue = [
+            userSpeech,
+            ...docentData.questions[ch.id].lines
+          ];
           this.docentState.queueIdx = 0;
           this.displayNextDocentLine();
         }
