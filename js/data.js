@@ -3,20 +3,21 @@
  * EXHIBITION DATA ARCHIVE (Source of Truth)
  * 19 Animals & 5 Sacred Layers of Baekje Incense Burner
  * 100% Robust JSON-Serialized Pure JavaScript Data
+ * Enriched with Grounded Mountain Topography Coordinates
  * ============================================================
  */
 
 const EXHIBITION_DATA = {
   "layers": [
     {
-      "id": "top",
+      "id": "celestial",
       "layerIndex": 1,
-      "name": "꼭대기",
-      "shortName": "꼭대기",
-      "category": "top",
+      "name": "천상 (꼭대기)",
+      "shortName": "천상",
+      "category": "celestial",
       "title": "하늘을 향해 날아오르는 봉황",
       "desc": "향로의 정상에는 턱 밑에 영롱한 구슬을 품은 봉황 한 마리가 날개를 활짝 펼치고 당당하게 서 있습니다. 봉황의 가슴과 배 쪽에는 향 연기가 은은하게 피어오르도록 뚫어놓은 배연공이 숨겨져 있습니다.",
-      "bg": "Asset/2. Main/bg/bg_top.webp",
+      "bg": "Asset/2. Main/bg/bg_celestial.webp",
       "animalCodes": [
         "18"
       ]
@@ -100,8 +101,8 @@ const EXHIBITION_DATA = {
       "layer": "land",
       "layerName": "삼신산",
       "layerCoords": {
-        "x": 8,
-        "y": 68
+        "x": 22,
+        "y": 82
       },
       "panelTheme": "단단한 발굽과 초원 질주의 생체역학",
       "simpleDesc": "단단한 땅을 빠르게 달리는 인간의 오랜 동반자이자 기마문화의 상징.",
@@ -211,8 +212,8 @@ const EXHIBITION_DATA = {
       "layer": "land",
       "layerName": "삼신산",
       "layerCoords": {
-        "x": 15,
-        "y": 62
+        "x": 14,
+        "y": 68
       },
       "panelTheme": "맹수의 위엄과 산림 매복의 해부학",
       "simpleDesc": "강력한 근육과 은밀한 사냥 기술을 지닌 백두대간의 최상위 포식자.",
@@ -278,8 +279,8 @@ const EXHIBITION_DATA = {
       "layer": "land",
       "layerName": "삼신산",
       "layerCoords": {
-        "x": 22,
-        "y": 58
+        "x": 28,
+        "y": 64
       },
       "panelTheme": "갈기와 사회적 무리 사냥의 진화",
       "simpleDesc": "풍성한 갈기와 무리 생활을 통해 백수(百獸)의 왕으로 군림한 맹수.",
@@ -345,8 +346,8 @@ const EXHIBITION_DATA = {
       "layer": "land",
       "layerName": "삼신산",
       "layerCoords": {
-        "x": 30,
-        "y": 54
+        "x": 40,
+        "y": 84
       },
       "panelTheme": "유연한 체형과 소형 포식자의 생태",
       "simpleDesc": "가늘고 긴 몸으로 좁은 굴속을 누비며 민첩하게 사냥하는 작은 맹수.",
@@ -400,8 +401,8 @@ const EXHIBITION_DATA = {
       "layer": "land",
       "layerName": "삼신산",
       "layerCoords": {
-        "x": 38,
-        "y": 50
+        "x": 32,
+        "y": 55
       },
       "panelTheme": "정교한 손발과 수상 생활의 적응",
       "simpleDesc": "나뭇가지를 쥐는 손과 영리한 지능으로 숲을 탐색하는 영장류.",
@@ -471,8 +472,8 @@ const EXHIBITION_DATA = {
       "layer": "land",
       "layerName": "삼신산",
       "layerCoords": {
-        "x": 46,
-        "y": 46
+        "x": 48,
+        "y": 62
       },
       "panelTheme": "매년 재생되는 경이로운 뿔의 생체공학",
       "simpleDesc": "우아한 자태와 계절마다 새로 자라는 장대한 뿔을 지닌 초식동물.",
@@ -558,8 +559,8 @@ const EXHIBITION_DATA = {
       "layer": "land",
       "layerName": "삼신산",
       "layerCoords": {
-        "x": 54,
-        "y": 42
+        "x": 58,
+        "y": 82
       },
       "panelTheme": "견고한 주둥이와 생태계 엔지니어링",
       "simpleDesc": "단단한 주둥이로 땅을 파헤치며 숲의 물질 순환을 돕는 야성의 전차.",
@@ -641,8 +642,8 @@ const EXHIBITION_DATA = {
       "layer": "land",
       "layerName": "삼신산",
       "layerCoords": {
-        "x": 62,
-        "y": 38
+        "x": 72,
+        "y": 68
       },
       "panelTheme": "기둥 같은 다리와 거대 체구의 완충 역학",
       "simpleDesc": "수 톤의 체중을 부드럽게 지탱하는 놀라운 발바닥 쿠션의 거인.",
@@ -720,8 +721,8 @@ const EXHIBITION_DATA = {
       "layer": "land",
       "layerName": "삼신산",
       "layerCoords": {
-        "x": 70,
-        "y": 34
+        "x": 18,
+        "y": 52
       },
       "panelTheme": "특화된 부리와 적응방산의 비밀",
       "simpleDesc": "독특한 형태의 부리로 특정한 먹이 환경에 완벽히 적응한 상상의 새.",
@@ -779,8 +780,8 @@ const EXHIBITION_DATA = {
       "layer": "land",
       "layerName": "삼신산",
       "layerCoords": {
-        "x": 78,
-        "y": 30
+        "x": 88,
+        "y": 66
       },
       "panelTheme": "포식과 방어의 끝없는 군비경쟁",
       "simpleDesc": "독사에 맞서 치명적인 공격을 가하는 용맹한 야수와 뱀의 대결.",
@@ -838,8 +839,8 @@ const EXHIBITION_DATA = {
       "layer": "land",
       "layerName": "삼신산",
       "layerCoords": {
-        "x": 86,
-        "y": 26
+        "x": 68,
+        "y": 50
       },
       "panelTheme": "화려한 볏과 성선택의 시각 신호",
       "simpleDesc": "머리 위의 깃털 장식으로 자신의 건강과 유전적 우수성을 뽐내는 새.",
@@ -913,8 +914,8 @@ const EXHIBITION_DATA = {
       "layer": "water",
       "layerName": "연꽃과 물가",
       "layerCoords": {
-        "x": 18,
-        "y": 75
+        "x": 16,
+        "y": 74
       },
       "panelTheme": "원시의 생체 설계와 수륙양용의 지배자",
       "simpleDesc": "수억 년 동안 거의 변하지 않은 완벽한 수중 매복 포식자.",
@@ -1000,8 +1001,8 @@ const EXHIBITION_DATA = {
       "layer": "water",
       "layerName": "연꽃과 물가",
       "layerCoords": {
-        "x": 34,
-        "y": 70
+        "x": 36,
+        "y": 66
       },
       "panelTheme": "유선형 체형과 아가미 호흡의 진화",
       "simpleDesc": "물살을 가르며 생명의 기원인 수중 세계를 유영하는 지느러미의 개척자.",
@@ -1071,8 +1072,8 @@ const EXHIBITION_DATA = {
       "layer": "water",
       "layerName": "연꽃과 물가",
       "layerCoords": {
-        "x": 50,
-        "y": 65
+        "x": 52,
+        "y": 78
       },
       "panelTheme": "유선형 몸매와 극저온 잠수 생리학",
       "simpleDesc": "육지에서 바다로 돌아가 매끄러운 몸으로 차가운 파도를 가르는 기각류.",
@@ -1146,8 +1147,8 @@ const EXHIBITION_DATA = {
       "layer": "water",
       "layerName": "연꽃과 물가",
       "layerCoords": {
-        "x": 66,
-        "y": 60
+        "x": 68,
+        "y": 64
       },
       "panelTheme": "치밀한 방수 모피와 맑은 하천의 지표종",
       "simpleDesc": "물갈퀴와 빽빽한 털로 하천 생태계를 자유자재로 누비는 수중 사냥꾼.",
@@ -1213,8 +1214,8 @@ const EXHIBITION_DATA = {
       "layer": "water",
       "layerName": "연꽃과 물가",
       "layerCoords": {
-        "x": 82,
-        "y": 55
+        "x": 85,
+        "y": 48
       },
       "panelTheme": "긴 다리와 찰나의 스피어 피싱(Spear-Fishing)",
       "simpleDesc": "물가에 고요히 서 있다가 벼락같이 물고기를 낚아채는 섭금류.",
@@ -1280,8 +1281,8 @@ const EXHIBITION_DATA = {
       "layer": "land",
       "layerName": "삼신산",
       "layerCoords": {
-        "x": 90,
-        "y": 40
+        "x": 84,
+        "y": 54
       },
       "panelTheme": "비행을 포기하고 질주를 선택한 다리",
       "simpleDesc": "날개 대신 강력한 다리 근육을 발달시켜 대지를 질주하는 주조류.",
@@ -1348,11 +1349,11 @@ const EXHIBITION_DATA = {
         "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
         "appearance": "봉황의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
       },
-      "layer": "top",
-      "layerName": "꼭대기",
+      "layer": "celestial",
+      "layerName": "천상 (꼭대기)",
       "layerCoords": {
         "x": 50,
-        "y": 10
+        "y": 46
       },
       "panelTheme": "천상의 이상과 백제 왕실의 신령한 상징",
       "simpleDesc": "향로의 정상에서 세상을 굽어살피며 태평성대를 알리는 신조.",
@@ -1423,7 +1424,7 @@ const EXHIBITION_DATA = {
       "layerName": "바다",
       "layerCoords": {
         "x": 50,
-        "y": 90
+        "y": 58
       },
       "panelTheme": "심해를 솟구쳐 향로를 떠받치는 불멸의 생명력",
       "simpleDesc": "용트림하는 역동적인 몸체로 지상과 천상을 연결하는 받침대의 수호자.",

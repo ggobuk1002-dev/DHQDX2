@@ -959,31 +959,31 @@ img {
 
 .marker-pin-wrap {
   position: relative;
-  width: 84px;
-  height: 84px;
+  width: 62px;
+  height: 62px;
   border-radius: 50%;
   background: rgba(7, 10, 18, 0.92);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 2.5px solid rgba(212, 175, 55, 0.7);
+  border: 2px solid rgba(212, 175, 55, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.95), 0 0 20px rgba(212, 175, 55, 0.35);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9), 0 0 15px rgba(212, 175, 55, 0.35);
   transition: all var(--transition-normal);
 }
 
 .layer-symbol-marker.is-discovered .marker-pin-wrap {
   border-color: #ffd700;
-  background: rgba(212, 175, 55, 0.3);
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.7), 0 10px 25px rgba(0, 0, 0, 0.9);
+  background: rgba(212, 175, 55, 0.25);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.65), 0 8px 20px rgba(0, 0, 0, 0.9);
 }
 
 .marker-pin-img {
-  width: 64px;
-  height: 64px;
+  width: 46px;
+  height: 46px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.9));
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.9));
   transition: transform var(--transition-fast);
 }
 
@@ -992,33 +992,34 @@ img {
 }
 
 .layer-symbol-marker:hover .marker-pin-wrap {
-  transform: scale(1.25);
+  transform: scale(1.22);
   border-color: #ffffff;
   background: rgba(15, 23, 42, 0.98);
-  box-shadow: 0 0 45px var(--accent-gold-glow), 0 15px 35px rgba(0, 0, 0, 0.98);
+  box-shadow: 0 0 35px var(--accent-gold-glow), 0 12px 30px rgba(0, 0, 0, 0.98);
 }
 
 .layer-symbol-marker:hover .marker-pin-img {
-  transform: scale(1.12);
+  transform: scale(1.1);
 }
 
 .marker-hover-tooltip {
   position: absolute;
-  bottom: 125%;
+  bottom: 120%;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(5, 8, 15, 0.96);
   border: 1.5px solid var(--accent-gold);
   color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 12px;
-  font-size: 0.95rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
   font-weight: 700;
   white-space: nowrap;
-  opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.95), 0 0 15px rgba(212,175,55,0.4);
+  opacity: 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9), 0 0 15px var(--accent-gold-glow);
+  transition: all 0.25s ease;
+  z-index: 60;
 }
 
 .layer-symbol-marker:hover .marker-hover-tooltip {

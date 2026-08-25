@@ -843,7 +843,7 @@ class ExhibitionApp {
 
     EXHIBITION_DATA.layers.forEach(layer => {
       const layerAnimals = EXHIBITION_DATA.animals.filter(a => {
-        if (layer.id === 'celestial') return a.layer === 'celestial';
+        if (layer.id === 'celestial' || layer.id === 'top') return a.layer === 'celestial' || a.layer === 'top';
         if (layer.id === 'sky') return false;
         if (layer.id === 'land') return a.layer === 'land';
         if (layer.id === 'water') return a.layer === 'water';
@@ -872,22 +872,34 @@ class ExhibitionApp {
 
       // 층위 뷰포트 (bg_XXXX.webp 배경 + 상징 마커)
       let markersHtml = '';
-      layerAnimals.forEach(animal => {
-        const isDiscovered = this.discoveredAnimals && this.discoveredAnimals.has(animal.code);
-        const coords = animal.layerCoords || { x: 50, y: 50 };
-        const iconSrc = isDiscovered ? animal.icon : (animal.iconDark || animal.icon);
 
-        markersHtml += `
-          <div class="layer-symbol-marker ${isDiscovered ? 'is-discovered' : 'is-undiscovered'}" 
-               style="left: ${coords.x}%; top: ${coords.y}%;" 
-               data-animal-code="${animal.code}">
-            <div class="marker-pin-wrap">
-              <img class="marker-pin-img" src="${iconSrc}" alt="${animal.name}" onerror="this.src='${animal.icon}'">
+      if (layer.id === 'sky') {
+        markersHtml = `
+          <div class="layer-symbol-marker is-discovered" style="left: 50%; top: 48%; cursor: default;">
+            <div class="marker-pin-wrap" style="border-color: var(--accent-cyan); background: rgba(15, 23, 42, 0.95); box-shadow: 0 0 25px rgba(56, 189, 248, 0.6);">
+              <span style="font-size: 1.5rem;">🎵</span>
             </div>
-            <div class="marker-hover-tooltip">${animal.code} ${animal.name} ${isDiscovered ? '★' : ''}</div>
+            <div class="marker-hover-tooltip" style="border-color: var(--accent-cyan); color: #38bdf8; opacity: 1; transform: translateX(-50%) translateY(-6px);">다섯 악사의 신선 세계 (금·완함·동고·종적·소)</div>
           </div>
         `;
-      });
+      } else {
+        layerAnimals.forEach(animal => {
+          const isDiscovered = this.discoveredAnimals && this.discoveredAnimals.has(animal.code);
+          const coords = animal.layerCoords || { x: 50, y: 50 };
+          const iconSrc = isDiscovered ? animal.icon : (animal.iconDark || animal.icon);
+
+          markersHtml += `
+            <div class="layer-symbol-marker ${isDiscovered ? 'is-discovered' : 'is-undiscovered'}" 
+                 style="left: ${coords.x}%; top: ${coords.y}%;" 
+                 data-animal-code="${animal.code}">
+              <div class="marker-pin-wrap">
+                <img class="marker-pin-img" src="${iconSrc}" alt="${animal.name}" onerror="this.src='${animal.icon}'">
+              </div>
+              <div class="marker-hover-tooltip">${animal.code} ${animal.name} ${isDiscovered ? '★' : ''}</div>
+            </div>
+          `;
+        });
+      }
 
       const stageHtml = `
         <div class="layer-stage-viewport">
