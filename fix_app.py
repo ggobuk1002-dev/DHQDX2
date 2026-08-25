@@ -1,49 +1,28 @@
 # -*- coding: utf-8 -*-
-import os, sys
+import re, os
 
-comment_js_content = r'''/**
- * 금동대향로 가상웹전시 - 동물별 상세 댓글/소통 시스템 (commentSystem.js)
- * Source of Truth: MD문서/reply.md
- */
+with open('index.html', 'r', encoding='utf-8') as f:
+    html = f.read()
 
-const DEFAULT_ANIMAL_COMMENTS = {
-  // 01 말
-  '01': [
-    {
-      id: 'cmt-01-1',
-      name: '김○○',
-      text: '말 발가락이 원래 여러 개였다가 하나로 진화했다는 사실이 정말 놀라워요! 🐴',
-      likes: 28,
-      createdAt: 1714500000000,
-      replies: [
-        {
-          id: 'cmt-01-1-1',
-          name: '박○○',
-          text: '맞아요! 단단한 땅을 빨리 달리려고 가운데 발가락만 남은 거래요.',
-          likes: 14,
-          createdAt: 1714503600000,
-          replies: [
-            {
-              id: 'cmt-01-1-1-1',
-              name: '이○○',
-              text: '등자랑 편자가 발명되면서 인류 역사도 크게 바뀌었대요.',
-              likes: 9,
-              createdAt: 1714507200000,
-              replies: []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: 'cmt-01-2',
-      name: '최○○',
-      text: '백제 유물에 조각된 말의 생동감 넘치는 자세가 아주 멋지네요.',
-      likes: 19,
-      createdAt: 1714510000000,
-      replies: []
-    }
-  ],
+sections = re.findall(r'<section[^>]*id=["\']([^"\']+)["\']', html)
+print('Sections found in index.html:', sections)
+
+cat_match = re.search(r'<section[^>]*id=["\']view-catalog["\'][^>]*>(.*?)</section>', html, re.DOTALL)
+if cat_match:
+    cat_inner = cat_match.group(1)
+    print('animal-grid in view-catalog:', 'id="animal-grid"' in cat_inner)
+    print('unwrapped-map-container in view-catalog:', 'id="unwrapped-map-container"' in cat_inner)
+    print('unwrapped-layers-list in view-catalog:', 'id="unwrapped-layers-list"' in cat_inner)
+else:
+    print('view-catalog section NOT properly closed!')
+
+with open('js/data.js', 'r', encoding='utf-8') as f:
+    data_js = f.read()
+
+print('animals in EXHIBITION_DATA:', 'animals: [' in data_js)
+print('layers in EXHIBITION_DATA:', 'layers: [' in data_js)
+os._exit(0)
+
 
   // 02 호랑이
   '02': [

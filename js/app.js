@@ -41,14 +41,14 @@ class ExhibitionApp {
   }
 
   init() {
-    this.initViewer();
-    this.bindEvents();
-    this.renderCatalog('all');
-    this.renderUnwrappedLayers();
-    this.updateProgress();
-    this.initIntroSequence();
-    this.initScrollyObserver();
-    this.initWheelSnapController();
+    try { this.initViewer(); } catch (e) { console.error('Viewer init error:', e); }
+    try { this.bindEvents(); } catch (e) { console.error('BindEvents error:', e); }
+    try { this.renderCatalog('all'); } catch (e) { console.error('RenderCatalog error:', e); }
+    try { this.renderUnwrappedLayers(); } catch (e) { console.error('RenderUnwrapped error:', e); }
+    try { this.updateProgress(); } catch (e) { console.error('UpdateProgress error:', e); }
+    try { this.initIntroSequence(); } catch (e) { console.error('IntroSequence error:', e); }
+    try { this.initScrollyObserver(); } catch (e) { console.error('ScrollyObserver error:', e); }
+    try { this.initWheelSnapController(); } catch (e) { console.error('WheelSnap error:', e); }
 
     // 항상 인트로 화면에서 첫 시작!
     this.switchView('intro');
@@ -78,13 +78,22 @@ class ExhibitionApp {
             const loader = document.getElementById('global-loader');
             if (loader) loader.style.opacity = '0';
             setTimeout(() => { if (loader) loader.style.display = 'none'; }, 500);
-          }, 400);
+          }, 300);
         }
       });
     } else {
       const loader = document.getElementById('global-loader');
       if (loader) loader.style.display = 'none';
     }
+
+    // 로더 강제 닫힘 안전장치 (2.5초 후 무조건 해제)
+    setTimeout(() => {
+      const loader = document.getElementById('global-loader');
+      if (loader && loader.style.display !== 'none') {
+        loader.style.opacity = '0';
+        setTimeout(() => { if (loader) loader.style.display = 'none'; }, 500);
+      }
+    }, 2500);
   }
 
   /* ============================================================
@@ -107,11 +116,11 @@ class ExhibitionApp {
           targetView = e.target.closest('[data-nav]')?.getAttribute('data-nav');
         }
         if (targetView === 'unwrapped') {
+          this.catalogMode = 'unwrapped';
           this.switchView('catalog');
-          this.setCatalogMode('unwrapped');
         } else if (targetView === 'catalog') {
+          this.catalogMode = 'cards';
           this.switchView('catalog');
-          this.setCatalogMode('cards');
         } else if (targetView) {
           this.switchView(targetView);
         }
@@ -235,9 +244,23 @@ class ExhibitionApp {
   switchView(viewName, animalCode = null) {
     this.currentView = viewName;
 
+    // 모든 view-section 비활성화
     document.querySelectorAll('.view-section').forEach(sec => {
       sec.classList.remove('active');
     });
+
+    // 인트로 비디오 정지 제어
+    const video = document.getElementById('intro-video');
+    const blackout = document.getElementById('intro-blackout');
+    const skipBtn = document.getElementById('btn-intro-skip');
+    if (viewName !== 'intro') {
+      if (video) {
+        video.pause();
+        video.style.opacity = '0';
+      }
+      if (blackout) blackout.style.opacity = '0';
+      if (skipBtn) skipBtn.style.display = 'none';
+    }
 
     document.querySelectorAll('.nav-btn').forEach(btn => {
       const nav = btn.getAttribute('data-nav');
@@ -572,21 +595,26 @@ class ExhibitionApp {
 
     grid.innerHTML = '';
 
+    if (typeof EXHIBITION_DATA === 'undefined' || !EXHIBITION_DATA.animals) {
+      console.warn('EXHIBITION_DATA is not ready yet');
+      return;
+    }
+
     const filtered = category === 'all'
       ? EXHIBITION_DATA.animals
       : EXHIBITION_DATA.animals.filter(a => a.layer === category || (category === 'sky' && a.layer === 'celestial'));
 
     filtered.forEach(animal => {
-      const isDiscovered = this.discoveredAnimals.has(animal.code);
+      const isDiscovered = this.discoveredAnimals && this.discoveredAnimals.has(animal.code);
       const card = document.createElement('div');
       card.className = `animal-card ${isDiscovered ? 'is-discovered' : 'is-silhouette'}`;
       card.setAttribute('data-code', animal.code);
 
-      const iconSrc = isDiscovered ? animal.icon : animal.iconDark;
+      const iconSrc = isDiscovered ? animal.icon : (animal.iconDark || animal.icon);
 
       card.innerHTML = `
         <div class="card-thumb-wrap">
-          <img class="card-icon-img" src="${iconSrc}" alt="${animal.name}" loading="lazy">
+          <img class="card-icon-img" src="${iconSrc}" alt="${animal.name}" loading="lazy" onerror="this.src='${animal.icon}'">
         </div>
         <div class="card-body">
           <div class="card-meta">
@@ -624,6 +652,11 @@ class ExhibitionApp {
 
     container.innerHTML = '';
 
+    if (typeof EXHIBITION_DATA === 'undefined' || !EXHIBITION_DATA.layers) {
+      console.warn('EXHIBITION_DATA.layers is not ready yet');
+      return;
+    }
+
     EXHIBITION_DATA.layers.forEach(layer => {
       const layerAnimals = EXHIBITION_DATA.animals.filter(a => {
         if (layer.id === 'celestial') return a.layer === 'celestial';
@@ -655,16 +688,16 @@ class ExhibitionApp {
       // 층위 뷰포트 (bg_XXXX.webp 배경 + 상징 마커)
       let markersHtml = '';
       layerAnimals.forEach(animal => {
-        const isDiscovered = this.discoveredAnimals.has(animal.code);
+        const isDiscovered = this.discoveredAnimals && this.discoveredAnimals.has(animal.code);
         const coords = animal.layerCoords || { x: 50, y: 50 };
-        const iconSrc = isDiscovered ? animal.icon : animal.iconDark;
+        const iconSrc = isDiscovered ? animal.icon : (animal.iconDark || animal.icon);
 
         markersHtml += `
           <div class="layer-symbol-marker ${isDiscovered ? 'is-discovered' : 'is-undiscovered'}" 
                style="left: ${coords.x}%; top: ${coords.y}%;" 
                data-animal-code="${animal.code}">
             <div class="marker-pin-wrap">
-              <img class="marker-pin-img" src="${iconSrc}" alt="${animal.name}">
+              <img class="marker-pin-img" src="${iconSrc}" alt="${animal.name}" onerror="this.src='${animal.icon}'">
             </div>
             <div class="marker-hover-tooltip">${animal.code} ${animal.name} ${isDiscovered ? '★' : ''}</div>
           </div>
@@ -1424,6 +1457,10 @@ class ExhibitionApp {
 }
 
 // 애플리케이션 시작
-window.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+  window.addEventListener('DOMContentLoaded', () => {
+    window.app = new ExhibitionApp();
+  });
+} else {
   window.app = new ExhibitionApp();
-});
+}

@@ -195,10 +195,8 @@ const EXHIBITION_DATA = {
         { code: 'R04-05', text: '생태적 니치(niche)의 개념' }
       ],
       assetList: [
-        { code: 'A04-01', text: '[https://skfb.ly/oKByZ](https://skfb.ly/oKByZ)' },
-        { code: 'A04-02', text: '[https://skfb.ly/oEAwv](https://skfb.ly/oEAwv)' }
-      ](https://skfb.ly/oKByZ)' },
-        { code: 'A04-02', text: '[https://skfb.ly/oEAwv](https://skfb.ly/oEAwv)' }
+        { code: 'A04-01', text: 'https://skfb.ly/oKByZ' },
+        { code: 'A04-02', text: 'https://skfb.ly/oEAwv' }
       ],
     },
     {
@@ -487,9 +485,7 @@ const EXHIBITION_DATA = {
         { code: 'R13-05', text: '척추동물 턱의 진화' }
       ],
       assetList: [
-        { code: 'A13-01', text: '[https://skfb.ly/oEuLR](https://skfb.ly/oEuLR)' },
-        { code: 'A13-02', text: 'https://skfb.ly/6U8op' }
-      ](https://skfb.ly/oEuLR)' },
+        { code: 'A13-01', text: 'https://skfb.ly/oEuLR' },
         { code: 'A13-02', text: 'https://skfb.ly/6U8op' }
       ],
     },
@@ -522,9 +518,8 @@ const EXHIBITION_DATA = {
         { code: 'R14-05', text: '물범과 물개·바다사자의 수영 방식과 수렴' }
       ],
       assetList: [
-        { code: 'A14-01', text: 'https://skfb.ly/6SPy7' }
-      ](https://skfb.ly/oKByZ)' },
-        { code: 'A14-02', text: '[https://skfb.ly/oEAwv](https://skfb.ly/oEAwv)' }
+        { code: 'A14-01', text: 'https://skfb.ly/6SPy7' },
+        { code: 'A14-02', text: 'https://skfb.ly/oEAwv' }
       ],
     },
     {
