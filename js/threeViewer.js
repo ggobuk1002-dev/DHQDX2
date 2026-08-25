@@ -19,43 +19,38 @@ class IncenseBurner3DViewer {
     this.isPaused = false;
     this.animId = null;
     
-    // [intro.jpg]: 거대하게 카메라 앞 좌측을 가득 채우는 Cinematic Close-up Hero Object
-    this.introCameraPos = new THREE.Vector3(-0.95, 0.45, 0.88);
-    this.introTarget = new THREE.Vector3(0.35, 0.1, 0);
+    // [intro.jpg]: 거대하게 카메라 앞 좌측을 가득 채우는 Cinematic Close-up Hero Object (모바일은 중앙 핏)
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    this.introCameraPos = isMobile ? new THREE.Vector3(0, 0.15, 2.8) : new THREE.Vector3(-0.95, 0.45, 0.88);
+    this.introTarget = isMobile ? new THREE.Vector3(0, 0, 0) : new THREE.Vector3(0.35, 0.1, 0);
     
-    // 층위별 카메라 위치
-    this.stepCameraMap = {
-      'intro': {
-        pos: new THREE.Vector3(0, 0.05, 2.3),
-        target: new THREE.Vector3(0, 0, 0)
-      },
-      'celestial': {
-        pos: new THREE.Vector3(-0.35, 0.75, 1.1),
-        target: new THREE.Vector3(0, 0.55, 0)
-      },
-      'sky': {
-        pos: new THREE.Vector3(0.4, 0.45, 1.0),
-        target: new THREE.Vector3(0, 0.35, 0)
-      },
-      'land': {
-        pos: new THREE.Vector3(-0.45, 0.2, 1.2),
-        target: new THREE.Vector3(0, 0.15, 0)
-      },
-      'water': {
-        pos: new THREE.Vector3(0.45, -0.15, 1.1),
-        target: new THREE.Vector3(0, -0.15, 0)
-      },
-      'sea': {
-        pos: new THREE.Vector3(0, -0.45, 1.2),
-        target: new THREE.Vector3(0, -0.4, 0)
-      }
-    };
-
     this.targetCameraPos = this.introCameraPos.clone();
     this.targetLookAt = this.introTarget.clone();
     this.currentLookAt = this.introTarget.clone();
     
     this.init();
+  }
+
+  getStepCamera(stepId) {
+    const isMobile = window.innerWidth <= 768;
+    const desktopMap = {
+      'intro': { pos: new THREE.Vector3(0, 0.05, 2.3), target: new THREE.Vector3(0, 0, 0) },
+      'celestial': { pos: new THREE.Vector3(-0.35, 0.75, 1.1), target: new THREE.Vector3(0, 0.55, 0) },
+      'sky': { pos: new THREE.Vector3(0.4, 0.45, 1.0), target: new THREE.Vector3(0, 0.35, 0) },
+      'land': { pos: new THREE.Vector3(-0.45, 0.2, 1.2), target: new THREE.Vector3(0, 0.15, 0) },
+      'water': { pos: new THREE.Vector3(0.45, -0.15, 1.1), target: new THREE.Vector3(0, -0.15, 0) },
+      'sea': { pos: new THREE.Vector3(0, -0.45, 1.2), target: new THREE.Vector3(0, -0.4, 0) }
+    };
+    const mobileMap = {
+      'intro': { pos: new THREE.Vector3(0, 0.15, 2.8), target: new THREE.Vector3(0, 0, 0) },
+      'celestial': { pos: new THREE.Vector3(0, 0.8, 1.6), target: new THREE.Vector3(0, 0.55, 0) },
+      'sky': { pos: new THREE.Vector3(0, 0.45, 1.5), target: new THREE.Vector3(0, 0.35, 0) },
+      'land': { pos: new THREE.Vector3(0, 0.18, 1.6), target: new THREE.Vector3(0, 0.15, 0) },
+      'water': { pos: new THREE.Vector3(0, -0.15, 1.6), target: new THREE.Vector3(0, -0.15, 0) },
+      'sea': { pos: new THREE.Vector3(0, -0.48, 1.7), target: new THREE.Vector3(0, -0.4, 0) }
+    };
+    const map = isMobile ? mobileMap : desktopMap;
+    return map[stepId] || map['intro'];
   }
 
   init() {
@@ -230,6 +225,7 @@ class IncenseBurner3DViewer {
       if (this.eclipseGlow) this.eclipseGlow.visible = false;
       if (this.renderer) this.renderer.toneMappingExposure = 1.05;
     }
+    this.requestRender();
   }
 
   setIntroMode(enabled) {
@@ -241,10 +237,11 @@ class IncenseBurner3DViewer {
     if (this.eclipseGlow) this.eclipseGlow.visible = false;
     if (this.renderer) this.renderer.toneMappingExposure = 1.05;
 
-    const step = this.stepCameraMap[stepId] || this.stepCameraMap['intro'];
+    const step = this.getStepCamera(stepId);
     if (step) {
       this.targetCameraPos.copy(step.pos);
       this.targetLookAt.copy(step.target);
+      this.requestRender();
     }
   }
 
