@@ -432,9 +432,9 @@ img {
   display: flex;
   align-items: center;
   margin-bottom: 6rem;
-  opacity: 0.25;
-  transform: translateY(30px);
-  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.5;
+  transform: translateY(20px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .scrolly-step.is-active {
@@ -447,42 +447,46 @@ img {
 .scrolly-step.align-right { justify-content: flex-end; }
 
 .scrolly-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
+  background: rgba(7, 10, 18, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(212, 175, 55, 0.35);
   border-radius: var(--radius-lg);
-  padding: 2.5rem;
-  max-width: 480px;
+  padding: 2.5rem 2.8rem;
+  max-width: 500px;
   width: 100%;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 35px rgba(212, 175, 55, 0.15);
 }
 
 .scrolly-tag {
   display: inline-block;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  color: var(--accent-gold);
-  margin-bottom: 0.75rem;
-  padding: 0.25rem 0.8rem;
-  background: rgba(212, 175, 55, 0.15);
-  border-radius: 12px;
+  color: #ffe066;
+  margin-bottom: 0.85rem;
+  padding: 0.3rem 0.9rem;
+  background: rgba(212, 175, 55, 0.22);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 14px;
 }
 
 .scrolly-title {
   font-family: var(--font-serif);
-  font-size: 1.85rem;
+  font-size: 2.1rem;
   font-weight: 700;
-  color: #fff;
-  margin-bottom: 1rem;
+  color: #ffffff;
+  margin-bottom: 1.1rem;
   line-height: 1.35;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
 }
 
 .scrolly-desc {
-  font-size: 1rem;
-  color: #cbd5e1;
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
+  font-size: 1.12rem;
+  color: #ffffff;
+  font-weight: 400;
+  line-height: 1.85;
+  margin-bottom: 1.6rem;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.95);
 }
 
 .scrolly-link-row {

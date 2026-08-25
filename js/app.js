@@ -241,7 +241,15 @@ class ExhibitionApp {
 
     document.querySelectorAll('.nav-btn').forEach(btn => {
       const nav = btn.getAttribute('data-nav');
-      btn.classList.toggle('active', nav === viewName || (viewName === 'catalog' && nav === this.catalogMode));
+      if (viewName === 'catalog') {
+        if (this.catalogMode === 'unwrapped') {
+          btn.classList.toggle('active', nav === 'unwrapped');
+        } else {
+          btn.classList.toggle('active', nav === 'catalog');
+        }
+      } else {
+        btn.classList.toggle('active', nav === viewName);
+      }
     });
 
     const targetSection = document.getElementById('view-' + viewName);
@@ -255,7 +263,7 @@ class ExhibitionApp {
     const canvasContainer = document.getElementById('scrolly-canvas-container');
     const btnDocentHeader = document.getElementById('btn-docent-call');
 
-    // 과학해설사 버튼 활성화 제어 (상세 화면에서만 골드 펄스로 강조 활성화)
+    // 과학해설사 버튼 활성화 제어
     if (btnDocentHeader) {
       if (viewName === 'detail') {
         btnDocentHeader.classList.add('is-active-docent');
@@ -283,8 +291,11 @@ class ExhibitionApp {
       }
     } else if (viewName === 'catalog') {
       if (canvasContainer) canvasContainer.style.opacity = '0';
-      this.renderCatalog(this.currentCategory);
-      this.renderUnwrappedLayers();
+      if (this.catalogMode === 'unwrapped') {
+        this.setCatalogMode('unwrapped');
+      } else {
+        this.setCatalogMode('cards');
+      }
     } else if (viewName === 'detail') {
       if (canvasContainer) canvasContainer.style.opacity = '0';
       if (animalCode) {
@@ -303,6 +314,16 @@ class ExhibitionApp {
     const title = document.getElementById('discovery-title');
     const desc = document.getElementById('discovery-desc');
 
+    // 헤더 내비게이션 버튼 active 클래스 동기화
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      const nav = btn.getAttribute('data-nav');
+      if (mode === 'unwrapped') {
+        btn.classList.toggle('active', nav === 'unwrapped');
+      } else if (mode === 'cards') {
+        btn.classList.toggle('active', nav === 'catalog');
+      }
+    });
+
     if (mode === 'cards') {
       if (btnCards) btnCards.classList.add('active');
       if (btnUnwrapped) btnUnwrapped.classList.remove('active');
@@ -311,6 +332,7 @@ class ExhibitionApp {
       if (catTabs) catTabs.style.display = 'flex';
       if (title) title.innerText = '향로의 그림자: 19종 상징 도감';
       if (desc) desc.innerText = '검은 실루엣 속 동물을 탐색하면 본래의 생동감 넘치는 색을 되찾습니다. 19개 백제의 상징을 모두 발견해 보세요.';
+      this.renderCatalog(this.currentCategory);
     } else {
       if (btnCards) btnCards.classList.remove('active');
       if (btnUnwrapped) btnUnwrapped.classList.add('active');
