@@ -47,6 +47,25 @@ html, body {
   line-height: 1.6;
   overflow-x: hidden !important;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Image & Media Rendering Optimization */
+img, video {
+  max-width: 100%;
+  height: auto;
+  content-visibility: auto;
+}
+
+/* View Containment for 60fps Scrolling */
+.view-section:not(.active) {
+  content-visibility: hidden;
+  pointer-events: none;
+}
+
+.perspective-section, .detail-comments-wrapper, .unwrapped-layer-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 400px;
 }
 
 button {

@@ -95,6 +95,17 @@ class IncenseBurner3DViewer {
     this.loadModel();
 
     window.addEventListener('resize', () => this.onResize());
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        this.pause();
+      } else {
+        const mainView = document.getElementById('view-main');
+        if (mainView && mainView.classList.contains('active')) {
+          this.resume();
+        }
+      }
+    });
+    this.lastFrameTime = 0;
     this.animate();
   }
 
@@ -298,10 +309,16 @@ class IncenseBurner3DViewer {
     }
   }
 
-  animate() {
+  animate(timestamp = 0) {
     if (this.isPaused) return;
 
-    this.animId = requestAnimationFrame(() => this.animate());
+    this.animId = requestAnimationFrame((t) => this.animate(t));
+
+    // 초당 60fps 타깃 페이싱 (16.6ms 간격 유지로 불필요한 고주사율 과열 방지)
+    if (this.lastFrameTime && (timestamp - this.lastFrameTime < 14)) {
+      return;
+    }
+    this.lastFrameTime = timestamp;
 
     if (this.model) {
       if (this.isCinematicIntro) {

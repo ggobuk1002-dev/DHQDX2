@@ -675,6 +675,8 @@ class ExhibitionApp {
       ? EXHIBITION_DATA.animals
       : EXHIBITION_DATA.animals.filter(a => a.layer === category);
 
+    const fragment = document.createDocumentFragment();
+
     filtered.forEach(animal => {
       const isDiscovered = this.discoveredAnimals && this.discoveredAnimals.has(animal.code);
       const card = document.createElement('div');
@@ -685,7 +687,7 @@ class ExhibitionApp {
 
       card.innerHTML = `
         <div class="card-thumb-wrap">
-          <img class="card-icon-img" src="${iconSrc}" alt="${animal.name}" loading="lazy" onerror="this.src='${animal.icon}'">
+          <img class="card-icon-img" src="${iconSrc}" alt="${animal.name}" loading="lazy" decoding="async" onerror="this.src='${animal.icon}'">
         </div>
         <div class="card-body">
           <div class="card-meta">
@@ -705,9 +707,10 @@ class ExhibitionApp {
         this.switchView('detail', animal.code);
       });
 
-      grid.appendChild(card);
+      fragment.appendChild(card);
     });
 
+    grid.appendChild(fragment);
     this.updateProgress();
   }
 
