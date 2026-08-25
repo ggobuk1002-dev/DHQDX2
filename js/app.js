@@ -43,6 +43,7 @@ class ExhibitionApp {
   init() {
     try { this.initViewer(); } catch (e) { console.error('Viewer init error:', e); }
     try { this.bindEvents(); } catch (e) { console.error('BindEvents error:', e); }
+    try { this.initReferencesModal(); } catch (e) { console.error('ReferencesModal error:', e); }
     try { this.renderCatalog('all'); } catch (e) { console.error('RenderCatalog error:', e); }
     try { this.renderUnwrappedLayers(); } catch (e) { console.error('RenderUnwrapped error:', e); }
     try { this.updateProgress(); } catch (e) { console.error('UpdateProgress error:', e); }
@@ -931,26 +932,47 @@ class ExhibitionApp {
           <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 0.4rem;">🔬 과학 학술 참고문헌 (References)</div>
           <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem;">`;
         animal.referenceList.forEach(ref => {
+          let refText = ref.text
+            .replace(/(https?:\/\/[^\s\)\<\>]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">$1 ↗</a>')
+            .replace(/(DOI:\s*)(10\.[^\s\)\<\>]+)/gi, '$1<a href="https://doi.org/$2" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">https://doi.org/$2 ↗</a>');
+
           rHtml += `<li style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5; background: rgba(255,255,255,0.03); padding: 0.4rem 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-gold);">
-            <span style="color: var(--accent-gold-light); font-weight: 700; margin-right: 0.4rem;">[${ref.code}]</span>${ref.text}
+            <span style="color: var(--accent-gold-light); font-weight: 700; margin-right: 0.4rem;">[${ref.code}]</span>${refText}
           </li>`;
         });
         rHtml += `</ul></div>`;
       }
 
       if (animal.assetList && animal.assetList.length > 0) {
-        rHtml += `<div class="credit-group">
+        rHtml += `<div class="credit-group" style="margin-bottom: 0.8rem;">
           <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 0.4rem;">🎨 전시 에셋 및 3D 모델 출처 (Assets)</div>
           <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem;">`;
         animal.assetList.forEach(ast => {
+          let astText = ast.text.replace(/(https?:\/\/[^\s\)\<\>]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">$1 ↗</a>');
           rHtml += `<li style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5; background: rgba(255,255,255,0.03); padding: 0.4rem 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-cyan);">
-            <span style="color: var(--accent-cyan); font-weight: 700; margin-right: 0.4rem;">[${ast.code}]</span>${ast.text}
+            <span style="color: var(--accent-cyan); font-weight: 700; margin-right: 0.4rem;">[${ast.code}]</span>${astText}
           </li>`;
         });
         rHtml += `</ul></div>`;
       }
 
+      // 전체 참고문헌 아카이브 모달 바로가기 버튼 추가
+      rHtml += `
+        <div style="margin-top: 0.75rem; text-align: right;">
+          <button id="btn-goto-ref-archive" style="background: rgba(212, 175, 55, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); font-size: 0.8rem; font-weight: 700; padding: 0.35rem 0.85rem; border-radius: 16px; cursor: pointer; transition: all 0.2s ease;">
+            📚 전체 학술 출처 및 원본 아카이브 열람하기 ↗
+          </button>
+        </div>
+      `;
+
       sourceCredit.innerHTML = rHtml;
+
+      const gotoRefBtn = document.getElementById('btn-goto-ref-archive');
+      if (gotoRefBtn) {
+        gotoRefBtn.addEventListener('click', () => {
+          this.openReferencesModal(animal.name);
+        });
+      }
     }
 
     // OX 퀴즈 렌더링
@@ -1853,6 +1875,153 @@ class ExhibitionApp {
     const chatBody = document.getElementById('docent-chat-body');
     if (chatBody) {
       chatBody.innerText = `안녕하세요! 백제금동대향로의 ${animal.name}에 대해 궁금한 점이 있으신가요? ${animal.scienceStory}`;
+    }
+  }
+
+  /* ============================================================
+     10. 학술 참고문헌 및 출처 아카이브 (REFERENCES MODAL)
+     ============================================================ */
+  initReferencesModal() {
+    const modal = document.getElementById('references-modal');
+    const btnOpen = document.getElementById('btn-open-references');
+    const btnClose = document.getElementById('btn-close-references-modal');
+    const searchInput = document.getElementById('ref-search-input');
+    const tabsContainer = document.getElementById('ref-nav-tabs');
+
+    if (!modal || typeof REFERENCES_ARCHIVE === 'undefined') return;
+
+    // 헤더 버튼 클릭
+    if (btnOpen) {
+      btnOpen.addEventListener('click', () => {
+        this.openReferencesModal();
+      });
+    }
+
+    // 닫기 버튼 & 배경 클릭
+    if (btnClose) {
+      btnClose.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.style.display = 'none';
+    });
+
+    // 탭 생성 (전체 + 20개 섹션)
+    if (tabsContainer) {
+      tabsContainer.innerHTML = '';
+      const allTab = document.createElement('button');
+      allTab.className = 'ref-tab-btn active';
+      allTab.textContent = '전체 보기';
+      allTab.addEventListener('click', () => {
+        this.filterReferencesTab('all');
+      });
+      tabsContainer.appendChild(allTab);
+
+      REFERENCES_ARCHIVE.forEach((sec, idx) => {
+        const tab = document.createElement('button');
+        tab.className = 'ref-tab-btn';
+        tab.textContent = sec.title;
+        tab.dataset.index = idx;
+        tab.addEventListener('click', () => {
+          this.filterReferencesTab(idx);
+        });
+        tabsContainer.appendChild(tab);
+      });
+    }
+
+    // 검색창 이벤트
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        this.searchReferences(e.target.value);
+      });
+    }
+
+    // 초기 전체 렌더링
+    this.renderReferencesList(REFERENCES_ARCHIVE);
+  }
+
+  renderReferencesList(sections) {
+    const bodyContainer = document.getElementById('ref-content-body');
+    if (!bodyContainer) return;
+
+    if (!sections || sections.length === 0) {
+      bodyContainer.innerHTML = `
+        <div style="text-align:center; padding:3rem; color:var(--text-muted);">
+          🔍 일치하는 참고문헌이나 출처를 찾을 수 없습니다.
+        </div>
+      `;
+      return;
+    }
+
+    bodyContainer.innerHTML = '';
+    sections.forEach((sec, idx) => {
+      const card = document.createElement('div');
+      card.className = 'ref-section-card';
+      card.id = `ref-card-${idx}`;
+
+      // URL 자동 링크 변환
+      let formattedContent = sec.content
+        .replace(/(https?:\/\/[^\s\)\<\>]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1 ↗</a>')
+        .replace(/(DOI:\s*)(10\.[^\s\)\<\>]+)/gi, '$1<a href="https://doi.org/$2" target="_blank" rel="noopener noreferrer">https://doi.org/$2 ↗</a>');
+
+      card.innerHTML = `
+        <div class="ref-section-header">
+          <span style="color:var(--accent-gold); font-weight:800; font-size:0.9rem;">#${idx + 1}</span>
+          <h3 class="ref-section-title">${sec.title}</h3>
+        </div>
+        <div class="ref-section-content">${formattedContent}</div>
+      `;
+      bodyContainer.appendChild(card);
+    });
+  }
+
+  filterReferencesTab(tabKey) {
+    const tabs = document.querySelectorAll('.ref-tab-btn');
+    tabs.forEach(t => t.classList.remove('active'));
+
+    const activeTab = tabKey === 'all' 
+      ? document.querySelector('.ref-tab-btn') 
+      : document.querySelector(`.ref-tab-btn[data-index="${tabKey}"]`);
+    if (activeTab) activeTab.classList.add('active');
+
+    if (tabKey === 'all') {
+      this.renderReferencesList(REFERENCES_ARCHIVE);
+    } else {
+      const targetSec = REFERENCES_ARCHIVE[tabKey];
+      this.renderReferencesList(targetSec ? [targetSec] : []);
+    }
+  }
+
+  searchReferences(query) {
+    const q = query.trim().toLowerCase();
+    if (!q) {
+      this.renderReferencesList(REFERENCES_ARCHIVE);
+      return;
+    }
+
+    const filtered = REFERENCES_ARCHIVE.filter(sec => {
+      return sec.title.toLowerCase().includes(q) || sec.content.toLowerCase().includes(q);
+    });
+
+    this.renderReferencesList(filtered);
+  }
+
+  openReferencesModal(targetAnimalNameOrCode = null) {
+    const modal = document.getElementById('references-modal');
+    if (!modal) return;
+
+    modal.style.display = 'flex';
+
+    if (targetAnimalNameOrCode) {
+      const searchInput = document.getElementById('ref-search-input');
+      if (searchInput) searchInput.value = targetAnimalNameOrCode;
+      this.searchReferences(targetAnimalNameOrCode);
+    } else {
+      const searchInput = document.getElementById('ref-search-input');
+      if (searchInput) searchInput.value = '';
+      this.filterReferencesTab('all');
     }
   }
 }

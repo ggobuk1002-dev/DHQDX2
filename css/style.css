@@ -1878,6 +1878,212 @@ img {
   right: 1rem;
   color: #fff;
   font-size: 1.2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* ============================================================
+   7. ACADEMIC REFERENCES & CITATIONS MODAL
+   ============================================================ */
+.references-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 7, 12, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 3500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.references-modal-card {
+  position: relative;
+  background: #0b0f19;
+  border: 1.5px solid var(--accent-gold);
+  border-radius: var(--radius-lg);
+  max-width: 960px;
+  width: 100%;
+  height: 85vh;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 35px var(--accent-gold-glow);
+  overflow: hidden;
+}
+
+.references-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.25rem 1.75rem;
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.references-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ref-badge {
+  background: linear-gradient(135deg, var(--accent-gold), #b89728);
+  color: #000;
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+}
+
+.ref-modal-title {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: #fff;
+  margin: 0;
+}
+
+.references-header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ref-search-wrap {
+  position: relative;
+}
+
+.ref-search-input {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border-color);
+  color: #fff;
+  font-size: 0.88rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 20px;
+  width: 240px;
+  transition: all 0.3s ease;
+}
+
+.ref-search-input:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 10px var(--accent-gold-glow);
+  width: 280px;
+}
+
+.btn-close-ref {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-close-ref:hover {
+  background: #ef4444;
+  border-color: #ef4444;
+}
+
+.references-nav-tabs {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: rgba(10, 15, 29, 0.98);
+  padding: 0.65rem 1.25rem;
+  gap: 0.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  scrollbar-width: thin;
+}
+
+.ref-tab-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  font-size: 0.82rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 16px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ref-tab-btn:hover {
+  color: #fff;
+  border-color: var(--accent-gold);
+}
+
+.ref-tab-btn.active {
+  background: var(--accent-gold);
+  color: #000;
+  font-weight: 700;
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
+
+.references-content-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.ref-section-card {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  transition: all 0.25s ease;
+}
+
+.ref-section-card:hover {
+  border-color: var(--accent-gold);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+}
+
+.ref-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.ref-section-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--accent-gold);
+  margin: 0;
+}
+
+.ref-section-content {
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ref-section-content a {
+  color: #38bdf8;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  word-break: break-all;
+}
+
+.ref-section-content a:hover {
+  color: #7dd3fc;
 }
 
 .final-emblem-wrap {
@@ -3230,5 +3436,93 @@ img {
     line-height: 1.35 !important;
     border-radius: 8px !important;
     background: rgba(15, 23, 42, 0.95) !important;
+  }
+
+  /* Catalog View 4-Column Wide Grid for Landscape Mobile */
+  .animal-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 0.65rem !important;
+  }
+
+  .card-thumb-wrap {
+    height: 110px !important;
+  }
+
+  .card-icon-img {
+    max-width: 70px !important;
+    max-height: 70px !important;
+  }
+
+  .card-title {
+    font-size: 0.88rem !important;
+  }
+
+  /* References Modal Landscape Mobile Optimization */
+  .references-modal-backdrop {
+    padding: 0.5rem !important;
+  }
+
+  .references-modal-card {
+    height: 94vh !important;
+    max-height: 94vh !important;
+    border-radius: 12px !important;
+  }
+
+  .references-modal-header {
+    padding: 0.5rem 0.85rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .ref-modal-title {
+    font-size: 0.95rem !important;
+  }
+
+  .ref-badge {
+    font-size: 0.65rem !important;
+    padding: 0.15rem 0.45rem !important;
+  }
+
+  .ref-search-input {
+    width: 150px !important;
+    font-size: 0.75rem !important;
+    padding: 0.25rem 0.6rem !important;
+  }
+
+  .ref-search-input:focus {
+    width: 180px !important;
+  }
+
+  .btn-close-ref {
+    font-size: 0.75rem !important;
+    padding: 0.25rem 0.6rem !important;
+  }
+
+  .references-nav-tabs {
+    padding: 0.35rem 0.75rem !important;
+    gap: 0.25rem !important;
+  }
+
+  .ref-tab-btn {
+    font-size: 0.72rem !important;
+    padding: 0.2rem 0.55rem !important;
+  }
+
+  .references-content-body {
+    padding: 0.75rem 0.9rem !important;
+    gap: 0.75rem !important;
+  }
+
+  .ref-section-card {
+    padding: 0.75rem 0.9rem !important;
+    border-radius: 8px !important;
+  }
+
+  .ref-section-title {
+    font-size: 0.92rem !important;
+  }
+
+  .ref-section-content {
+    font-size: 0.78rem !important;
+    line-height: 1.45 !important;
   }
 }

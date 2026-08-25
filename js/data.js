@@ -1108,7 +1108,7 @@ const EXHIBITION_DATA = {
         "panelTheme": "방수 모피와 촉각 수염의 수중 사냥 전략",
         "simpleDesc": "깨끗한 하천을 헤엄치며 물고기를 쫓는 수중의 날렵한 사냥꾼.",
         "assetType": "embed",
-        "embedHtml": "<div class=\"sketchfab-embed-wrapper\"><iframe title=\"Eurasian Otter\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/188d7264dc354c7195cf47f4540bf252/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe></div>",
+        "embedHtml": "<div class=\"sketchfab-embed-wrapper\"><iframe title=\"Model 96A - North American Otter\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/57b88c7e30c74b588f28102177849397/embed?autospin=1&autostart=1&ui_infos=0&dnt=1\"></iframe></div>",
         "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel15.webp",
         "icon": "Asset/2. Main/icon/15.webp",
         "iconDark": "Asset/2. Main/icon_dark/15_dark.webp",
@@ -1144,7 +1144,7 @@ const EXHIBITION_DATA = {
         "assetList": [
             {
                 "code": "A15-01",
-                "text": "https://skfb.ly/6R6tM"
+                "text": "https://sketchfab.com/models/57b88c7e30c74b588f28102177849397"
             }
         ],
         "quizData": {

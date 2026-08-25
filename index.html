@@ -16,7 +16,7 @@
   <link rel="preload" href="GD_lowpoly.glb" as="fetch" crossorigin="anonymous">
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260825_ultra_v84">
+  <link rel="stylesheet" href="css/style.css?v=20260825_ultra_v87">
   
   <!-- Three.js & Loaders (CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -52,6 +52,7 @@
       <button class="nav-btn" data-nav="main">전시관람(메인)</button>
       <button class="nav-btn" data-nav="catalog">상징도감</button>
       <button class="nav-btn" data-nav="unwrapped">전개도 탐색</button>
+      <button class="nav-btn" id="btn-open-references" data-action="references">📚 참고문헌</button>
       <button class="btn-docent-call" id="btn-docent-call" title="개별 동물 상세 화면에서 활성화됩니다" disabled>
         <img src="Asset/4. Docent/neutral.webp" alt="해설사" class="header-docent-thumb">
         <span id="header-docent-label">해설사 래피드왜건</span>
@@ -576,6 +577,36 @@
     </div>
   </div>
 
+  <!-- ============================================================
+       7. MODAL: ACADEMIC REFERENCES & ASSET CITATIONS ARCHIVE
+       ============================================================ -->
+  <div id="references-modal" class="references-modal-backdrop" style="display: none;">
+    <div class="references-modal-card">
+      <div class="references-modal-header">
+        <div class="references-header-left">
+          <span class="ref-badge">ARCHIVE</span>
+          <h2 class="ref-modal-title">학술 참고문헌 및 출처 아카이브</h2>
+        </div>
+        <div class="references-header-controls">
+          <div class="ref-search-wrap">
+            <input type="text" id="ref-search-input" placeholder="동물 이름, 저자, 논문 키워드 검색..." class="ref-search-input">
+          </div>
+          <button id="btn-close-references-modal" class="btn-close-ref">✕ 닫기</button>
+        </div>
+      </div>
+
+      <!-- Quick Category Nav Tabs -->
+      <div class="references-nav-tabs" id="ref-nav-tabs">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- References Content List -->
+      <div class="references-content-body" id="ref-content-body">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
   <!-- Device Orientation Overlay (For Mobile Portrait -> Landscape) -->
   <div id="orientation-prompt-overlay" class="orientation-prompt-overlay">
     <div class="orientation-prompt-content">
@@ -589,11 +620,12 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/modelData.js?v=20260825_ultra_v84"></script>
-  <script src="js/dialogueData.js?v=20260825_ultra_v84"></script>
-  <script src="js/data.js?v=20260825_ultra_v84"></script>
-  <script src="js/commentSystem.js?v=20260825_ultra_v84"></script>
-  <script src="js/threeViewer.js?v=20260825_ultra_v84"></script>
-  <script src="js/app.js?v=20260825_ultra_v84"></script>
+  <script src="js/modelData.js?v=20260825_ultra_v87"></script>
+  <script src="js/dialogueData.js?v=20260825_ultra_v87"></script>
+  <script src="js/referencesData.js?v=20260825_ultra_v87"></script>
+  <script src="js/data.js?v=20260825_ultra_v87"></script>
+  <script src="js/commentSystem.js?v=20260825_ultra_v87"></script>
+  <script src="js/threeViewer.js?v=20260825_ultra_v87"></script>
+  <script src="js/app.js?v=20260825_ultra_v87"></script>
 </body>
 </html>
