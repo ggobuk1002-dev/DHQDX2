@@ -16,6 +16,8 @@ class IncenseBurner3DViewer {
     
     this.isCinematicIntro = true;
     this.autoRotateSpeed = 0.0015;
+    this.isPaused = false;
+    this.animId = null;
     
     // [intro.jpg]: 거대하게 카메라 앞 좌측을 가득 채우는 Cinematic Close-up Hero Object
     this.introCameraPos = new THREE.Vector3(-0.95, 0.45, 0.88);
@@ -70,10 +72,14 @@ class IncenseBurner3DViewer {
       canvas: this.canvas,
       antialias: true,
       alpha: true,
-      powerPreference: "high-performance"
+      powerPreference: "high-performance",
+      precision: (window.innerWidth <= 768) ? "mediump" : "highp"
     });
     this.renderer.setSize(width, height);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    
+    // 모바일 DPR 과부하 방지 (모바일: 최대 1.25, 데스크톱: 최대 1.75)
+    const isMobile = (window.innerWidth <= 768);
+    this.renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio || 1, 1.25) : Math.min(window.devicePixelRatio || 1, 1.75));
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 0.85;
     this.renderer.outputEncoding = THREE.sRGBEncoding;
@@ -264,13 +270,37 @@ class IncenseBurner3DViewer {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
+    // 모바일 주소창 show/hide로 인한 미세 높이 변화 시 버퍼 재성성 방지 (깜빡임/떨림 방지)
+    if (this.lastWidth && Math.abs(width - this.lastWidth) < 10 && Math.abs(height - this.lastHeight) < 120) {
+      return;
+    }
+    this.lastWidth = width;
+    this.lastHeight = height;
+
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
   }
 
+  pause() {
+    this.isPaused = true;
+    if (this.animId) {
+      cancelAnimationFrame(this.animId);
+      this.animId = null;
+    }
+  }
+
+  resume() {
+    if (this.isPaused) {
+      this.isPaused = false;
+      this.animate();
+    }
+  }
+
   animate() {
-    requestAnimationFrame(() => this.animate());
+    if (this.isPaused) return;
+
+    this.animId = requestAnimationFrame(() => this.animate());
 
     if (this.model) {
       if (this.isCinematicIntro) {

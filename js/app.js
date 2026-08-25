@@ -315,6 +315,8 @@ class ExhibitionApp {
       if (canvasContainer) {
         canvasContainer.style.display = 'none';
       }
+      if (this.viewer) this.viewer.pause();
+      this.disposeGLBViewer();
       this.playIntroVideo();
       
     } else if (viewName === 'main') {
@@ -322,7 +324,9 @@ class ExhibitionApp {
         canvasContainer.style.display = 'block';
         canvasContainer.style.opacity = '1';
       }
+      this.disposeGLBViewer();
       if (this.viewer) {
+        this.viewer.resume();
         this.viewer.setCinematicIntro(false);
         this.viewer.focusStep('intro');
       }
@@ -331,6 +335,8 @@ class ExhibitionApp {
         canvasContainer.style.opacity = '0';
         canvasContainer.style.display = 'none';
       }
+      if (this.viewer) this.viewer.pause();
+      this.disposeGLBViewer();
       if (this.catalogMode === 'unwrapped') {
         this.setCatalogMode('unwrapped');
       } else {
@@ -341,6 +347,7 @@ class ExhibitionApp {
         canvasContainer.style.opacity = '0';
         canvasContainer.style.display = 'none';
       }
+      if (this.viewer) this.viewer.pause();
       if (animalCode) {
         this.renderDetail(animalCode);
       }
@@ -511,6 +518,9 @@ class ExhibitionApp {
     this.currentUnwrappedIdx = 0;
 
     window.addEventListener('wheel', (e) => {
+      // 모바일 기기에서는 네이티브 터치 스크롤과의 충돌 및 화면 튕김 방지를 위해 휠 스냅 비활성화
+      if (window.innerWidth <= 768 || ('ontouchstart' in window)) return;
+
       // 1. 메인 3D 전시관람 스냅
       if (this.currentView === 'main') {
         const steps = Array.from(document.querySelectorAll('.scrolly-step'));
@@ -1264,9 +1274,29 @@ class ExhibitionApp {
   }
 
   /* ============================================================
-     8-1. GLB 3D 모델 전용 Three.js 뷰어 렌더링 (01.glb, 02.glb)
+     8-1. GLB 3D 모델 전용 Three.js 뷰어 렌더링 & 메모리 누수 방지
      ============================================================ */
+  disposeGLBViewer() {
+    if (this.currentGLBViewer) {
+      if (this.currentGLBViewer.animId) {
+        cancelAnimationFrame(this.currentGLBViewer.animId);
+      }
+      if (this.currentGLBViewer.controls) {
+        this.currentGLBViewer.controls.dispose();
+      }
+      if (this.currentGLBViewer.renderer) {
+        this.currentGLBViewer.renderer.dispose();
+        this.currentGLBViewer.renderer.forceContextLoss();
+      }
+      if (this.currentGLBViewer.onResize) {
+        window.removeEventListener('resize', this.currentGLBViewer.onResize);
+      }
+      this.currentGLBViewer = null;
+    }
+  }
+
   renderGLBViewer(container, glbUrl, animalName) {
+    this.disposeGLBViewer();
     container.innerHTML = '';
     
     const canvas = document.createElement('canvas');
@@ -1281,7 +1311,7 @@ class ExhibitionApp {
     loadingTip.style.left = '50%';
     loadingTip.style.transform = 'translateX(-50%)';
     loadingTip.style.color = 'var(--accent-gold)';
-    loadingTip.style.fontSize = '0.85rem';
+    loadingTip.style.fontSize = '0.82rem';
     loadingTip.style.background = 'rgba(8,9,13,0.85)';
     loadingTip.style.padding = '0.35rem 0.9rem';
     loadingTip.style.borderRadius = '14px';
@@ -1289,37 +1319,41 @@ class ExhibitionApp {
     loadingTip.innerText = `3D 모델 로딩 중: ${animalName}...`;
     container.appendChild(loadingTip);
 
-    const width = container.clientWidth || 600;
-    const height = container.clientHeight || 520;
+    const isMobile = (window.innerWidth <= 768);
+    const width = container.clientWidth || (isMobile ? window.innerWidth : 600);
+    const height = container.clientHeight || (isMobile ? 310 : 520);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     camera.position.set(0, 0.6, 2.5);
 
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: !isMobile, // 모바일에서는 안티앨리어싱 꺼서 GPU 부하 절반 절감
+      alpha: true,
+      powerPreference: "high-performance",
+      precision: isMobile ? "mediump" : "highp"
+    });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio || 1, 1.25) : Math.min(window.devicePixelRatio || 1, 1.75));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.15;
     renderer.outputEncoding = THREE.sRGBEncoding;
 
     const controls = new THREE.OrbitControls(camera, canvas);
     controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
+    controls.dampingFactor = 0.08;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 1.5;
+    controls.autoRotateSpeed = 1.2;
+    controls.enableZoom = false; // 모바일 터치 스크롤 간섭 방지
 
-    // 조명 세팅
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+    // 조명 세팅 (가볍게 2개로 최적화)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.6);
     scene.add(ambientLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0xfffaed, 2.8);
+    const dirLight1 = new THREE.DirectionalLight(0xfffaed, 2.5);
     dirLight1.position.set(3, 5, 3);
     scene.add(dirLight1);
-
-    const dirLight2 = new THREE.DirectionalLight(0xd4af37, 2.0);
-    dirLight2.position.set(-3, -2, -3);
-    scene.add(dirLight2);
 
     // GLB 로더 실행
     const loader = new THREE.GLTFLoader();
@@ -1339,28 +1373,40 @@ class ExhibitionApp {
         model.position.z -= center.z;
       }
       scene.add(model);
-      loadingTip.innerText = `💡 마우스로 드래그하여 ${animalName} 3D 모델을 회전하세요`;
+      loadingTip.innerText = `💡 드래그하여 ${animalName} 3D 모델을 회전하세요`;
     }, undefined, (err) => {
       console.warn('GLB load error:', err);
-      loadingTip.innerText = `${animalName} 3D 모델 (로컬 파일 로드)`;
+      loadingTip.innerText = `${animalName} 3D 모델 (기본 로드)`;
     });
 
+    const viewerState = {
+      renderer,
+      scene,
+      camera,
+      controls,
+      animId: null,
+      onResize: null
+    };
+
     const animate = () => {
-      requestAnimationFrame(animate);
+      viewerState.animId = requestAnimationFrame(animate);
       controls.update();
       renderer.render(scene, camera);
     };
     animate();
 
     const onResize = () => {
-      if (!container) return;
-      const w = container.clientWidth;
-      const h = container.clientHeight;
+      if (!container || !camera || !renderer) return;
+      const w = container.clientWidth || window.innerWidth;
+      const h = container.clientHeight || (isMobile ? 310 : 520);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
     };
+    viewerState.onResize = onResize;
     window.addEventListener('resize', onResize);
+
+    this.currentGLBViewer = viewerState;
   }
 
   /* ============================================================
