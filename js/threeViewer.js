@@ -21,8 +21,7 @@ class IncenseBurner3DViewer {
     
     this.currentStepId = 'intro';
     
-    const isMobileInit = (typeof window !== 'undefined') && (window.innerWidth <= 768 && window.innerWidth < window.innerHeight);
-    this.introCameraPos = isMobileInit ? new THREE.Vector3(0, 0.05, 3.25) : new THREE.Vector3(0, 0, 2.15);
+    this.introCameraPos = new THREE.Vector3(0, 0, 2.25);
     this.introTarget = new THREE.Vector3(0, 0, 0);
     
     this.targetCameraPos = this.introCameraPos.clone();
@@ -32,33 +31,52 @@ class IncenseBurner3DViewer {
     this.init();
   }
 
+  updateCameraAspect(width, height) {
+    if (!this.camera) return;
+    const aspect = width / height;
+    this.camera.aspect = aspect;
+
+    // [핵심] Three.js 수평 시야각 불변 공식 (Horizontal FOV Matching)
+    // 세로 모바일에서 가로 폭이 좁아지는 만큼 수직 FOV를 수학적으로 비례 확장하여
+    // 가로로 로딩하든, 세로로 로딩하든, 보다가 회전하든 향로의 크기와 위치가 100% 동일하게 유지됨!
+    const baseFov = 45;
+    if (aspect < 1.0) {
+      const rad = (baseFov * Math.PI) / 180;
+      const fov = 2 * Math.atan(Math.tan(rad / 2) / aspect) * (180 / Math.PI);
+      this.camera.fov = Math.min(Math.max(fov, 45), 68);
+    } else {
+      this.camera.fov = baseFov;
+    }
+    this.camera.updateProjectionMatrix();
+  }
+
   getStepCamera(stepId) {
     const width = (typeof window !== 'undefined') ? (window.innerWidth || 800) : 800;
     const height = (typeof window !== 'undefined') ? (window.innerHeight || 600) : 600;
     const isPortraitMobile = width <= 768 && width < height;
     const isLandscapeMobile = (height < 550) || (width > height && width <= 900);
     
-    // 1. 모바일 세로 모드: 향로는 정중앙(X=0), 초점 Y축과 카메라 Y축 100% 일치
+    // 1. 모바일 세로 모드: 향로는 정중앙(X=0), 초점 Y축 완벽 일치
     const portraitMobileMap = {
-      'intro':     { pos: new THREE.Vector3(0, 0.05, 3.25), target: new THREE.Vector3(0, 0, 0) },
-      'celestial': { pos: new THREE.Vector3(0, 0.50, 2.75), target: new THREE.Vector3(0, 0.50, 0) },
-      'sky':       { pos: new THREE.Vector3(0, 0.28, 2.75), target: new THREE.Vector3(0, 0.28, 0) },
-      'land':      { pos: new THREE.Vector3(0, 0.08, 2.75), target: new THREE.Vector3(0, 0.08, 0) },
-      'water':     { pos: new THREE.Vector3(0, -0.15, 2.75), target: new THREE.Vector3(0, -0.15, 0) },
-      'sea':       { pos: new THREE.Vector3(0, -0.38, 2.85), target: new THREE.Vector3(0, -0.38, 0) }
+      'intro':     { pos: new THREE.Vector3(0, 0, 2.25), target: new THREE.Vector3(0, 0, 0) },
+      'celestial': { pos: new THREE.Vector3(0, 0.50, 1.95), target: new THREE.Vector3(0, 0.50, 0) },
+      'sky':       { pos: new THREE.Vector3(0, 0.28, 1.95), target: new THREE.Vector3(0, 0.28, 0) },
+      'land':      { pos: new THREE.Vector3(0, 0.08, 1.95), target: new THREE.Vector3(0, 0.08, 0) },
+      'water':     { pos: new THREE.Vector3(0, -0.15, 1.95), target: new THREE.Vector3(0, -0.15, 0) },
+      'sea':       { pos: new THREE.Vector3(0, -0.38, 2.05), target: new THREE.Vector3(0, -0.38, 0) }
     };
 
-    // 2. 모바일 가로 모드: 대향 오프셋(X=±0.55), 초점 Y축 100% 일치
+    // 2. 모바일 가로 모드: 대향 오프셋(X=±0.55), 초점 Y축 완벽 일치
     const landscapeMobileMap = {
-      'intro':     { pos: new THREE.Vector3(0, 0, 2.35), target: new THREE.Vector3(0, 0, 0) },
-      'celestial': { pos: new THREE.Vector3(-0.55, 0.50, 2.10), target: new THREE.Vector3(0, 0.50, 0) },
-      'sky':       { pos: new THREE.Vector3(0.55, 0.28, 2.10), target: new THREE.Vector3(0, 0.28, 0) },
-      'land':      { pos: new THREE.Vector3(-0.55, 0.08, 2.10), target: new THREE.Vector3(0, 0.08, 0) },
-      'water':     { pos: new THREE.Vector3(0.55, -0.15, 2.10), target: new THREE.Vector3(0, -0.15, 0) },
-      'sea':       { pos: new THREE.Vector3(0.55, -0.38, 2.20), target: new THREE.Vector3(0, -0.38, 0) }
+      'intro':     { pos: new THREE.Vector3(0, 0, 2.25), target: new THREE.Vector3(0, 0, 0) },
+      'celestial': { pos: new THREE.Vector3(-0.55, 0.50, 1.95), target: new THREE.Vector3(0, 0.50, 0) },
+      'sky':       { pos: new THREE.Vector3(0.55, 0.28, 1.95), target: new THREE.Vector3(0, 0.28, 0) },
+      'land':      { pos: new THREE.Vector3(-0.55, 0.08, 1.95), target: new THREE.Vector3(0, 0.08, 0) },
+      'water':     { pos: new THREE.Vector3(0.55, -0.15, 1.95), target: new THREE.Vector3(0, -0.15, 0) },
+      'sea':       { pos: new THREE.Vector3(0.55, -0.38, 2.05), target: new THREE.Vector3(0, -0.38, 0) }
     };
 
-    // 3. 데스크톱 와이드 모드: 대향 오프셋(X=±0.60), 초점 Y축 100% 일치
+    // 3. 데스크톱 와이드 모드: 대향 오프셋(X=±0.60), 초점 Y축 완벽 일치
     const desktopMap = {
       'intro':     { pos: new THREE.Vector3(0, 0, 2.15), target: new THREE.Vector3(0, 0, 0) },
       'celestial': { pos: new THREE.Vector3(-0.60, 0.50, 1.85), target: new THREE.Vector3(0, 0.50, 0) },
@@ -85,6 +103,7 @@ class IncenseBurner3DViewer {
     const height = window.innerHeight || 600;
     // near 클리핑 플레인을 0.005로 극도로 낮추어 초근접 시 메쉬 잘림/뚫림(투명화) 원천 차단!
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.005, 100);
+    this.updateCameraAspect(width, height);
     this.camera.position.copy(this.introCameraPos);
 
     this.renderer = new THREE.WebGLRenderer({
@@ -365,8 +384,7 @@ class IncenseBurner3DViewer {
     this.lastWidth = width;
     this.lastHeight = height;
 
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
+    this.updateCameraAspect(width, height);
     this.renderer.setSize(width, height);
 
     // 화면 회전(가로 <-> 세로) 시 현재 층위 카메라 및 초점 즉각 재동기화!
