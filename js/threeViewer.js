@@ -151,7 +151,8 @@ class IncenseBurner3DViewer {
 
   loadModel() {
     const loader = new THREE.GLTFLoader();
-    const modelUrl = (typeof GD_MODEL_BASE64 !== 'undefined' && GD_MODEL_BASE64) ? GD_MODEL_BASE64 : 'GD_lowpoly.glb';
+    const modelUrl = 'GD_lowpoly.glb';
+    const isMobile = (window.innerWidth <= 768);
 
     loader.load(
       modelUrl,
@@ -161,11 +162,11 @@ class IncenseBurner3DViewer {
         const darkAntiqueGold = new THREE.Color(0x3a3020);
         this.model.traverse((child) => {
           if (child.isMesh) {
-            child.geometry.computeVertexNormals();
+            if (!isMobile) child.geometry.computeVertexNormals();
             child.material = new THREE.MeshStandardMaterial({
               color: darkAntiqueGold,
-              metalness: 0.92,
-              roughness: 0.28,
+              metalness: isMobile ? 0.75 : 0.92,
+              roughness: isMobile ? 0.45 : 0.28,
               emissive: new THREE.Color(0x050402)
             });
           }
