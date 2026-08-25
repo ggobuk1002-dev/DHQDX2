@@ -204,6 +204,27 @@ class ExhibitionApp {
       });
     }
 
+    // 상세 화면 모바일 3D 뷰어 토글 (펼치기 / 접기)
+    const btnToggle3D = document.getElementById('btn-toggle-3d-stage');
+    const stageCol = document.getElementById('detail-stage-column');
+    const toggle3DText = document.getElementById('toggle-3d-text');
+    if (btnToggle3D && stageCol) {
+      btnToggle3D.addEventListener('click', () => {
+        const isCollapsed = stageCol.classList.contains('collapsed');
+        if (isCollapsed) {
+          stageCol.classList.remove('collapsed');
+          stageCol.classList.add('is-expanded');
+          btnToggle3D.setAttribute('aria-expanded', 'true');
+          if (toggle3DText) toggle3DText.innerText = '3D 유물 모델 접기';
+        } else {
+          stageCol.classList.add('collapsed');
+          stageCol.classList.remove('is-expanded');
+          btnToggle3D.setAttribute('aria-expanded', 'false');
+          if (toggle3DText) toggle3DText.innerText = '3D 유물 모델 보기 (펼치기)';
+        }
+      });
+    }
+
     // 도슨트 닫기 버튼 & 배경 클릭 시 닫기
     const btnCloseDocent = document.getElementById('btn-close-docent');
     const docentModal = document.getElementById('docent-modal');
@@ -815,6 +836,20 @@ class ExhibitionApp {
     if (codeTag) codeTag.innerText = `NO. ${animal.code} · ${animal.layerName}`;
     if (title) title.innerText = animal.name;
     if (simpleDesc) simpleDesc.innerText = animal.simpleDesc;
+
+    // 모바일 환경일 경우 3D 뷰어를 기본 접힘 상태로 설정하여 패널과 설명이 바로 보이도록 최적화
+    const stageCol = document.getElementById('detail-stage-column');
+    const btnToggle3D = document.getElementById('btn-toggle-3d-stage');
+    const toggle3DText = document.getElementById('toggle-3d-text');
+    if (window.innerWidth <= 768 && stageCol) {
+      stageCol.classList.add('collapsed');
+      stageCol.classList.remove('is-expanded');
+      if (btnToggle3D) btnToggle3D.setAttribute('aria-expanded', 'false');
+      if (toggle3DText) toggle3DText.innerText = '📦 3D 유물 모델 보기 (펼치기)';
+    } else if (stageCol) {
+      stageCol.classList.remove('collapsed');
+      stageCol.classList.remove('is-expanded');
+    }
 
     // [핵심] 좌측 무대: con_Mapping.md의 3D 에셋 (GLB 전용 뷰어 또는 Sketchfab Embed iframe)
     const embedWrap = document.getElementById('detail-3d-embed-wrap');
@@ -1508,6 +1543,10 @@ class ExhibitionApp {
     // 코드 정규화 (1 -> '01')
     const normalizedCode = String(animalCode || '01').padStart(2, '0');
     this.docentState.animalCode = normalizedCode;
+    if (!this.docentState.exploredQuestions) {
+      this.docentState.exploredQuestions = new Set();
+    }
+    this.docentState.exploredQuestions.clear();
 
     const animal = EXHIBITION_DATA.animals.find(a => a.code === normalizedCode) || EXHIBITION_DATA.animals[0];
     const docentData = (typeof DOCENT_DIALOGUES !== 'undefined' && DOCENT_DIALOGUES[normalizedCode]) 
@@ -1575,22 +1614,29 @@ class ExhibitionApp {
 
     if (this.docentState.currentMode === 'START') {
       if (docentData.start.choices && docentData.start.choices.length > 0) {
-        this.showDocentChoices(docentData.start.choices);
+        this.showDocentChoices(docentData.start.choices, false);
         if (clickHint) clickHint.style.display = 'none';
       }
     } else if (this.docentState.currentMode === 'QUESTION') {
-      const qObj = docentData.questions ? docentData.questions[this.docentState.currentQuestionId] : null;
-      if (qObj && qObj.return) {
-        this.docentState.currentMode = 'RETURN';
-        this.docentState.dialogueQueue = [{ speaker: '래피드왜건', emotion: 'explaining', text: qObj.return.text || '다른 궁금한 점이 있으신가요?' }];
-        this.docentState.queueIdx = 0;
-        this.displayNextDocentLine();
-      } else {
-        this.showDocentChoices(docentData.start.choices);
-        if (clickHint) clickHint.style.display = 'none';
+      if (this.docentState.currentQuestionId) {
+        this.docentState.exploredQuestions.add(this.docentState.currentQuestionId);
       }
+      
+      const animal = EXHIBITION_DATA.animals.find(a => a.code === this.docentState.animalCode);
+      const animalName = animal ? animal.name : '이 상징';
+      
+      this.docentState.currentMode = 'RETURN';
+      this.docentState.dialogueQueue = [
+        {
+          speaker: '래피드왜건',
+          emotion: 'explaining',
+          text: `${animalName}에 대해 또 다른 궁금한 점이 있으신가요? 아래 질문을 선택하여 탐구를 이어가시거나, 대화를 종료하고 전시품을 계속 감상하실 수 있습니다.`
+        }
+      ];
+      this.docentState.queueIdx = 0;
+      this.displayNextDocentLine();
     } else if (this.docentState.currentMode === 'RETURN') {
-      this.showDocentChoices(docentData.start.choices);
+      this.showDocentChoices(docentData.start.choices, true);
       if (clickHint) clickHint.style.display = 'none';
     }
   }
@@ -1601,6 +1647,11 @@ class ExhibitionApp {
       this.docentState.isTyping = false;
       const chatBody = document.getElementById('docent-chat-body');
       if (chatBody) chatBody.innerText = this.docentState.fullText;
+      return;
+    }
+
+    const optionsFooter = document.getElementById('docent-options-footer');
+    if (optionsFooter && optionsFooter.style.display === 'block') {
       return;
     }
 
@@ -1661,20 +1712,30 @@ class ExhibitionApp {
     typeNextChar();
   }
 
-  showDocentChoices(choices) {
+  showDocentChoices(choices, isReturn = false) {
     const footer = document.getElementById('docent-options-footer');
     const list = document.getElementById('docent-options-list');
+    const optTitle = footer ? footer.querySelector('.vn-options-title') : null;
     if (!footer || !list) return;
 
     list.innerHTML = '';
+    if (optTitle) {
+      optTitle.innerText = isReturn 
+        ? '💬 다른 질문을 선택하여 탐구를 이어가거나 대화를 종료하세요:' 
+        : '💬 질문을 선택하여 과학적 탐구를 확장하세요:';
+    }
     footer.style.display = 'block';
 
     const docentData = (typeof DOCENT_DIALOGUES !== 'undefined') ? DOCENT_DIALOGUES[this.docentState.animalCode] : null;
 
     choices.forEach(ch => {
+      const isExplored = this.docentState.exploredQuestions && this.docentState.exploredQuestions.has(ch.id);
       const btn = document.createElement('button');
-      btn.className = 'btn-docent-option';
-      btn.innerText = `💬 "${ch.text}"`;
+      btn.className = `btn-docent-option ${isExplored ? 'is-explored' : ''}`;
+      btn.innerHTML = `
+        <span>${isExplored ? '✓ ' : '💬 '}"${ch.text}"</span>
+        ${isExplored ? '<span style="font-size:0.75rem; color:#4ade80; font-weight:600;">탐구완료</span>' : '<span style="font-size:0.8rem; color:var(--accent-gold);">질문하기 →</span>'}
+      `;
       btn.addEventListener('click', () => {
         if (docentData && docentData.questions && docentData.questions[ch.id]) {
           footer.style.display = 'none';
@@ -1699,12 +1760,10 @@ class ExhibitionApp {
       list.appendChild(btn);
     });
 
-    // 대화 종료 버튼 추가
+    // 뚜렷한 대화 종료 버튼 추가
     const endBtn = document.createElement('button');
-    endBtn.className = 'btn-docent-option';
-    endBtn.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-    endBtn.style.color = 'var(--text-muted)';
-    endBtn.innerText = '✕ 대화 종료하고 전시품 계속 감상하기';
+    endBtn.className = 'btn-docent-option btn-docent-end-option';
+    endBtn.innerHTML = '<span>✕ 대화 종료하고 전시품 계속 감상하기</span>';
     endBtn.addEventListener('click', () => {
       this.closeDocent();
     });

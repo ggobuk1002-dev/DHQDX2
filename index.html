@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
   
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260825_mobile_v40">
+  <link rel="stylesheet" href="css/style.css?v=20260825_mobile_v42">
   
   <!-- Three.js & Loaders (CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -290,7 +290,17 @@
     <div class="detail-main-layout">
       
       <!-- Left Column: 3D Asset Embed Stage -->
-      <div class="detail-stage-column">
+      <div class="detail-stage-column" id="detail-stage-column">
+        
+        <!-- Mobile Toggle Bar for 3D Viewer -->
+        <button id="btn-toggle-3d-stage" class="btn-toggle-3d-stage" aria-expanded="false">
+          <div class="toggle-3d-label">
+            <span class="toggle-3d-icon">📦</span>
+            <span id="toggle-3d-text">3D 유물 모델 보기 (펼치기)</span>
+          </div>
+          <span class="toggle-arrow" id="toggle-3d-arrow">▼</span>
+        </button>
+
         <div class="stage-viewer-wrap" id="detail-stage-wrap">
           <!-- 3D Embed Container (Sketchfab iframe or Three.js GLB) -->
           <div id="detail-3d-embed-wrap" class="detail-3d-embed-wrap">
@@ -299,7 +309,7 @@
         </div>
         
         <!-- Controls & Docent Call under 3D Asset -->
-        <div class="stage-controls">
+        <div class="stage-controls" id="stage-controls">
           <span class="stage-hint" id="detail-stage-hint">💡 마우스로 3D 모델을 회전/확대하여 관찰하세요</span>
           <button id="btn-detail-docent-direct" class="btn-detail-docent-call">
             <img src="Asset/4. Docent/explaining.webp" alt="해설사">
@@ -471,9 +481,6 @@
   <div id="docent-modal" class="docent-vn-backdrop">
     <div class="docent-vn-container">
       
-      <!-- Close Button -->
-      <button id="btn-close-docent" class="btn-close-vn">✕ 대화 종료 및 전시 복귀</button>
-
       <!-- Character Portrait Layer -->
       <div class="docent-vn-character">
         <img id="docent-character-portrait" class="docent-portrait-img" src="Asset/4. Docent/neutral.webp" alt="래피드왜건">
@@ -482,12 +489,15 @@
       <!-- Dialogue UI Layer -->
       <div class="docent-vn-ui">
         
-        <!-- Theme Badge -->
-        <div class="vn-header-badge" id="docent-theme-badge">
-          <span class="badge-dot">●</span>
-          <span id="docent-animal-tag">01 말</span>
-          <span class="badge-divider">|</span>
-          <span id="docent-theme-text">말의 이동과 발가락의 진화</span>
+        <!-- Top Header Bar: Theme Badge + Close Button -->
+        <div class="vn-ui-top-bar">
+          <div class="vn-header-badge" id="docent-theme-badge">
+            <span class="badge-dot">●</span>
+            <span id="docent-animal-tag">01 말</span>
+            <span class="badge-divider">|</span>
+            <span id="docent-theme-text">말의 이동과 발가락의 진화</span>
+          </div>
+          <button id="btn-close-docent" class="btn-close-vn">✕ 대화 종료</button>
         </div>
 
         <!-- Dialogue Box -->
@@ -531,11 +541,11 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/modelData.js?v=20260825_mobile_v40"></script>
-  <script src="js/dialogueData.js?v=20260825_mobile_v40"></script>
-  <script src="js/data.js?v=20260825_mobile_v40"></script>
-  <script src="js/commentSystem.js?v=20260825_mobile_v40"></script>
-  <script src="js/threeViewer.js?v=20260825_mobile_v40"></script>
-  <script src="js/app.js?v=20260825_mobile_v40"></script>
+  <script src="js/modelData.js?v=20260825_mobile_v42"></script>
+  <script src="js/dialogueData.js?v=20260825_mobile_v42"></script>
+  <script src="js/data.js?v=20260825_mobile_v42"></script>
+  <script src="js/commentSystem.js?v=20260825_mobile_v42"></script>
+  <script src="js/threeViewer.js?v=20260825_mobile_v42"></script>
+  <script src="js/app.js?v=20260825_mobile_v42"></script>
 </body>
 </html>
