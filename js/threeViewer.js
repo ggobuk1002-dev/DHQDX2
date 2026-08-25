@@ -20,9 +20,9 @@ class IncenseBurner3DViewer {
     this.animId = null;
     
     // [intro.jpg]: 거대하게 카메라 앞 좌측을 가득 채우는 Cinematic Close-up Hero Object (모바일은 중앙 핏)
-    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-    this.introCameraPos = isMobile ? new THREE.Vector3(0, 0.15, 2.8) : new THREE.Vector3(0, -0.05, 2.15);
-    this.introTarget = new THREE.Vector3(0, 0, 0);
+    const isMobileInit = (typeof window !== 'undefined') && (window.innerWidth <= 768 && window.innerWidth < window.innerHeight);
+    this.introCameraPos = isMobileInit ? new THREE.Vector3(0, 0.10, 3.35) : new THREE.Vector3(0, -0.05, 2.15);
+    this.introTarget = isMobileInit ? new THREE.Vector3(0, -0.05, 0) : new THREE.Vector3(0, 0, 0);
     
     this.targetCameraPos = this.introCameraPos.clone();
     this.targetLookAt = this.introTarget.clone();
@@ -37,14 +37,14 @@ class IncenseBurner3DViewer {
     const isPortraitMobile = width <= 768 && width < height;
     const isLandscapeMobile = (height < 550) || (width > height && width <= 900);
     
-    // 1. 모바일 세로 모드: 향로는 정중앙 상단에 안정적으로 핏 (X=0)
+    // 1. 모바일 세로 모드: 향로는 정중앙 상단에 안정적으로 핏 (X=0, Z=3.05~3.35)
     const portraitMobileMap = {
-      'intro':     { pos: new THREE.Vector3(0, -0.05, 2.75), target: new THREE.Vector3(0, 0, 0) },
-      'celestial': { pos: new THREE.Vector3(0, 0.48, 2.55), target: new THREE.Vector3(0, 0.45, 0) },
-      'sky':       { pos: new THREE.Vector3(0, 0.28, 2.55), target: new THREE.Vector3(0, 0.25, 0) },
-      'land':      { pos: new THREE.Vector3(0, 0.08, 2.55), target: new THREE.Vector3(0, 0.08, 0) },
-      'water':     { pos: new THREE.Vector3(0, -0.15, 2.55), target: new THREE.Vector3(0, -0.15, 0) },
-      'sea':       { pos: new THREE.Vector3(0, -0.38, 2.65), target: new THREE.Vector3(0, -0.35, 0) }
+      'intro':     { pos: new THREE.Vector3(0, 0.10, 3.35), target: new THREE.Vector3(0, -0.05, 0) },
+      'celestial': { pos: new THREE.Vector3(0, 0.62, 3.05), target: new THREE.Vector3(0, 0.48, 0) },
+      'sky':       { pos: new THREE.Vector3(0, 0.40, 3.05), target: new THREE.Vector3(0, 0.28, 0) },
+      'land':      { pos: new THREE.Vector3(0, 0.18, 3.05), target: new THREE.Vector3(0, 0.08, 0) },
+      'water':     { pos: new THREE.Vector3(0, -0.08, 3.05), target: new THREE.Vector3(0, -0.15, 0) },
+      'sea':       { pos: new THREE.Vector3(0, -0.32, 3.15), target: new THREE.Vector3(0, -0.38, 0) }
     };
 
     // 2. 모바일 가로 모드: 카드 대향 분리 배치
