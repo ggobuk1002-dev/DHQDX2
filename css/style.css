@@ -2869,41 +2869,81 @@ img {
 }
 
 /* ============================================================
-   10. FORCED LANDSCAPE ORIENTATION LOCK (모바일 가로모드 강제 고정)
-   - 모바일 기기가 세로(portrait) 상태일 때 90도 자동 회전하여 항상 16:9 와이드 가로 전시로 고정
+   10. DEVICE ORIENTATION OVERLAY (국립박물관 가로 회전 유도 시스템)
+   - 모바일 세로(portrait) 상태 시 회전 안내 모달 표출
+   - 가로(landscape) 전환 시 16:9 와이드 풀스크린으로 즉시 진입
    ============================================================ */
+.orientation-prompt-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 9, 13, 0.98);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  z-index: 999999;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
 @media screen and (orientation: portrait) and (max-width: 900px) {
-  html, body {
-    width: 100vw !important;
-    height: 100vh !important;
-    overflow: hidden !important;
+  .orientation-prompt-overlay {
+    display: flex !important;
   }
+}
 
-  body {
-    position: absolute !important;
-    top: 0 !important;
-    left: 100vw !important;
-    width: 100vh !important;
-    height: 100vw !important;
-    transform: rotate(90deg) !important;
-    transform-origin: 0 0 !important;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
+.orientation-prompt-content {
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
 
-  /* 회전 상태에서의 고정 레이어 및 3D 캔버스 크기 보정 */
-  .scrolly-canvas-container {
-    width: 100vh !important;
-    height: 100vw !important;
-  }
+.rotate-phone-icon {
+  position: relative;
+  font-size: 3.5rem;
+  width: 85px;
+  height: 85px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: phoneRotateAnim 2.5s infinite ease-in-out;
+}
 
-  .app-header {
-    width: 100vh !important;
-  }
+.rotate-arrow {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  font-size: 1.8rem;
+  animation: arrowSpin 2.5s infinite linear;
+}
 
-  .docent-vn-backdrop {
-    width: 100vh !important;
-    height: 100vw !important;
-  }
+@keyframes phoneRotateAnim {
+  0%, 15% { transform: rotate(0deg); }
+  50%, 75% { transform: rotate(-90deg); }
+  90%, 100% { transform: rotate(0deg); }
+}
+
+@keyframes arrowSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.orientation-title {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: var(--accent-gold);
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 0 15px var(--accent-gold-glow);
+}
+
+.orientation-desc {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  line-height: 1.65;
+  word-break: keep-all;
+  margin: 0;
 }
