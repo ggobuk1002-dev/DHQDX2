@@ -204,30 +204,8 @@ class ExhibitionApp {
       });
     }
 
-    // 상세 화면 모바일 3D 뷰어 토글 (펼치기 / 접기)
-    const btnToggle3D = document.getElementById('btn-toggle-3d-stage');
-    const stageCol = document.getElementById('detail-stage-column');
-    const toggle3DText = document.getElementById('toggle-3d-text');
-    if (btnToggle3D && stageCol) {
-      btnToggle3D.addEventListener('click', () => {
-        const isCollapsed = stageCol.classList.contains('collapsed');
-        if (isCollapsed) {
-          stageCol.classList.remove('collapsed');
-          stageCol.classList.add('is-expanded');
-          btnToggle3D.setAttribute('aria-expanded', 'true');
-          if (toggle3DText) toggle3DText.innerText = '3D 유물 모델 접기';
-        } else {
-          stageCol.classList.add('collapsed');
-          stageCol.classList.remove('is-expanded');
-          btnToggle3D.setAttribute('aria-expanded', 'false');
-          if (toggle3DText) toggle3DText.innerText = '3D 유물 모델 보기 (펼치기)';
-        }
-      });
-    }
-
-    // 도슨트 닫기 버튼 & 배경 클릭 시 닫기
+    // 도슨트 닫기 버튼
     const btnCloseDocent = document.getElementById('btn-close-docent');
-    const docentModal = document.getElementById('docent-modal');
     if (btnCloseDocent) {
       btnCloseDocent.addEventListener('click', () => this.closeDocent());
     }
@@ -836,20 +814,6 @@ class ExhibitionApp {
     if (codeTag) codeTag.innerText = `NO. ${animal.code} · ${animal.layerName}`;
     if (title) title.innerText = animal.name;
     if (simpleDesc) simpleDesc.innerText = animal.simpleDesc;
-
-    // 모바일 환경일 경우 3D 뷰어를 기본 접힘 상태로 설정하여 패널과 설명이 바로 보이도록 최적화
-    const stageCol = document.getElementById('detail-stage-column');
-    const btnToggle3D = document.getElementById('btn-toggle-3d-stage');
-    const toggle3DText = document.getElementById('toggle-3d-text');
-    if (window.innerWidth <= 768 && stageCol) {
-      stageCol.classList.add('collapsed');
-      stageCol.classList.remove('is-expanded');
-      if (btnToggle3D) btnToggle3D.setAttribute('aria-expanded', 'false');
-      if (toggle3DText) toggle3DText.innerText = '📦 3D 유물 모델 보기 (펼치기)';
-    } else if (stageCol) {
-      stageCol.classList.remove('collapsed');
-      stageCol.classList.remove('is-expanded');
-    }
 
     // [핵심] 좌측 무대: con_Mapping.md의 3D 에셋 (GLB 전용 뷰어 또는 Sketchfab Embed iframe)
     const embedWrap = document.getElementById('detail-3d-embed-wrap');
@@ -1560,7 +1524,6 @@ class ExhibitionApp {
 
     modal.style.display = 'flex';
     modal.style.zIndex = '9999';
-    document.body.classList.add('modal-open');
 
     if (docentData && docentData.start && docentData.start.lines && docentData.start.lines.length > 0) {
       this.startDocent(docentData);
@@ -1574,7 +1537,6 @@ class ExhibitionApp {
     if (modal) modal.style.display = 'none';
     if (this.docentState.typeTimer) clearTimeout(this.docentState.typeTimer);
     this.docentState.isTyping = false;
-    document.body.classList.remove('modal-open');
   }
 
   startDocent(docentData) {

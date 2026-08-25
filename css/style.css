@@ -48,11 +48,6 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-body.modal-open {
-  overflow: hidden !important;
-  touch-action: none;
-}
-
 button {
   font-family: inherit;
   cursor: pointer;
@@ -1058,11 +1053,6 @@ img {
   height: fit-content;
 }
 
-/* Mobile Toggle Button for 3D Stage (Hidden on Desktop) */
-.btn-toggle-3d-stage {
-  display: none;
-}
-
 .stage-viewer-wrap {
   width: 100%;
   height: 520px;
@@ -1506,27 +1496,26 @@ img {
 .docent-vn-backdrop {
   position: fixed;
   inset: 0;
-  /* 상단 및 중앙의 3D 에셋과 패널이 선명하게 보이도록 하단 그라디언트만 은은하게 적용 */
-  background: linear-gradient(to top, rgba(5, 7, 10, 0.88) 0%, rgba(5, 7, 10, 0.35) 45%, rgba(0, 0, 0, 0.05) 75%);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   z-index: 9999;
   display: none;
   align-items: flex-end;
   justify-content: center;
   padding-bottom: 2rem;
-  pointer-events: auto;
+  pointer-events: none !important;
 }
 
 .docent-vn-container {
   position: relative;
   width: 100%;
   max-width: 1050px;
-  min-height: 520px;
+  min-height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  pointer-events: auto;
+  pointer-events: none !important;
 }
 
 .docent-vn-character {
@@ -2478,85 +2467,20 @@ img {
     top: 0 !important;
     width: 100% !important;
     z-index: 10 !important;
-    gap: 0.6rem !important;
+    gap: 0.85rem !important;
   }
 
-  /* 3D Toggle Button for Mobile */
-  .btn-toggle-3d-stage {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 100% !important;
-    padding: 0.75rem 1.1rem !important;
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(15, 23, 42, 0.9)) !important;
-    border: 1.5px solid var(--accent-gold) !important;
+  .stage-viewer-wrap {
+    height: 310px !important;
     border-radius: var(--radius-md) !important;
-    color: var(--accent-gold-light) !important;
-    font-size: 0.92rem !important;
-    font-weight: 700 !important;
-    cursor: pointer !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
-    transition: all var(--transition-normal) !important;
-  }
-
-  .btn-toggle-3d-stage:active {
-    transform: scale(0.98);
-  }
-
-  .toggle-3d-label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .toggle-3d-icon {
-    font-size: 1.1rem;
-  }
-
-  .toggle-arrow {
-    font-size: 0.8rem;
-    color: var(--accent-gold);
-    transition: transform 0.3s ease;
-  }
-
-  /* Collapsed state (Default on Mobile) */
-  .detail-stage-column.collapsed .stage-viewer-wrap {
-    display: none !important;
-  }
-
-  .detail-stage-column.collapsed .stage-hint {
-    display: none !important;
-  }
-
-  .detail-stage-column.collapsed .stage-controls {
-    padding: 0 !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-
-  /* Expanded state */
-  .detail-stage-column.is-expanded .toggle-arrow {
-    transform: rotate(180deg);
-  }
-
-  .detail-stage-column.is-expanded .stage-viewer-wrap {
     display: block !important;
-    height: 290px !important;
-    border-radius: var(--radius-md) !important;
-    animation: expandDown 0.35s ease-out;
-  }
-
-  @keyframes expandDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
   }
 
   .stage-controls {
     flex-direction: column;
     gap: 0.6rem;
     align-items: stretch;
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1rem;
   }
 
   .stage-hint {
@@ -2620,20 +2544,60 @@ img {
     padding-left: 0.5rem;
   }
 
-  /* 6. Docent Visual Novel Modal (Mobile Collision-Free Bottom Sheet) */
+  /* 6. Docent Visual Novel Modal (Non-blocking Floating Island Overlay) */
   .docent-vn-backdrop {
-    padding-bottom: 0 !important;
-    background: rgba(5, 7, 10, 0.82) !important;
-    backdrop-filter: blur(6px) !important;
-    -webkit-backdrop-filter: blur(6px) !important;
+    padding-bottom: 0.75rem !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
     align-items: flex-end !important;
+    pointer-events: none !important;
   }
 
   .docent-vn-container {
     width: 100% !important;
     max-width: 100% !important;
     min-height: auto !important;
-    padding: 0 0.75rem 1rem 0.75rem !important;
+    padding: 0 0.6rem !important;
+    pointer-events: none !important;
+  }
+
+  .docent-vn-character {
+    position: absolute !important;
+    bottom: calc(100% - 15px) !important;
+    left: 1rem !important;
+    width: 100px !important;
+    height: 130px !important;
+    z-index: 5 !important;
+    pointer-events: none !important;
+  }
+
+  .docent-portrait-img {
+    max-height: 130px !important;
+    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.95)) !important;
+  }
+
+  .docent-vn-ui {
+    padding: 0.9rem 1rem !important;
+    border-radius: 16px !important;
+    max-height: 52vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    min-height: auto !important;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.95), 0 0 20px var(--accent-gold-glow) !important;
+    pointer-events: auto !important;
+  }
+
+  .vn-ui-top-bar {
+    margin-bottom: 0.5rem !important;
+    padding-bottom: 0.4rem !important;
+  }
+
+  .vn-header-badge {
+    font-size: 0.75rem !important;
+    margin-bottom: 0 !important;
+    gap: 0.3rem !important;
+    flex-wrap: wrap !important;
   }
 
   .btn-close-vn {
@@ -2641,88 +2605,57 @@ img {
     background: rgba(255, 255, 255, 0.1) !important;
     border: 1px solid var(--accent-gold) !important;
     color: #fff !important;
-    font-size: 0.78rem !important;
+    font-size: 0.75rem !important;
     font-weight: 700 !important;
-    padding: 0.3rem 0.75rem !important;
-    border-radius: 12px !important;
+    padding: 0.25rem 0.65rem !important;
+    border-radius: 10px !important;
     box-shadow: none !important;
-    z-index: 10 !important;
-  }
-
-  .docent-vn-character {
-    position: absolute !important;
-    bottom: calc(100% - 20px) !important;
-    left: 1.25rem !important;
-    width: 110px !important;
-    height: 140px !important;
-    z-index: 5 !important;
-    pointer-events: none !important;
-  }
-
-  .docent-portrait-img {
-    max-height: 140px !important;
-    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.95)) !important;
-  }
-
-  .docent-vn-ui {
-    padding: 1rem 1.15rem !important;
-    border-radius: 18px !important;
-    max-height: 65vh !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    min-height: auto !important;
-    box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.9), 0 0 20px var(--accent-gold-glow) !important;
-  }
-
-  .vn-header-badge {
-    font-size: 0.78rem !important;
-    margin-bottom: 0.4rem !important;
-    gap: 0.35rem !important;
-    flex-wrap: wrap !important;
+    pointer-events: auto !important;
   }
 
   .vn-speaker-row {
-    margin-bottom: 0.4rem !important;
+    margin-bottom: 0.35rem !important;
   }
 
   .vn-speaker-name {
-    font-size: 0.95rem !important;
-    padding: 0.15rem 0.55rem !important;
+    font-size: 0.9rem !important;
+    padding: 0.12rem 0.5rem !important;
   }
 
   .vn-text-content {
-    font-size: 0.92rem !important;
-    line-height: 1.65 !important;
-    min-height: 52px !important;
+    font-size: 0.88rem !important;
+    line-height: 1.6 !important;
+    min-height: 48px !important;
   }
 
   .vn-click-hint {
-    font-size: 0.75rem !important;
+    font-size: 0.72rem !important;
   }
 
   .vn-options-container {
-    margin-top: 0.75rem !important;
-    padding-top: 0.75rem !important;
+    margin-top: 0.6rem !important;
+    padding-top: 0.6rem !important;
   }
 
   .vn-options-title {
-    font-size: 0.82rem !important;
-    margin-bottom: 0.5rem !important;
+    font-size: 0.78rem !important;
+    margin-bottom: 0.4rem !important;
   }
 
   .vn-options-list {
-    gap: 0.4rem !important;
-    max-height: 160px !important;
+    gap: 0.35rem !important;
+    max-height: 150px !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
   }
 
   .btn-docent-option {
-    padding: 0.55rem 0.85rem !important;
-    font-size: 0.84rem !important;
-    line-height: 1.4 !important;
-    min-height: 38px !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.82rem !important;
+    line-height: 1.35 !important;
+    min-height: 36px !important;
     border-radius: 8px !important;
+    pointer-events: auto !important;
   }
 }
 
