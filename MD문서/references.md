@@ -516,7 +516,7 @@ https://skfb.ly/6SPy7
  Davis, R. W. et al. (1988). Effects of oil contamination on the thermal insulation of sea otters. *Journal of Wildlife Management, 52*(1), 144–148.
 
 \-3D에셋  
-https://skfb.ly/oSKos
+https://sketchfab.com/models/57b88c7e30c74b588f28102177849397
 
 # \#\#\# 16\. 백로 / 왜가리 / 두루미
 
