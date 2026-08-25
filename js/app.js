@@ -489,61 +489,108 @@ class ExhibitionApp {
   }
 
   /* ============================================================
-     5-1. 한 번에 훅훅 넘어가는 스크롤 스냅 휠 컨트롤러
+     5-1. 한 번에 훅훅 넘어가는 스크롤 스냅 휠 컨트롤러 (메인 & 전개도 공통)
      ============================================================ */
   initWheelSnapController() {
     this.isSnapping = false;
     this.currentStepIdx = 0;
-    const steps = Array.from(document.querySelectorAll('.scrolly-step'));
-    if (!steps.length) return;
+    this.currentUnwrappedIdx = 0;
 
     window.addEventListener('wheel', (e) => {
-      if (this.currentView !== 'main') return;
-      if (this.isSnapping) {
-        e.preventDefault();
-        return;
+      // 1. 메인 3D 전시관람 스냅
+      if (this.currentView === 'main') {
+        const steps = Array.from(document.querySelectorAll('.scrolly-step'));
+        if (!steps.length) return;
+
+        if (this.isSnapping) {
+          e.preventDefault();
+          return;
+        }
+
+        if (Math.abs(e.deltaY) > 15) {
+          e.preventDefault();
+          this.isSnapping = true;
+
+          if (e.deltaY > 0) {
+            if (this.currentStepIdx < steps.length - 1) this.currentStepIdx++;
+          } else {
+            if (this.currentStepIdx > 0) this.currentStepIdx--;
+          }
+
+          const targetStep = steps[this.currentStepIdx];
+          if (targetStep) {
+            targetStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+
+          setTimeout(() => { this.isSnapping = false; }, 550);
+        }
       }
 
-      // 휠 델타 감지 (살짝만 굴려도 1스텝씩 훅훅 이동)
-      if (Math.abs(e.deltaY) > 15) {
-        e.preventDefault();
-        this.isSnapping = true;
+      // 2. 전개도 탐색 모드 층위별 1-화면 훅훅 스냅
+      else if (this.currentView === 'catalog' && this.catalogMode === 'unwrapped') {
+        const layerCards = Array.from(document.querySelectorAll('.unwrapped-layer-card'));
+        if (!layerCards.length) return;
 
-        if (e.deltaY > 0) {
-          if (this.currentStepIdx < steps.length - 1) {
-            this.currentStepIdx++;
-          }
-        } else {
-          if (this.currentStepIdx > 0) {
-            this.currentStepIdx--;
-          }
+        if (this.isSnapping) {
+          e.preventDefault();
+          return;
         }
 
-        const targetStep = steps[this.currentStepIdx];
-        if (targetStep) {
-          targetStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        if (Math.abs(e.deltaY) > 20) {
+          e.preventDefault();
+          this.isSnapping = true;
 
-        setTimeout(() => {
-          this.isSnapping = false;
-        }, 550);
+          if (e.deltaY > 0) {
+            if (this.currentUnwrappedIdx < layerCards.length - 1) this.currentUnwrappedIdx++;
+          } else {
+            if (this.currentUnwrappedIdx > 0) this.currentUnwrappedIdx--;
+          }
+
+          const targetLayer = layerCards[this.currentUnwrappedIdx];
+          if (targetLayer) {
+            targetLayer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+
+          setTimeout(() => { this.isSnapping = false; }, 550);
+        }
       }
     }, { passive: false });
 
     // 키보드 방향키 이동 지원
     window.addEventListener('keydown', (e) => {
-      if (this.currentView !== 'main') return;
-      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-        if (this.currentStepIdx < steps.length - 1) {
-          e.preventDefault();
-          this.currentStepIdx++;
-          steps[this.currentStepIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (this.currentView === 'main') {
+        const steps = Array.from(document.querySelectorAll('.scrolly-step'));
+        if (!steps.length) return;
+
+        if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+          if (this.currentStepIdx < steps.length - 1) {
+            e.preventDefault();
+            this.currentStepIdx++;
+            steps[this.currentStepIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+          if (this.currentStepIdx > 0) {
+            e.preventDefault();
+            this.currentStepIdx--;
+            steps[this.currentStepIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
         }
-      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        if (this.currentStepIdx > 0) {
-          e.preventDefault();
-          this.currentStepIdx--;
-          steps[this.currentStepIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else if (this.currentView === 'catalog' && this.catalogMode === 'unwrapped') {
+        const layerCards = Array.from(document.querySelectorAll('.unwrapped-layer-card'));
+        if (!layerCards.length) return;
+
+        if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+          if (this.currentUnwrappedIdx < layerCards.length - 1) {
+            e.preventDefault();
+            this.currentUnwrappedIdx++;
+            layerCards[this.currentUnwrappedIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+          if (this.currentUnwrappedIdx > 0) {
+            e.preventDefault();
+            this.currentUnwrappedIdx--;
+            layerCards[this.currentUnwrappedIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
         }
       }
     });
