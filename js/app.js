@@ -290,14 +290,20 @@ class ExhibitionApp {
         this.viewer.focusStep('intro');
       }
     } else if (viewName === 'catalog') {
-      if (canvasContainer) canvasContainer.style.opacity = '0';
+      if (canvasContainer) {
+        canvasContainer.style.opacity = '0';
+        canvasContainer.style.display = 'none';
+      }
       if (this.catalogMode === 'unwrapped') {
         this.setCatalogMode('unwrapped');
       } else {
         this.setCatalogMode('cards');
       }
     } else if (viewName === 'detail') {
-      if (canvasContainer) canvasContainer.style.opacity = '0';
+      if (canvasContainer) {
+        canvasContainer.style.opacity = '0';
+        canvasContainer.style.display = 'none';
+      }
       if (animalCode) {
         this.renderDetail(animalCode);
       }
