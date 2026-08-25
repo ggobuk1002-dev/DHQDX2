@@ -1,6 +1,7 @@
 /**
  * 과학해설사 확정 대화 데이터셋 (Source of Truth: dialogue.md)
  * 캐릭터: 래피드왜건
+ * 구조: START -> [Q1..Qn] -> [RETURN] -> [END 랜덤 퇴장]
  */
 const DOCENT_DIALOGUES = {
   "01": {
@@ -78,7 +79,6 @@ const DOCENT_DIALOGUES = {
         ],
         "concepts": [
           "농업 환경",
-          "동물의 이용",
           "발굽 형태",
           "문화적 상징"
         ],
@@ -158,31 +158,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "excited",
             "text": "이렇게 작은 도구 하나가 사람이 말을 이용하는 방법을 꽤 많이 바꿔놓았다는 게 재미있죠?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "다른 것도 궁금하다면 한번 골라볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "말 얘기를 하다 보니 저도 이것저것 더 궁금해지네요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "이렇게 보면 말도 꽤나 복잡한 동물이죠?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "thinking",
-            "text": "음… 다음에는 어떤 동물을 이야기해볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "저는 잠깐 쉬고 있을게요. 궁금한 게 생기면 또 불러주세요."
           }
         ],
         "concepts": [
@@ -193,6 +168,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "다른 것도 궁금하다면 한번 골라볼까요?",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "말 얘기를 하다 보니 저도 이것저것 더 궁금해지네요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "이렇게 보면 말도 꽤나 복잡한 동물이죠?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "thinking",
+          "text": "음… 다음에는 어떤 동물을 이야기해볼까요?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "저는 잠깐 쉬고 있을게요. 궁금한 게 생기면 또 불러주세요."
+        }
+      ]
     }
   },
   "02": {
@@ -333,31 +333,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "enlightened",
             "text": "그러니까 한 가지 이유만으로 설명하기보다는, 서식 환경의 변화와 먹이 감소, 인간의 포획이 여러 시기에 걸쳐 겹친 결과로 보는 것이 더 적절해요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "호랑이를 조금 다르게 보게 되지 않았나요? 다른 이야기도 궁금하다면 골라보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "호랑이에게는 생각보다 재미있는 이야기가 많이 숨어 있답니다. 전시를 더 둘러볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "오늘 본 호랑이가 아까와는 조금 다르게 보일지도 모르겠네요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "저는 여기서 잠깐 쉬고 있을게요. 다른 전시물도 천천히 둘러보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "다음에는 또 어떤 동물을 만나게 될까요? 한번 둘러보세요!"
           }
         ],
         "concepts": [
@@ -369,6 +344,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "호랑이를 조금 다르게 보게 되지 않았나요? 다른 이야기도 궁금하다면 골라보세요.",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "호랑이에게는 생각보다 재미있는 이야기가 많이 숨어 있답니다. 전시를 더 둘러볼까요?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "오늘 본 호랑이가 아까와는 조금 다르게 보일지도 모르겠네요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "저는 여기서 잠깐 쉬고 있을게요. 다른 전시물도 천천히 둘러보세요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "다음에는 또 어떤 동물을 만나게 될까요? 한번 둘러보세요!"
+        }
+      ]
     }
   },
   "03": {
@@ -526,8 +526,7 @@ const DOCENT_DIALOGUES = {
         ],
         "concepts": [
           "사자의 새끼 돌봄",
-          "암컷 간 협력",
-          "동물 행동과 속설의 구분"
+          "암컷 간 협력"
         ],
         "next": "RETURN"
       },
@@ -554,31 +553,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "enlightened",
             "text": "그러니까 ‘누가 이기냐’보다는, 두 동물이 어떻게 다르게 살아가는지를 비교해 보는 게 훨씬 과학적인 질문이겠죠?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "사자를 조금 더 살펴볼까요? 궁금한 질문을 골라보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "사자에게도 생각보다 재미있는 이야기가 많죠?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "다음에 사자를 보게 된다면 갈기부터 한번 자세히 살펴보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "좋은 관찰이었어요. 다른 동물들도 한번 살펴볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "어떤 동물에게 또 재미있는 이야기가 숨어 있을지 찾아보세요!"
           }
         ],
         "concepts": [
@@ -588,6 +562,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "사자를 조금 더 살펴볼까요? 궁금한 질문을 골라보세요.",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "사자에게도 생각보다 재미있는 이야기가 많죠?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "다음에 사자를 보게 된다면 갈기부터 한번 자세히 살펴보세요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "좋은 관찰이었어요. 다른 동물들도 한번 살펴볼까요?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "어떤 동물에게 또 재미있는 이야기가 숨어 있을지 찾아보세요!"
+        }
+      ]
     }
   },
   "04": {
@@ -723,31 +722,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "excited",
             "text": "이렇게 각 동물이 살아가는 방식과 이용하는 자원을 살펴보면, 그 동물이 생태계에서 어떤 자리를 차지하고 있는지도 알 수 있답니다."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "족제비가 어떻게 살아가는지 조금 더 알아볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "작은 족제비도 자기만의 방식으로 살아가고 있었네요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "동물마다 저마다 다른 생활 방식이 있다는 게 재미있죠?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "다른 동물들도 어떤 방식으로 살아가는지 한번 살펴보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "thinking",
-            "text": "다음에는 또 어떤 동물의 ‘생태적 자리’를 찾아볼까요?"
           }
         ],
         "concepts": [
@@ -758,6 +732,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "족제비가 어떻게 살아가는지 조금 더 알아볼까요?",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "작은 족제비도 자기만의 방식으로 살아가고 있었네요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "동물마다 저마다 다른 생활 방식이 있다는 게 재미있죠?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "다른 동물들도 어떤 방식으로 살아가는지 한번 살펴보세요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "thinking",
+          "text": "다음에는 또 어떤 동물의 ‘생태적 자리’를 찾아볼까요?"
+        }
+      ]
     }
   },
   "05": {
@@ -857,7 +856,7 @@ const DOCENT_DIALOGUES = {
           {
             "speaker": "래피드왜건",
             "emotion": "explaining",
-            "text": "그리고 사람과 가장 가까운 현생 친척 가운데 하나인 침팬지·보노보의 계통과는 약 800만~600만 년 전 공통 조상에서 갈라진 것으로 추정돼요."
+            "text": "그리고 사람과 가장 가까운 현생 친척 가운데 하나인 침팬지·보노보의 계통과는 약 800만\\~600만 년 전 공통 조상에서 갈라진 것으로 추정돼요."
           },
           {
             "speaker": "래피드왜건",
@@ -923,31 +922,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "enlightened",
             "text": "한반도에도 원숭이가 살았던 시기가 있었다는 사실은, 지금과는 다른 환경이 한반도에 존재했던 시기가 있었다는 것을 보여주는 흥미로운 단서랍니다."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "원숭이를 조금 더 살펴볼까요? 궁금한 질문을 골라보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "사람과 원숭이가 닮은 이유도, 서로 다른 모습으로 살아가는 이유도 공통 조상에서 시작된 이야기였네요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "오늘은 원숭이를 만났으니, 다음에는 또 어떤 동물이 숨어 있는지 찾아볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "원숭이에 대한 이야기는 여기까지예요. 다른 동물들도 한번 살펴보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "thinking",
-            "text": "혹시 다른 동물을 보다가 궁금한 게 생기면, 언제든 다시 불러주세요."
           }
         ],
         "concepts": [
@@ -958,6 +932,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "원숭이를 조금 더 살펴볼까요? 궁금한 질문을 골라보세요.",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "사람과 원숭이가 닮은 이유도, 서로 다른 모습으로 살아가는 이유도 공통 조상에서 시작된 이야기였네요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "오늘은 원숭이를 만났으니, 다음에는 또 어떤 동물이 숨어 있는지 찾아볼까요?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "원숭이에 대한 이야기는 여기까지예요. 다른 동물들도 한번 살펴보세요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "thinking",
+          "text": "혹시 다른 동물을 보다가 궁금한 게 생기면, 언제든 다시 불러주세요."
+        }
+      ]
     }
   },
   "06": {
@@ -1094,31 +1093,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "excited",
             "text": "즉, 진화에서는 ‘클수록 무조건 좋다’가 아니라, 이점과 비용이 함께 작용하면서 형질의 크기가 달라질 수 있는 거예요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "사슴뿔을 조금 더 살펴봤어요. 다른 궁금증도 한번 골라볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "사슴뿔 하나만 살펴봐도 진화에 관한 질문이 꽤 많이 생기죠? 재미있는 발견이었어요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "다음 전시에서도 눈에 띄는 특징 하나를 골라서 새로운 질문을 만들어보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "좋은 관찰이었어요. 그럼 저는 이만 돌아갈게요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "thinking",
-            "text": "다음에는 또 어떤 동물의 특징이 궁금해질까요? 전시를 더 둘러봐요."
           }
         ],
         "concepts": [
@@ -1130,6 +1104,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "사슴뿔을 조금 더 살펴봤어요. 다른 궁금증도 한번 골라볼까요?",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "사슴뿔 하나만 살펴봐도 진화에 관한 질문이 꽤 많이 생기죠? 재미있는 발견이었어요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "다음 전시에서도 눈에 띄는 특징 하나를 골라서 새로운 질문을 만들어보세요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "좋은 관찰이었어요. 그럼 저는 이만 돌아갈게요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "thinking",
+          "text": "다음에는 또 어떤 동물의 특징이 궁금해질까요? 전시를 더 둘러봐요."
+        }
+      ]
     }
   },
   "07": {
@@ -1304,42 +1303,41 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "neutral",
             "text": "다만 문화가 만들어지는 데에는 여러 가지 이유가 있을 수 있기 때문에, 환경 하나만으로 그 이유를 설명할 수는 없답니다."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "재미있는 질문이 더 남아 있네요. 다른 것도 살펴볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "다른 동물들도 한번 살펴보세요. 재미있는 이야기가 또 있을 거예요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "멧돼지 말고도 궁금한 동물이 있다면 한번 찾아보세요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "오늘 본 멧돼지가 조금 다르게 보이지 않나요? 그럼 저는 여기서 물러날게요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "더 궁금한 게 생기면 언제든 다시 불러주세요. 전시에서 또 만나요!"
           }
         ],
         "concepts": [
           "돼지의 진흙 목욕(wallowing)",
           "체온 조절과 피부 보호",
-          "동물의 행동과 인간의 인식",
           "환경과 인간의 문화적 관계",
           "돼지고기 금기에 대한 환경적 해석"
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "재미있는 질문이 더 남아 있네요. 다른 것도 살펴볼까요?",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "다른 동물들도 한번 살펴보세요. 재미있는 이야기가 또 있을 거예요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "멧돼지 말고도 궁금한 동물이 있다면 한번 찾아보세요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "오늘 본 멧돼지가 조금 다르게 보이지 않나요? 그럼 저는 여기서 물러날게요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "더 궁금한 게 생기면 언제든 다시 불러주세요. 전시에서 또 만나요!"
+        }
+      ]
     }
   },
   "08": {
@@ -1485,31 +1483,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "enlightened",
             "text": "코끼리에게는 살아가는 데 쓰이는 신체 구조였던 상아가, 인간에게는 귀중한 재료가 되면서 오히려 코끼리를 위험에 빠뜨리는 특징이 된 거죠."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "코끼리를 조금 다른 각도에서 살펴봤네요. 다른 질문도 궁금하다면 골라보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "거대한 몸 뒤에 숨어 있는 이야기도 꽤 많죠? 전시를 더 둘러보면 또 다른 동물의 이야기도 만날 수 있을 거예요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "오늘은 코끼리의 발부터 상아까지 살펴봤네요. 이제 다른 동물도 한번 만나볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "코끼리 이야기는 여기까지예요. 전시를 천천히 더 둘러보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "다음에는 또 어떤 동물이 기다리고 있을까요? 한번 찾아보세요!"
           }
         ],
         "concepts": [
@@ -1520,6 +1493,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "코끼리를 조금 다른 각도에서 살펴봤네요. 다른 질문도 궁금하다면 골라보세요.",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "거대한 몸 뒤에 숨어 있는 이야기도 꽤 많죠? 전시를 더 둘러보면 또 다른 동물의 이야기도 만날 수 있을 거예요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "오늘은 코끼리의 발부터 상아까지 살펴봤네요. 이제 다른 동물도 한번 만나볼까요?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "코끼리 이야기는 여기까지예요. 전시를 천천히 더 둘러보세요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "다음에는 또 어떤 동물이 기다리고 있을까요? 한번 찾아보세요!"
+        }
+      ]
     }
   },
   "09": {
@@ -1643,31 +1641,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "enlightened",
             "text": "이처럼 하나의 공통 조상을 가진 생물 집단이 여러 환경과 생태적 지위에 적응하면서 다양한 형태와 종으로 분화하는 현상을 적응방산이라고 해요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "부리 하나만 살펴봐도 새들이 살아가는 방식에 관한 여러 이야기를 찾아볼 수 있네요. 다른 질문도 골라볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "다음에 새를 볼 때는 부리부터 한번 살펴보세요. 어떤 걸 먹고 어떻게 살아가는지 상상해볼 수도 있거든요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "오늘은 이 이상한 부리가 새로운 질문을 만들어주는 단서가 되었네요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "재미있는 동물을 더 찾아보고 싶다면 전시를 계속 둘러보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "다음에는 또 어떤 동물의 독특한 특징을 발견하게 될까요? 전시에서 찾아보세요."
           }
         ],
         "concepts": [
@@ -1678,6 +1651,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "부리 하나만 살펴봐도 새들이 살아가는 방식에 관한 여러 이야기를 찾아볼 수 있네요. 다른 질문도 골라볼까요?",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "다음에 새를 볼 때는 부리부터 한번 살펴보세요. 어떤 걸 먹고 어떻게 살아가는지 상상해볼 수도 있거든요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "오늘은 이 이상한 부리가 새로운 질문을 만들어주는 단서가 되었네요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "재미있는 동물을 더 찾아보고 싶다면 전시를 계속 둘러보세요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "다음에는 또 어떤 동물의 독특한 특징을 발견하게 될까요? 전시에서 찾아보세요."
+        }
+      ]
     }
   },
   "10": {
@@ -1801,31 +1799,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "enlightened",
             "text": "그래서 연구자들은 혹시 우리 먼 조상과의 만남이 이런 형질의 진화에 영향을 주었을지도 모른다고 생각해요. 물론 시기가 비슷하다는 것만으로 사람이 그 형질을 진화시켰다고 단정할 수는 없어요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "진화에 관한 이야기가 더 궁금하다면 다른 질문도 골라보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "오늘은 야수와 뱀의 모습에서 시작해서 진화 이야기까지 살펴봤네요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "서로 영향을 주고받으며 변화하는 생물들의 이야기는 생각보다 가까이에 있을지도 몰라요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "thinking",
-            "text": "다음에는 또 어떤 동물의 모습에서 재미있는 이야기를 발견할 수 있을까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "그럼 저는 이만 돌아갈게요. 전시를 더 둘러봐요!"
           }
         ],
         "concepts": [
@@ -1836,6 +1809,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "진화에 관한 이야기가 더 궁금하다면 다른 질문도 골라보세요.",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "오늘은 야수와 뱀의 모습에서 시작해서 진화 이야기까지 살펴봤네요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "서로 영향을 주고받으며 변화하는 생물들의 이야기는 생각보다 가까이에 있을지도 몰라요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "thinking",
+          "text": "다음에는 또 어떤 동물의 모습에서 재미있는 이야기를 발견할 수 있을까요?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "그럼 저는 이만 돌아갈게요. 전시를 더 둘러봐요!"
+        }
+      ]
     }
   },
   "11": {
@@ -1975,31 +1973,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "enlightened",
             "text": "어떤 생물에서는 이런 교배형이 아주 다양하게 나타나기도 하지요. 그러니까 자연에서 번식과 성을 구분하는 방식은 우리가 익숙한 두 가지 방식만으로 설명할 수 없는 경우도 있답니다."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "재미있는 질문이 더 있다면 골라보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "새의 화려한 모습에도 진화의 이야기가 숨어 있었네요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "자연을 볼 때는 겉모습뿐 아니라, 그 모습이 어떻게 만들어졌는지도 살펴보면 더 재미있답니다."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "다른 동물들도 어떤 이야기를 품고 있는지 한번 살펴보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "다음 동물에서는 또 어떤 재미있는 특징을 발견하게 될까요?"
           }
         ],
         "concepts": [
@@ -2010,6 +1983,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "재미있는 질문이 더 있다면 골라보세요.",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "새의 화려한 모습에도 진화의 이야기가 숨어 있었네요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "자연을 볼 때는 겉모습뿐 아니라, 그 모습이 어떻게 만들어졌는지도 살펴보면 더 재미있답니다."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "다른 동물들도 어떤 이야기를 품고 있는지 한번 살펴보세요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "다음 동물에서는 또 어떤 재미있는 특징을 발견하게 될까요?"
+        }
+      ]
     }
   },
   "12": {
@@ -2166,31 +2164,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "enlightened",
             "text": "그리고 두 동물의 호흡을 살펴보면 재미있는 공통점도 발견할 수 있어요. 새와 악어에서는 공기가 주요 통로를 따라 한 방향으로 흐르는 단방향성 기류(unidirectional airflow)가 나타나요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "악어를 조금 다르게 보게 됐다면, 다른 질문도 골라볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "악어를 다시 보니까 처음과는 조금 다르게 보이지 않나요? 전시를 더 둘러보세요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "비슷한 모습 속에도 긴 진화의 역사가 숨어 있답니다. 다음 동물도 한번 살펴보세요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "궁금한 동물이 또 있나요? 천천히 전시를 둘러보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "다음에는 어떤 동물의 이야기를 만나볼까요? 전시를 계속 탐험해 보세요!"
           }
         ],
         "concepts": [
@@ -2201,6 +2174,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "악어를 조금 다르게 보게 됐다면, 다른 질문도 골라볼까요?",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "악어를 다시 보니까 처음과는 조금 다르게 보이지 않나요? 전시를 더 둘러보세요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "비슷한 모습 속에도 긴 진화의 역사가 숨어 있답니다. 다음 동물도 한번 살펴보세요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "궁금한 동물이 또 있나요? 천천히 전시를 둘러보세요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "다음에는 어떤 동물의 이야기를 만나볼까요? 전시를 계속 탐험해 보세요!"
+        }
+      ]
     }
   },
   "13": {
@@ -2336,31 +2334,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "excited",
             "text": "결국 중요한 건, 물고기에서 시작된 변화가 새로운 환경을 이용하는 과정으로 이어졌다는 점이에요. 그리고 그 긴 진화의 역사 끝에는 우리도 함께 이어져 있답니다."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "물고기와 우리 사이에 어떤 연결이 있는지 조금 더 살펴볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "물고기를 다시 보게 되면, 우리 몸과 이어지는 아주 오래된 역사를 한번 떠올려 보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "물고기와 우리가 이렇게 가까운 이야기를 가지고 있을 줄은, 조금 놀랍죠?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "재미있는 이야기는 여기까지예요. 전시를 더 둘러보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "다음에는 또 어떤 동물의 이야기가 기다리고 있을까요? 한번 찾아보세요."
           }
         ],
         "concepts": [
@@ -2371,6 +2344,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "물고기와 우리 사이에 어떤 연결이 있는지 조금 더 살펴볼까요?",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "물고기를 다시 보게 되면, 우리 몸과 이어지는 아주 오래된 역사를 한번 떠올려 보세요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "물고기와 우리가 이렇게 가까운 이야기를 가지고 있을 줄은, 조금 놀랍죠?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "재미있는 이야기는 여기까지예요. 전시를 더 둘러보세요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "다음에는 또 어떤 동물의 이야기가 기다리고 있을까요? 한번 찾아보세요."
+        }
+      ]
     }
   },
   "14": {
@@ -2499,41 +2497,41 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "enlightened",
             "text": "하지만 학명에 ‘일본’이라는 이름이 들어갔다고 해서 독도 강치가 일본에만 살았다는 뜻은 아니에요. 생물의 학명에는 그 동물이 발견되고 연구된 당시의 역사와 표본의 정보가 남기도 있답니다."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "다른 질문도 궁금하다면 하나 골라보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "물범처럼 바다와 육지를 오가는 동물에는 정말 재미있는 특징이 많죠!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "오늘 본 동물들의 모습도 다시 한번 살펴보세요. 비슷한 모습 속에서도 서로 다른 특징을 발견할 수 있을 거예요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "다음 전시에서도 또 재미있는 동물을 만나보세요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "그럼 저는 여기서 물러날게요. 전시를 계속 둘러보세요!"
           }
         ],
         "concepts": [
           "독도 강치",
-          "Zalophus japonicus*",
+          "*Zalophus japonicus*",
           "학명의 명명 역사",
           "학명과 실제 분포의 구분"
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "다른 질문도 궁금하다면 하나 골라보세요.",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "물범처럼 바다와 육지를 오가는 동물에는 정말 재미있는 특징이 많죠!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "오늘 본 동물들의 모습도 다시 한번 살펴보세요. 비슷한 모습 속에서도 서로 다른 특징을 발견할 수 있을 거예요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "다음 전시에서도 또 재미있는 동물을 만나보세요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "그럼 저는 여기서 물러날게요. 전시를 계속 둘러보세요!"
+        }
+      ]
     }
   },
   "15": {
@@ -2688,31 +2686,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "enlightened",
             "text": "그래서 기름 유출은 수달이나 바닷새처럼 물에서 생활하는 동물에게 특히 위험할 수 있어요. 몸을 보호하는 털과 깃털 자체가 생존에 중요한 역할을 하기 때문이죠."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "다른 궁금한 점도 살펴볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "수달에 대해 더 알아보니 물속 생활이 조금 다르게 보이지 않나요? 또 다른 전시도 살펴보세요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "수달의 털처럼 동물의 몸에는 생활 방식에 맞춰 발달한 다양한 특징이 숨어 있어요. 다른 동물도 한번 살펴보세요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "오늘 본 수달의 특징을 다른 동물과 비교해보면 또 재미있는 점을 발견할 수 있을 거예요. 그럼 다음 전시에서 만나요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "수달에 대한 이야기는 여기까지예요. 다른 동물들은 어떤 특징을 가지고 있을지 찾아보세요!"
           }
         ],
         "concepts": [
@@ -2723,6 +2696,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "다른 궁금한 점도 살펴볼까요?",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "수달에 대해 더 알아보니 물속 생활이 조금 다르게 보이지 않나요? 또 다른 전시도 살펴보세요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "수달의 털처럼 동물의 몸에는 생활 방식에 맞춰 발달한 다양한 특징이 숨어 있어요. 다른 동물도 한번 살펴보세요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "오늘 본 수달의 특징을 다른 동물과 비교해보면 또 재미있는 점을 발견할 수 있을 거예요. 그럼 다음 전시에서 만나요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "수달에 대한 이야기는 여기까지예요. 다른 동물들은 어떤 특징을 가지고 있을지 찾아보세요!"
+        }
+      ]
     }
   },
   "16": {
@@ -2855,31 +2853,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "enlightened",
             "text": "그래서 하나의 생물을 바라보는 방법에도 여러 기준이 있을 수 있어요. 우리가 만든 이름과 범주는 자연 그 자체와 완전히 같은 것이 아니라, 자연을 이해하기 위한 하나의 관점인 셈이죠."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "새를 구분하는 방법부터 이름과 범주에 관한 이야기까지, 다른 질문도 살펴볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "비슷해 보이는 새도 자세히 보면 정말 다양한 특징이 있죠. 다른 전시에서도 한번 찾아보세요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "오늘 본 새들을 다음에 만나면 어떤 특징이 먼저 눈에 들어오는지 한번 생각해 보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "새를 구분하는 방법은 여기까지예요. 전시를 계속 둘러보세요!"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "다른 동물들은 어떻게 나누고 이름을 붙이는지도 한번 살펴보면 재미있을 거예요!"
           }
         ],
         "concepts": [
@@ -2890,6 +2863,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "새를 구분하는 방법부터 이름과 범주에 관한 이야기까지, 다른 질문도 살펴볼까요?",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "비슷해 보이는 새도 자세히 보면 정말 다양한 특징이 있죠. 다른 전시에서도 한번 찾아보세요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "오늘 본 새들을 다음에 만나면 어떤 특징이 먼저 눈에 들어오는지 한번 생각해 보세요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "새를 구분하는 방법은 여기까지예요. 전시를 계속 둘러보세요!"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "다른 동물들은 어떻게 나누고 이름을 붙이는지도 한번 살펴보면 재미있을 거예요!"
+        }
+      ]
     }
   },
   "17": {
@@ -3134,31 +3132,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "enlightened",
             "text": "이처럼 한 가지 기능에 대한 특화가 다른 기능에 영향을 미치는 현상을 진화적 상쇄(Evolutionary Trade-off)라고 합니다."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "다른 질문도 골라볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "날개 하나만 봐도 진화의 이야기가 꽤 복잡하죠?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "같은 기능이라고 해서 같은 방식으로 만들어지는 건 아니랍니다."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "thinking",
-            "text": "다음에는 또 어떤 동물의 특징이 궁금해질까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "더 궁금한 게 생기면 전시를 천천히 둘러보세요."
           }
         ],
         "concepts": [
@@ -3168,6 +3141,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "다른 질문도 골라볼까요?",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "날개 하나만 봐도 진화의 이야기가 꽤 복잡하죠?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "같은 기능이라고 해서 같은 방식으로 만들어지는 건 아니랍니다."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "thinking",
+          "text": "다음에는 또 어떤 동물의 특징이 궁금해질까요?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "더 궁금한 게 생기면 전시를 천천히 둘러보세요."
+        }
+      ]
     }
   },
   "18": {
@@ -3329,31 +3327,6 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "excited",
             "text": "서로 완전히 달라 보이는 두 동물이 같은 큰 계통에 속한다는 사실, 신화와 자연을 함께 바라보면 또 다른 모습이 보이지 않나요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "다른 관점에서도 이 새를 한번 살펴볼까요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "같은 새를 보더라도 어떤 특징에 주목하느냐에 따라 정말 다르게 보일 수 있죠."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "thinking",
-            "text": "다음에는 다른 동물도 조금 더 자세히 들여다보세요. 의외의 특징이 보일지도 모르니까요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "문화유산에는 하나의 답만 있는 게 아니에요. 새로운 관점으로 바라보면 또 다른 이야기가 보이기도 하죠."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "그럼 저는 여기서 잠시 물러날게요. 전시를 더 둘러보세요."
           }
         ],
         "concepts": [
@@ -3366,6 +3339,31 @@ const DOCENT_DIALOGUES = {
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "다른 관점에서도 이 새를 한번 살펴볼까요?",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "같은 새를 보더라도 어떤 특징에 주목하느냐에 따라 정말 다르게 보일 수 있죠."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "thinking",
+          "text": "다음에는 다른 동물도 조금 더 자세히 들여다보세요. 의외의 특징이 보일지도 모르니까요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "문화유산에는 하나의 답만 있는 게 아니에요. 새로운 관점으로 바라보면 또 다른 이야기가 보이기도 하죠."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "그럼 저는 여기서 잠시 물러날게요. 전시를 더 둘러보세요."
+        }
+      ]
     }
   },
   "19": {
@@ -3489,43 +3487,43 @@ const DOCENT_DIALOGUES = {
             "speaker": "래피드왜건",
             "emotion": "enlightened",
             "text": "그래서 동아시아의 용은 단순히 무서운 괴물이 아니라, 동물이 도달할 수 있는 초월적인 경지로도 생각할 수 있어요. 처음부터 드래곤으로 태어나는 서양의 용과 비교하면, 스스로 갈고닦아 용이 된다는 점이 정말 재미있죠."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "다른 질문도 궁금하다면 하나 골라보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "enlightened",
-            "text": "뱀처럼 생긴 용에서 인간의 지각과 학습까지 이어지다니, 생각보다 자연과 상상의 거리가 가깝죠?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "excited",
-            "text": "다음에 용을 보게 된다면, 어떤 동물의 특징이 숨어 있는지도 한번 찾아보세요."
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "thinking",
-            "text": "혹시 여러분이라면 어떤 동물이 용이 될 수 있을 것 같나요?"
-          },
-          {
-            "speaker": "래피드왜건",
-            "emotion": "neutral",
-            "text": "그럼 저는 이만 갈게요. 다른 동물들도 천천히 살펴보세요."
           }
         ],
         "concepts": [
-          "동물의 신령화",
           "등용문 설화",
-          "동물에서 용으로의 승격",
           "동아시아 용과 서양 드래곤의 문화적 차이"
         ],
         "next": "RETURN"
       }
+    },
+    "returnPrompt": "다른 질문도 궁금하다면 하나 골라보세요.",
+    "end": {
+      "randomLines": [
+        {
+          "speaker": "래피드왜건",
+          "emotion": "enlightened",
+          "text": "뱀처럼 생긴 용에서 인간의 지각과 학습까지 이어지다니, 생각보다 자연과 상상의 거리가 가깝죠?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "excited",
+          "text": "다음에 용을 보게 된다면, 어떤 동물의 특징이 숨어 있는지도 한번 찾아보세요."
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "thinking",
+          "text": "혹시 여러분이라면 어떤 동물이 용이 될 수 있을 것 같나요?"
+        },
+        {
+          "speaker": "래피드왜건",
+          "emotion": "neutral",
+          "text": "그럼 저는 이만 갈게요. 다른 동물들도 천천히 살펴보세요."
+        }
+      ]
     }
   }
 };
 
-window.DOCENT_DIALOGUES = DOCENT_DIALOGUES;
+if (typeof window !== 'undefined') {
+  window.DOCENT_DIALOGUES = DOCENT_DIALOGUES;
+}

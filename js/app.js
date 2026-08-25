@@ -1967,13 +1967,14 @@ class ExhibitionApp {
       
       const animal = EXHIBITION_DATA.animals.find(a => a.code === this.docentState.animalCode);
       const animalName = animal ? animal.name : '이 상징';
+      const returnPromptText = docentData.returnPrompt || `${animalName}에 대해 또 다른 궁금한 점이 있으신가요? 아래 질문을 선택하여 탐구를 이어가시거나, 대화를 종료하고 전시품을 계속 감상하실 수 있습니다.`;
       
       this.docentState.currentMode = 'RETURN';
       this.docentState.dialogueQueue = [
         {
           speaker: '래피드왜건',
           emotion: 'explaining',
-          text: `${animalName}에 대해 또 다른 궁금한 점이 있으신가요? 아래 질문을 선택하여 탐구를 이어가시거나, 대화를 종료하고 전시품을 계속 감상하실 수 있습니다.`
+          text: returnPromptText
         }
       ];
       this.docentState.queueIdx = 0;
@@ -1981,7 +1982,29 @@ class ExhibitionApp {
     } else if (this.docentState.currentMode === 'RETURN') {
       this.showDocentChoices(docentData.start.choices, true);
       if (clickHint) clickHint.style.display = 'none';
+    } else if (this.docentState.currentMode === 'END') {
+      if (clickHint) clickHint.style.display = 'none';
+      this.closeDocent();
     }
+  }
+
+  triggerDocentEnd(docentData) {
+    const footer = document.getElementById('docent-options-footer');
+    const dialogueBox = document.getElementById('docent-dialogue-box');
+    if (footer) footer.style.display = 'none';
+    if (dialogueBox) dialogueBox.style.display = 'block';
+
+    const randomLines = (docentData && docentData.end && docentData.end.randomLines && docentData.end.randomLines.length > 0)
+      ? docentData.end.randomLines
+      : [{ speaker: '래피드왜건', emotion: 'neutral', text: '저는 잠깐 쉬고 있을게요. 궁금한 게 생기면 또 불러주세요.' }];
+
+    // 4가지 퇴장 후보 대사 중 무작위로 정확히 1개만 선택!
+    const chosenLine = randomLines[Math.floor(Math.random() * randomLines.length)];
+
+    this.docentState.currentMode = 'END';
+    this.docentState.dialogueQueue = [chosenLine];
+    this.docentState.queueIdx = 0;
+    this.displayNextDocentLine();
   }
 
   handleDocentClick() {
@@ -2117,12 +2140,12 @@ class ExhibitionApp {
       list.appendChild(btn);
     });
 
-    // 뚜렷한 대화 종료 버튼 추가
+    // 뚜렷한 대화 종료 버튼 추가 (누르면 1개 랜덤 멘트 출력 후 종료)
     const endBtn = document.createElement('button');
     endBtn.className = 'btn-docent-option btn-docent-end-option';
     endBtn.innerHTML = '<span>✕ 대화 종료하고 전시품 계속 감상하기</span>';
     endBtn.addEventListener('click', () => {
-      this.closeDocent();
+      this.triggerDocentEnd(docentData);
     });
     list.appendChild(endBtn);
   }
