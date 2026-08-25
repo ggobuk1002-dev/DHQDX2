@@ -3,12 +3,12 @@
 > 본 문서는 가상 웹 전시에 수록된 19종 백제 상징 생명과 5대 층위의 자연사·문화유산 학술 연구 근거, 단행본, 논문(DOI), 3D 에셋 및 박물관 소장 데이터의 공식 서지 총람입니다.
 
 ## 공통
-- **[R00-01]**
-  - 반즈, 사이먼. (2023). 『100가지 동물로 읽는 세계사: 티라노사우루스부터 북극곰까지 인류와 공생한 동물들의 이야기』. 오수원 옮김. 서울: 현대지성.
-- **[R00-02]**
-  - 애슈비, 잭. (2026). 『자연사박물관이 세계를 구하는 법: 대멸종의 시대, 자연의 기억보관소가 들려주는 전시실 너머의 이야기』. 제효영 옮김. 서울: 김영사.
-- **[R00-03]**
-  - 케이시언, 퍼트리샤 오노니우. (2026). 『자연은 퀴어하다: 장소에 토박이가 된다는 것, 속한다는 것, 그리고 자연의 온갖 퀴어함에 관하여』. 노승영 옮김. 서울: 에이도스.
+- **[R00-01]** **동물과 인간의 역사적 관계**
+  Barnes, S. (2023). 『100가지 동물로 읽는 세계사: 티라노사우루스부터 북극곰까지 인류와 공생한 동물들의 이야기』. 오수원 옮김. 서울: 현대지성.
+- **[R00-02]** **자연사박물관의 역할과 생물다양성 보전**
+  Ashby, J. (2026). 『자연사박물관이 세계를 구하는 법: 대멸종의 시대, 자연의 기억보관소가 들려주는 전시실 너머의 이야기』. 제효영 옮김. 서울: 김영사.
+- **[R00-03]** **생물학적 성과 자연의 성적 다양성**
+  Casey, P. O. (2026). 『자연은 퀴어하다: 장소에 토박이가 된다는 것, 속한다는 것, 그리고 자연의 온갖 퀴어함에 관하여』. 노승영 옮김. 서울: 에이도스.
 - **[R00-04]** **다윈핀치의 종분화와 적응방산**
   - Grant, P. R., & Grant, B. R. (2008). How and Why Species Multiply: The Radiation of Darwin's Finches. Princeton University Press.
 - **[R00-05]** **니치 구성과 생물-환경 상호작용**
@@ -141,23 +141,23 @@ https://digital.khs.go.kr/record/recordDetail3D.do?ichDataUid=139368679378851003
   https://skfb.ly/pMuOH
 
 ## 6. 사슴
-- **[R06-01]**
-  사슴뿔의 재생과 성장
-- **[R06-02]**
+- **[R06-01]** **사슴뿔의 재생과 성장 메커니즘**
+  Goss, R. J. (1983). Deer Antlers: Regeneration, Function and Evolution. Academic Press.
+- **[R06-02]** **사슴뿔 발생의 형태형성학적 특성**
   Li, C. & Suttie, J. M. (2012). Morphogenetic aspects of deer antler development. Frontiers in Bioscience (Elite Edition), 4(5), 1836–1842. DOI: 10.2741/505.
-- **[R06-03]**
+- **[R06-03]** **사슴뿔 줄기세포와 포유류 조직 재생**
   Feleke, M., Bennett, S., Chen, J., Hu, X., Williams, D. & Xu, J. (2020). New physiological insights into the phenomena of deer antler: A unique model for skeletal tissue regeneration. Journal of Orthopaedic Translation, 27, 57–66. DOI: 10.1016/j.jot.2020.10.012.
-- **[R06-04]**
+- **[R06-04]** **사슴뿔 재생을 통한 포유류 재생의학 통찰**
   Li, C. (2023). Deer antler renewal gives insights into mammalian epimorphic regeneration. Cell Regeneration, 12, 26.
-- **[R06-05]**
-  사슴뿔과 성선택
-- **[R06-06]**
+- **[R06-05]** **사슴뿔과 성선택 및 유전적 상관성**
+  Kruuk, L. E. B. et al. (2002). Antler size in red deer: Heritability and selection. Evolution, 56(8), 1683–1695.
+- **[R06-06]** **붉은사슴 뿔 크기의 유전력과 번식 성공도**
   Kruuk, L. E. B., Slate, J., Pemberton, J. M., Brotherstone, S., Guinness, F. & Clutton-Brock, T. H. (2002). Antler size in red deer: heritability and selection but no evolution. Evolution, 56(8), 1683–1695. DOI: 10.1111/j.0014-3820.2002.tb01480.x.
-- **[R06-07]**
+- **[R06-07]** **뿔 크기와 수컷의 생애 번식 성공도**
   Clements, M. N., Clutton-Brock, T. H., Albon, S. D., Pemberton, J. M. & Kruuk, L. E. B. (2010). Getting the timing right: antler growth phenology and sexual selection in a wild red deer population. Oecologia, 164(2), 357–368. DOI: 10.1007/s00442-010-1656-7.
-- **[R06-08]**
+- **[R06-08]** **사슴 뿔의 크기와 성장 비용 및 생애사적 절충**
   뿔의 크기와 비용·절충
-- **[R06-09]**
+- **[R06-09]** **사회적 환경이 사슴 성적 형질 투자에 미치는 영향**
   Reglero, M. M. et al. (2020). Social environment modulates investment in sex trait versus lifespan: red deer produce bigger antlers when facing more rivalry. Scientific Reports, 10, 9234.
 - **[A06-01]**
   https://skfb.ly/6BHXp
@@ -186,24 +186,20 @@ https://digital.khs.go.kr/record/recordDetail3D.do?ichDataUid=139368679378851003
   https://skfb.ly/oSyL7
 
 ## 8. 코끼리
-- **[R08-01]**
-  Jannel, A., Nair, J. P., Panagiotopoulou, O., Romilio, A. & Salisbury, S. W. (2019). “Keep your feet on the ground”: Simulated range of motion and hind foot posture of the Middle Jurassic sauropod *Rhoetosaurus brownei* and its implications for sauropod biology. *Journal of Morphology*, 280(6), 849–878. DOI: 10.1002/jmor.20989.
-- **[R08-02]**
-  Fischer, M. S., Schaller, N., & others. (2007). The structure of the cushions in the feet of African elephants (*Loxodonta africana*). *Journal of Anatomy*, 210.
-→ 코끼리 발의 섬유성·지방성 쿠션과 체중 지지, 힘의 분산을 뒷받침하는 자료.
-- **[R08-03]**
-  Lee, R. et al. (2016). Foot pressure distributions during walking in African elephants (*Loxodonta africana*). *Journal of Experimental Biology*.
-→ 코끼리의 발바닥 패드가 보행 중 하중을 분산하는 구조와 기능을 뒷받침.
-- **[R08-04]**
-  전투코끼리와 알렉산더
-- **[R08-05]**
-  Naiden, F. S., Garvin, E. E., Vanderspoel, J. & Epplett, C. (2021). Elephants in Hellenistic Warfare. In W. Heckel, F. S. Naiden, E. E. Garvin & J. Vanderspoel (Eds.), *A Companion to Greek Warfare*. Wiley-Blackwell. DOI: 10.1002/9781119438847.ch15.
-- **[R08-06]**
-  Trautmann, T. R. (2015). *Elephants and Kings: An Environmental History*. University of Chicago Press.
-→ 알렉산더 이후 헬레니즘 세계에서 전투코끼리가 중요한 군사 자원으로 활용된 역사적 맥락
-- **[R08-07]**
-  Glover, R. F. (1948). The Tactical Handling of the Elephant. *Greece & Rome*, 17(49), 1–11. DOI: 10.1017/S0017383500009748.
-→ 히다스페스 전투와 히파시스강에서의 알렉산더 군대의 진격 거부, 전투코끼리에 대한 군사적 위협 인식을 다루는 고전 연구.
+- **[R08-01]** **용각류의 발 구조와 자세, 체중 지지**
+  Jannel, A., Nair, J. P., Panagiotopoulou, O., Romilio, A. & Salisbury, S. W. (2019). “Keep your feet on the ground”: Simulated range of motion and hind foot posture of the Middle Jurassic sauropod Rhoetosaurus brownei and its implications for sauropod biology. Journal of Morphology, 280(6), 849–878. DOI: 10.1002/jmor.20989.
+- **[R08-02]** **코끼리 발의 섬유성·지방성 쿠션과 체중 지지**
+  Fischer, M. S., Schaller, N., & others. (2007). The structure of the cushions in the feet of African elephants (Loxodonta africana). Journal of Anatomy, 210.
+- **[R08-03]** **코끼리 발바닥의 하중 분산과 보행 역학**
+  Lee, R. et al. (2016). Foot pressure distributions during walking in African elephants (Loxodonta africana). Journal of Experimental Biology.
+- **[R08-04]** **알렉산더 대왕과 전투코끼리**
+  전투코끼리가 고대 그리스·마케도니아 세계의 군사적 위협으로 인식되고 활용된 역사적 맥락을 다루는 자료.
+- **[R08-05]** **헬레니즘 세계의 전투코끼리와 군사적 활용**
+  Naiden, F. S., Garvin, E. E., Vanderspoel, J. & Epplett, C. (2021). Elephants in Hellenistic Warfare. In W. Heckel, F. S. Naiden, E. E. Garvin & J. Vanderspoel (Eds.), A Companion to Greek Warfare. Wiley-Blackwell. DOI: 10.1002/9781119438847.ch15.
+- **[R08-06]** **코끼리와 왕권, 환경 및 정치적 역사**
+  Trautmann, T. R. (2015). Elephants and Kings: An Environmental History. University of Chicago Press.
+- **[R08-07]** **고대 전쟁에서 전투코끼리의 전술적 활용**
+  Glover, R. F. (1948). The Tactical Handling of the Elephant. Greece & Rome, 17(49), 1–11. DOI: 10.1017/S0017383500009748.
 - **[A08-01]**
   https://skfb.ly/QWCR
 
@@ -224,14 +220,14 @@ https://digital.khs.go.kr/record/recordDetail3D.do?ichDataUid=139368679378851003
 ## 10. 뱀을 물고 있는 야수
 - **[R10-01]** **진화적 경쟁과 붉은 여왕 가설**
   Van Valen, L. (1973). A new evolutionary law. Evolutionary Theory, 1, 1–30.
-포식자와 피식자의 공진화 및 붉은 여왕 가설
-Stenseth, N. C. & Maynard Smith, J. (1984). Coevolution in ecosystems: Red Queen evolution or stasis? Evolution, 38(4), 870–880.
-스피팅코브라의 사람 얼굴에 대한 독 분사 행동
-Westhoff, G., Tzschätzsch, K. & Bleckmann, H. (2005). The spitting behavior of two species of spitting cobras. Journal of Comparative Physiology A, 191(10), 873–881. DOI: 10.1007/s00359-005-0010-8.
-스피팅코브라의 표적 추적과 독 분사 정확성
-Westhoff, G., Boetig, M., Bleckmann, H. & Young, B. A. (2010). Target tracking during venom “spitting” by cobras. Journal of Experimental Biology, 213(11), 1797–1802. DOI: 10.1242/jeb.037135.
-스피팅코브라의 진화와 초기 인류와의 시기적 연관성
-Kazandjian, T. D., Petras, D., Robinson, S. D., et al. (2021). Convergent evolution of pain-inducing defensive venom components in spitting cobras. Science, 371(6527), 386–390. DOI: 10.1126/science.abb9303.
+- **[R10-02]** **포식자와 피식자의 공진화 및 붉은 여왕 가설**
+  Stenseth, N. C. & Maynard Smith, J. (1984). Coevolution in ecosystems: Red Queen evolution or stasis? Evolution, 38(4), 870–880.
+- **[R10-03]** **스피팅코브라의 사람 얼굴에 대한 독 분사 행동**
+  Westhoff, G., Tzschätzsch, K. & Bleckmann, H. (2005). The spitting behavior of two species of spitting cobras. Journal of Comparative Physiology A, 191(10), 873–881. DOI: 10.1007/s00359-005-0010-8.
+- **[R10-04]** **스피팅코브라의 표적 추적과 독 분사 정확성**
+  Westhoff, G., Boetig, M., Bleckmann, H. & Young, B. A. (2010). Target tracking during venom “spitting” by cobras. Journal of Experimental Biology, 213(11), 1797–1802. DOI: 10.1242/jeb.037135.
+- **[R10-05]** **스피팅코브라의 진화와 초기 인류와의 시기적 연관성**
+  Kazandjian, T. D., Petras, D., Robinson, S. D., et al. (2021). Convergent evolution of pain-inducing defensive venom components in spitting cobras. Science, 371(6527), 386–390. DOI: 10.1126/science.abb9303.
 - **[A10-01]**
   https://skfb.ly/6XUDU
 

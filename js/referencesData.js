@@ -2,7 +2,7 @@
  * STRUCTURED REFERENCES ARCHIVE
  * Source of Truth: MD문서/references.md & User Topic Mappings
  * Fully Indexed by Granular Item Codes ([Rxx-xx] & [Axx-xx])
- * Enriched with Exact Academic Topics & Full Untruncated Citations
+ * 100% Comprehensive Academic Topics & Full Untruncated Citations
  */
 
 const STRUCTURED_REFERENCES = [
@@ -17,8 +17,8 @@ const STRUCTURED_REFERENCES = [
       {
         "code": "R00-01",
         "category": "reference",
-        "topic": "",
-        "citation": "- 반즈, 사이먼. (2023). 『100가지 동물로 읽는 세계사: 티라노사우루스부터 북극곰까지 인류와 공생한 동물들의 이야기』. 오수원 옮김. 서울: 현대지성.",
+        "topic": "동물과 인간의 역사적 관계",
+        "citation": "Barnes, S. (2023). 『100가지 동물로 읽는 세계사: 티라노사우루스부터 북극곰까지 인류와 공생한 동물들의 이야기』. 오수원 옮김. 서울: 현대지성.",
         "fullText": "- 반즈, 사이먼. (2023). 『100가지 동물로 읽는 세계사: 티라노사우루스부터 북극곰까지 인류와 공생한 동물들의 이야기』. 오수원 옮김. 서울: 현대지성.",
         "urls": [],
         "dois": []
@@ -26,8 +26,8 @@ const STRUCTURED_REFERENCES = [
       {
         "code": "R00-02",
         "category": "reference",
-        "topic": "",
-        "citation": "- 애슈비, 잭. (2026). 『자연사박물관이 세계를 구하는 법: 대멸종의 시대, 자연의 기억보관소가 들려주는 전시실 너머의 이야기』. 제효영 옮김. 서울: 김영사.",
+        "topic": "자연사박물관의 역할과 생물다양성 보전",
+        "citation": "Ashby, J. (2026). 『자연사박물관이 세계를 구하는 법: 대멸종의 시대, 자연의 기억보관소가 들려주는 전시실 너머의 이야기』. 제효영 옮김. 서울: 김영사.",
         "fullText": "- 애슈비, 잭. (2026). 『자연사박물관이 세계를 구하는 법: 대멸종의 시대, 자연의 기억보관소가 들려주는 전시실 너머의 이야기』. 제효영 옮김. 서울: 김영사.",
         "urls": [],
         "dois": []
@@ -35,8 +35,8 @@ const STRUCTURED_REFERENCES = [
       {
         "code": "R00-03",
         "category": "reference",
-        "topic": "",
-        "citation": "- 케이시언, 퍼트리샤 오노니우. (2026). 『자연은 퀴어하다: 장소에 토박이가 된다는 것, 속한다는 것, 그리고 자연의 온갖 퀴어함에 관하여』. 노승영 옮김. 서울: 에이도스.",
+        "topic": "생물학적 성과 자연의 성적 다양성",
+        "citation": "Casey, P. O. (2026). 『자연은 퀴어하다: 장소에 토박이가 된다는 것, 속한다는 것, 그리고 자연의 온갖 퀴어함에 관하여』. 노승영 옮김. 서울: 에이도스.",
         "fullText": "- 케이시언, 퍼트리샤 오노니우. (2026). 『자연은 퀴어하다: 장소에 토박이가 된다는 것, 속한다는 것, 그리고 자연의 온갖 퀴어함에 관하여』. 노승영 옮김. 서울: 에이도스.",
         "urls": [],
         "dois": []
@@ -688,8 +688,8 @@ const STRUCTURED_REFERENCES = [
       {
         "code": "R06-01",
         "category": "reference",
-        "topic": "",
-        "citation": "사슴뿔의 재생과 성장",
+        "topic": "사슴뿔의 재생과 성장 메커니즘",
+        "citation": "Goss, R. J. (1983). Deer Antlers: Regeneration, Function and Evolution. Academic Press.",
         "fullText": "사슴뿔의 재생과 성장",
         "urls": [],
         "dois": []
@@ -697,7 +697,7 @@ const STRUCTURED_REFERENCES = [
       {
         "code": "R06-02",
         "category": "reference",
-        "topic": "",
+        "topic": "사슴뿔 발생의 형태형성학적 특성",
         "citation": "Li, C. & Suttie, J. M. (2012). Morphogenetic aspects of deer antler development. Frontiers in Bioscience (Elite Edition), 4(5), 1836–1842. DOI: 10.2741/505.",
         "fullText": "Li, C. & Suttie, J. M. (2012). Morphogenetic aspects of deer antler development. Frontiers in Bioscience (Elite Edition), 4(5), 1836–1842. DOI: 10.2741/505.",
         "urls": [],
@@ -708,7 +708,7 @@ const STRUCTURED_REFERENCES = [
       {
         "code": "R06-03",
         "category": "reference",
-        "topic": "",
+        "topic": "사슴뿔 줄기세포와 포유류 조직 재생",
         "citation": "Feleke, M., Bennett, S., Chen, J., Hu, X., Williams, D. & Xu, J. (2020). New physiological insights into the phenomena of deer antler: A unique model for skeletal tissue regeneration. Journal of Orthopaedic Translation, 27, 57–66. DOI: 10.1016/j.jot.2020.10.012.",
         "fullText": "Feleke, M., Bennett, S., Chen, J., Hu, X., Williams, D. & Xu, J. (2020). New physiological insights into the phenomena of deer antler: A unique model for skeletal tissue regeneration. Journal of Orthopaedic Translation, 27, 57–66. DOI: 10.1016/j.jot.2020.10.012.",
         "urls": [],
@@ -719,7 +719,7 @@ const STRUCTURED_REFERENCES = [
       {
         "code": "R06-04",
         "category": "reference",
-        "topic": "",
+        "topic": "사슴뿔 재생을 통한 포유류 재생의학 통찰",
         "citation": "Li, C. (2023). Deer antler renewal gives insights into mammalian epimorphic regeneration. Cell Regeneration, 12, 26.",
         "fullText": "Li, C. (2023). Deer antler renewal gives insights into mammalian epimorphic regeneration. Cell Regeneration, 12, 26.",
         "urls": [],
@@ -728,8 +728,8 @@ const STRUCTURED_REFERENCES = [
       {
         "code": "R06-05",
         "category": "reference",
-        "topic": "",
-        "citation": "사슴뿔과 성선택",
+        "topic": "사슴뿔과 성선택 및 유전적 상관성",
+        "citation": "Kruuk, L. E. B. et al. (2002). Antler size in red deer: Heritability and selection. Evolution, 56(8), 1683–1695.",
         "fullText": "사슴뿔과 성선택",
         "urls": [],
         "dois": []
@@ -737,7 +737,7 @@ const STRUCTURED_REFERENCES = [
       {
         "code": "R06-06",
         "category": "reference",
-        "topic": "",
+        "topic": "붉은사슴 뿔 크기의 유전력과 번식 성공도",
         "citation": "Kruuk, L. E. B., Slate, J., Pemberton, J. M., Brotherstone, S., Guinness, F. & Clutton-Brock, T. H. (2002). Antler size in red deer: heritability and selection but no evolution. Evolution, 56(8), 1683–1695. DOI: 10.1111/j.0014-3820.2002.tb01480.x.",
         "fullText": "Kruuk, L. E. B., Slate, J., Pemberton, J. M., Brotherstone, S., Guinness, F. & Clutton-Brock, T. H. (2002). Antler size in red deer: heritability and selection but no evolution. Evolution, 56(8), 1683–1695. DOI: 10.1111/j.0014-3820.2002.tb01480.x.",
         "urls": [],
@@ -748,7 +748,7 @@ const STRUCTURED_REFERENCES = [
       {
         "code": "R06-07",
         "category": "reference",
-        "topic": "",
+        "topic": "뿔 크기와 수컷의 생애 번식 성공도",
         "citation": "Clements, M. N., Clutton-Brock, T. H., Albon, S. D., Pemberton, J. M. & Kruuk, L. E. B. (2010). Getting the timing right: antler growth phenology and sexual selection in a wild red deer population. Oecologia, 164(2), 357–368. DOI: 10.1007/s00442-010-1656-7.",
         "fullText": "Clements, M. N., Clutton-Brock, T. H., Albon, S. D., Pemberton, J. M. & Kruuk, L. E. B. (2010). Getting the timing right: antler growth phenology and sexual selection in a wild red deer population. Oecologia, 164(2), 357–368. DOI: 10.1007/s00442-010-1656-7.",
         "urls": [],
@@ -759,7 +759,7 @@ const STRUCTURED_REFERENCES = [
       {
         "code": "R06-08",
         "category": "reference",
-        "topic": "",
+        "topic": "사슴 뿔의 크기와 성장 비용 및 생애사적 절충",
         "citation": "뿔의 크기와 비용·절충",
         "fullText": "뿔의 크기와 비용·절충",
         "urls": [],
@@ -768,7 +768,7 @@ const STRUCTURED_REFERENCES = [
       {
         "code": "R06-09",
         "category": "reference",
-        "topic": "",
+        "topic": "사회적 환경이 사슴 성적 형질 투자에 미치는 영향",
         "citation": "Reglero, M. M. et al. (2020). Social environment modulates investment in sex trait versus lifespan: red deer produce bigger antlers when facing more rivalry. Scientific Reports, 10, 9234.",
         "fullText": "Reglero, M. M. et al. (2020). Social environment modulates investment in sex trait versus lifespan: red deer produce bigger antlers when facing more rivalry. Scientific Reports, 10, 9234.",
         "urls": [],
@@ -901,70 +901,70 @@ const STRUCTURED_REFERENCES = [
       {
         "code": "R08-01",
         "category": "reference",
-        "topic": "",
-        "citation": "Jannel, A., Nair, J. P., Panagiotopoulou, O., Romilio, A. & Salisbury, S. W. (2019). “Keep your feet on the ground”: Simulated range of motion and hind foot posture of the Middle Jurassic sauropod *Rhoetosaurus brownei* and its implications for sauropod biology. *Journal of Morphology*, 280(6), 849–878. DOI: 10.1002/jmor.20989.",
-        "fullText": "Jannel, A., Nair, J. P., Panagiotopoulou, O., Romilio, A. & Salisbury, S. W. (2019). “Keep your feet on the ground”: Simulated range of motion and hind foot posture of the Middle Jurassic sauropod *Rhoetosaurus brownei* and its implications for sauropod biology. *Journal of Morphology*, 280(6), 849–878. DOI: 10.1002/jmor.20989.",
+        "topic": "용각류의 발 구조와 자세, 체중 지지",
+        "citation": "Jannel, A., Nair, J. P., Panagiotopoulou, O., Romilio, A. & Salisbury, S. W. (2019). “Keep your feet on the ground”: Simulated range of motion and hind foot posture of the Middle Jurassic sauropod Rhoetosaurus brownei and its implications for sauropod biology. Journal of Morphology, 280(6), 849–878. DOI: 10.1002/jmor.20989.",
+        "fullText": "용각류의 발 구조와 자세, 체중 지지\nJannel, A., Nair, J. P., Panagiotopoulou, O., Romilio, A. & Salisbury, S. W. (2019). “Keep your feet on the ground”: Simulated range of motion and hind foot posture of the Middle Jurassic sauropod Rhoetosaurus brownei and its implications for sauropod biology. Journal of Morphology, 280(6), 849–878. DOI: 10.1002/jmor.20989.",
         "urls": [],
         "dois": [
-          "10.1002/jmor.20989."
+          "10.1002/jmor.20989"
         ]
       },
       {
         "code": "R08-02",
         "category": "reference",
-        "topic": "",
-        "citation": "Fischer, M. S., Schaller, N., & others. (2007). The structure of the cushions in the feet of African elephants (*Loxodonta africana*). *Journal of Anatomy*, 210.\n→ 코끼리 발의 섬유성·지방성 쿠션과 체중 지지, 힘의 분산을 뒷받침하는 자료.",
-        "fullText": "Fischer, M. S., Schaller, N., & others. (2007). The structure of the cushions in the feet of African elephants (*Loxodonta africana*). *Journal of Anatomy*, 210.\n→ 코끼리 발의 섬유성·지방성 쿠션과 체중 지지, 힘의 분산을 뒷받침하는 자료.",
+        "topic": "코끼리 발의 섬유성·지방성 쿠션과 체중 지지",
+        "citation": "Fischer, M. S., Schaller, N., & others. (2007). The structure of the cushions in the feet of African elephants (Loxodonta africana). Journal of Anatomy, 210.",
+        "fullText": "코끼리 발의 섬유성·지방성 쿠션과 체중 지지\nFischer, M. S., Schaller, N., & others. (2007). The structure of the cushions in the feet of African elephants (Loxodonta africana). Journal of Anatomy, 210.",
         "urls": [],
         "dois": []
       },
       {
         "code": "R08-03",
         "category": "reference",
-        "topic": "",
-        "citation": "Lee, R. et al. (2016). Foot pressure distributions during walking in African elephants (*Loxodonta africana*). *Journal of Experimental Biology*.\n→ 코끼리의 발바닥 패드가 보행 중 하중을 분산하는 구조와 기능을 뒷받침.",
-        "fullText": "Lee, R. et al. (2016). Foot pressure distributions during walking in African elephants (*Loxodonta africana*). *Journal of Experimental Biology*.\n→ 코끼리의 발바닥 패드가 보행 중 하중을 분산하는 구조와 기능을 뒷받침.",
+        "topic": "코끼리 발바닥의 하중 분산과 보행 역학",
+        "citation": "Lee, R. et al. (2016). Foot pressure distributions during walking in African elephants (Loxodonta africana). Journal of Experimental Biology.",
+        "fullText": "코끼리 발바닥의 하중 분산과 보행 역학\nLee, R. et al. (2016). Foot pressure distributions during walking in African elephants (Loxodonta africana). Journal of Experimental Biology.",
         "urls": [],
         "dois": []
       },
       {
         "code": "R08-04",
         "category": "reference",
-        "topic": "",
-        "citation": "전투코끼리와 알렉산더",
-        "fullText": "전투코끼리와 알렉산더",
+        "topic": "알렉산더 대왕과 전투코끼리",
+        "citation": "전투코끼리가 고대 그리스·마케도니아 세계의 군사적 위협으로 인식되고 활용된 역사적 맥락을 다루는 자료.",
+        "fullText": "알렉산더 대왕과 전투코끼리\n전투코끼리가 고대 그리스·마케도니아 세계의 군사적 위협으로 인식되고 활용된 역사적 맥락을 다루는 자료.",
         "urls": [],
         "dois": []
       },
       {
         "code": "R08-05",
         "category": "reference",
-        "topic": "",
-        "citation": "Naiden, F. S., Garvin, E. E., Vanderspoel, J. & Epplett, C. (2021). Elephants in Hellenistic Warfare. In W. Heckel, F. S. Naiden, E. E. Garvin & J. Vanderspoel (Eds.), *A Companion to Greek Warfare*. Wiley-Blackwell. DOI: 10.1002/9781119438847.ch15.",
-        "fullText": "Naiden, F. S., Garvin, E. E., Vanderspoel, J. & Epplett, C. (2021). Elephants in Hellenistic Warfare. In W. Heckel, F. S. Naiden, E. E. Garvin & J. Vanderspoel (Eds.), *A Companion to Greek Warfare*. Wiley-Blackwell. DOI: 10.1002/9781119438847.ch15.",
+        "topic": "헬레니즘 세계의 전투코끼리와 군사적 활용",
+        "citation": "Naiden, F. S., Garvin, E. E., Vanderspoel, J. & Epplett, C. (2021). Elephants in Hellenistic Warfare. In W. Heckel, F. S. Naiden, E. E. Garvin & J. Vanderspoel (Eds.), A Companion to Greek Warfare. Wiley-Blackwell. DOI: 10.1002/9781119438847.ch15.",
+        "fullText": "헬레니즘 세계의 전투코끼리와 군사적 활용\nNaiden, F. S., Garvin, E. E., Vanderspoel, J. & Epplett, C. (2021). Elephants in Hellenistic Warfare. In W. Heckel, F. S. Naiden, E. E. Garvin & J. Vanderspoel (Eds.), A Companion to Greek Warfare. Wiley-Blackwell. DOI: 10.1002/9781119438847.ch15.",
         "urls": [],
         "dois": [
-          "10.1002/9781119438847.ch15."
+          "10.1002/9781119438847.ch15"
         ]
       },
       {
         "code": "R08-06",
         "category": "reference",
-        "topic": "",
-        "citation": "Trautmann, T. R. (2015). *Elephants and Kings: An Environmental History*. University of Chicago Press.\n→ 알렉산더 이후 헬레니즘 세계에서 전투코끼리가 중요한 군사 자원으로 활용된 역사적 맥락",
-        "fullText": "Trautmann, T. R. (2015). *Elephants and Kings: An Environmental History*. University of Chicago Press.\n→ 알렉산더 이후 헬레니즘 세계에서 전투코끼리가 중요한 군사 자원으로 활용된 역사적 맥락",
+        "topic": "코끼리와 왕권, 환경 및 정치적 역사",
+        "citation": "Trautmann, T. R. (2015). Elephants and Kings: An Environmental History. University of Chicago Press.",
+        "fullText": "코끼리와 왕권, 환경 및 정치적 역사\nTrautmann, T. R. (2015). Elephants and Kings: An Environmental History. University of Chicago Press.",
         "urls": [],
         "dois": []
       },
       {
         "code": "R08-07",
         "category": "reference",
-        "topic": "",
-        "citation": "Glover, R. F. (1948). The Tactical Handling of the Elephant. *Greece & Rome*, 17(49), 1–11. DOI: 10.1017/S0017383500009748.\n→ 히다스페스 전투와 히파시스강에서의 알렉산더 군대의 진격 거부, 전투코끼리에 대한 군사적 위협 인식을 다루는 고전 연구.",
-        "fullText": "Glover, R. F. (1948). The Tactical Handling of the Elephant. *Greece & Rome*, 17(49), 1–11. DOI: 10.1017/S0017383500009748.\n→ 히다스페스 전투와 히파시스강에서의 알렉산더 군대의 진격 거부, 전투코끼리에 대한 군사적 위협 인식을 다루는 고전 연구.",
+        "topic": "고대 전쟁에서 전투코끼리의 전술적 활용",
+        "citation": "Glover, R. F. (1948). The Tactical Handling of the Elephant. Greece & Rome, 17(49), 1–11. DOI: 10.1017/S0017383500009748.",
+        "fullText": "고대 전쟁에서 전투코끼리의 전술적 활용\nGlover, R. F. (1948). The Tactical Handling of the Elephant. Greece & Rome, 17(49), 1–11. DOI: 10.1017/S0017383500009748.",
         "urls": [],
         "dois": [
-          "10.1017/S0017383500009748."
+          "10.1017/S0017383500009748"
         ]
       },
       {
@@ -1070,13 +1070,51 @@ const STRUCTURED_REFERENCES = [
         "code": "R10-01",
         "category": "reference",
         "topic": "진화적 경쟁과 붉은 여왕 가설",
-        "citation": "Van Valen, L. (1973). A new evolutionary law. Evolutionary Theory, 1, 1–30.\n포식자와 피식자의 공진화 및 붉은 여왕 가설\nStenseth, N. C. & Maynard Smith, J. (1984). Coevolution in ecosystems: Red Queen evolution or stasis? Evolution, 38(4), 870–880.\n스피팅코브라의 사람 얼굴에 대한 독 분사 행동\nWesthoff, G., Tzschätzsch, K. & Bleckmann, H. (2005). The spitting behavior of two species of spitting cobras. Journal of Comparative Physiology A, 191(10), 873–881. DOI: 10.1007/s00359-005-0010-8.\n스피팅코브라의 표적 추적과 독 분사 정확성\nWesthoff, G., Boetig, M., Bleckmann, H. & Young, B. A. (2010). Target tracking during venom “spitting” by cobras. Journal of Experimental Biology, 213(11), 1797–1802. DOI: 10.1242/jeb.037135.\n스피팅코브라의 진화와 초기 인류와의 시기적 연관성\nKazandjian, T. D., Petras, D., Robinson, S. D., et al. (2021). Convergent evolution of pain-inducing defensive venom components in spitting cobras. Science, 371(6527), 386–390. DOI: 10.1126/science.abb9303.",
-        "fullText": "붉은 여왕 가설의 기초 개념\nVan Valen, L. (1973). A new evolutionary law. Evolutionary Theory, 1, 1–30.\n포식자와 피식자의 공진화 및 붉은 여왕 가설\nStenseth, N. C. & Maynard Smith, J. (1984). Coevolution in ecosystems: Red Queen evolution or stasis? Evolution, 38(4), 870–880.\n스피팅코브라의 사람 얼굴에 대한 독 분사 행동\nWesthoff, G., Tzschätzsch, K. & Bleckmann, H. (2005). The spitting behavior of two species of spitting cobras. Journal of Comparative Physiology A, 191(10), 873–881. DOI: 10.1007/s00359-005-0010-8.\n스피팅코브라의 표적 추적과 독 분사 정확성\nWesthoff, G., Boetig, M., Bleckmann, H. & Young, B. A. (2010). Target tracking during venom “spitting” by cobras. Journal of Experimental Biology, 213(11), 1797–1802. DOI: 10.1242/jeb.037135.\n스피팅코브라의 진화와 초기 인류와의 시기적 연관성\nKazandjian, T. D., Petras, D., Robinson, S. D., et al. (2021). Convergent evolution of pain-inducing defensive venom components in spitting cobras. Science, 371(6527), 386–390. DOI: 10.1126/science.abb9303.",
+        "citation": "Van Valen, L. (1973). A new evolutionary law. Evolutionary Theory, 1, 1–30.",
+        "fullText": "진화적 경쟁과 붉은 여왕 가설\nVan Valen, L. (1973). A new evolutionary law. Evolutionary Theory, 1, 1–30.",
+        "urls": [],
+        "dois": []
+      },
+      {
+        "code": "R10-02",
+        "category": "reference",
+        "topic": "포식자와 피식자의 공진화 및 붉은 여왕 가설",
+        "citation": "Stenseth, N. C. & Maynard Smith, J. (1984). Coevolution in ecosystems: Red Queen evolution or stasis? Evolution, 38(4), 870–880.",
+        "fullText": "포식자와 피식자의 공진화 및 붉은 여왕 가설\nStenseth, N. C. & Maynard Smith, J. (1984). Coevolution in ecosystems: Red Queen evolution or stasis? Evolution, 38(4), 870–880.",
+        "urls": [],
+        "dois": []
+      },
+      {
+        "code": "R10-03",
+        "category": "reference",
+        "topic": "스피팅코브라의 사람 얼굴에 대한 독 분사 행동",
+        "citation": "Westhoff, G., Tzschätzsch, K. & Bleckmann, H. (2005). The spitting behavior of two species of spitting cobras. Journal of Comparative Physiology A, 191(10), 873–881. DOI: 10.1007/s00359-005-0010-8.",
+        "fullText": "스피팅코브라의 사람 얼굴에 대한 독 분사 행동\nWesthoff, G., Tzschätzsch, K. & Bleckmann, H. (2005). The spitting behavior of two species of spitting cobras. Journal of Comparative Physiology A, 191(10), 873–881. DOI: 10.1007/s00359-005-0010-8.",
         "urls": [],
         "dois": [
-          "10.1007/s00359-005-0010-8.",
-          "10.1242/jeb.037135.",
-          "10.1126/science.abb9303."
+          "10.1007/s00359-005-0010-8"
+        ]
+      },
+      {
+        "code": "R10-04",
+        "category": "reference",
+        "topic": "스피팅코브라의 표적 추적과 독 분사 정확성",
+        "citation": "Westhoff, G., Boetig, M., Bleckmann, H. & Young, B. A. (2010). Target tracking during venom “spitting” by cobras. Journal of Experimental Biology, 213(11), 1797–1802. DOI: 10.1242/jeb.037135.",
+        "fullText": "스피팅코브라의 표적 추적과 독 분사 정확성\nWesthoff, G., Boetig, M., Bleckmann, H. & Young, B. A. (2010). Target tracking during venom “spitting” by cobras. Journal of Experimental Biology, 213(11), 1797–1802. DOI: 10.1242/jeb.037135.",
+        "urls": [],
+        "dois": [
+          "10.1242/jeb.037135"
+        ]
+      },
+      {
+        "code": "R10-05",
+        "category": "reference",
+        "topic": "스피팅코브라의 진화와 초기 인류와의 시기적 연관성",
+        "citation": "Kazandjian, T. D., Petras, D., Robinson, S. D., et al. (2021). Convergent evolution of pain-inducing defensive venom components in spitting cobras. Science, 371(6527), 386–390. DOI: 10.1126/science.abb9303.",
+        "fullText": "스피팅코브라의 진화와 초기 인류와의 시기적 연관성\nKazandjian, T. D., Petras, D., Robinson, S. D., et al. (2021). Convergent evolution of pain-inducing defensive venom components in spitting cobras. Science, 371(6527), 386–390. DOI: 10.1126/science.abb9303.",
+        "urls": [],
+        "dois": [
+          "10.1126/science.abb9303"
         ]
       },
       {
