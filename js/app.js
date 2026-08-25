@@ -157,6 +157,7 @@ class ExhibitionApp {
 
     // 스크롤리텔링 옵저버
     this.initScrollyObserver();
+    this.initWheelSnapController();
 
     // 헤더 과학해설사 버튼 (상세화면에서는 즉시 실행, 타 화면에서는 안내 또는 상세화면 이동)
     const btnDocentCall = document.getElementById('btn-docent-call');
@@ -405,6 +406,15 @@ class ExhibitionApp {
           entry.target.classList.add('is-active');
 
           const stepId = entry.target.getAttribute('data-step-id');
+          const allSteps = Array.from(document.querySelectorAll('.scrolly-step'));
+          const targetIdx = allSteps.indexOf(entry.target);
+          if (targetIdx !== -1) this.currentStepIdx = targetIdx;
+
+          // 도트 인디케이터 활성화
+          document.querySelectorAll('.layer-nav-dot').forEach(dot => {
+            dot.classList.toggle('active', dot.getAttribute('data-step-target') === stepId);
+          });
+
           if (this.viewer) {
             this.viewer.focusStep(stepId);
           }
@@ -614,13 +624,13 @@ class ExhibitionApp {
     if (title) title.innerText = animal.name;
     if (simpleDesc) simpleDesc.innerText = animal.simpleDesc;
 
-    // [핵심] 좌측 무대: con_Mapping.md의 3D 에셋 Embed (Sketchfab iframe or GLB)
+    // [핵심] 좌측 무대: con_Mapping.md의 3D 에셋 Embed (Sketchfab iframe or GLB 뷰어)
     const embedWrap = document.getElementById('detail-3d-embed-wrap');
     if (embedWrap) {
-      if (animal.embedHtml) {
+      if (animal.glb) {
+        this.renderGLBViewer(embedWrap, animal.glb, animal.name);
+      } else if (animal.embedHtml) {
         embedWrap.innerHTML = animal.embedHtml;
-      } else if (animal.glb) {
-        embedWrap.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--accent-gold);"><p>3D 모델: ${animal.name}</p></div>`;
       }
     }
 

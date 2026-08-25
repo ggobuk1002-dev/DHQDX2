@@ -1,7 +1,716 @@
 # -*- coding: utf-8 -*-
 import os
 
-print("Starting full site rebuild...")
+print("Fixing 01.glb (Horse) and 02.glb (Tiger) 3D asset viewer...")
+
+# 1. Update js/data.js
+with open('js/data.js', 'r', encoding='utf-8') as f:
+    data_js = f.read()
+
+# Fix 01 말: remove lion embed, keep glb
+old_horse = r'''      id: 1,
+      code: '01',
+      name: '말',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 18, y: 45 },
+      panelTheme: '말의 이동과 발가락의 진화',
+      simpleDesc: '단단한 땅을 빠르게 달리는 인간의 오랜 동반자이자 기마문화의 상징.',
+      assetType: 'glb',
+      glb: 'Asset/3. Exhibition/glb/01.glb',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Horse" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/b279685790ac4194b51707df5cd245d4/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>','''
+
+new_horse = r'''      id: 1,
+      code: '01',
+      name: '말',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 18, y: 45 },
+      panelTheme: '말의 이동과 발가락의 진화',
+      simpleDesc: '단단한 땅을 빠르게 달리는 인간의 오랜 동반자이자 기마문화의 상징.',
+      assetType: 'glb',
+      glb: 'Asset/3. Exhibition/glb/01.glb','''
+
+old_tiger = r'''      id: 2,
+      code: '02',
+      name: '호랑이',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 26, y: 35 },
+      panelTheme: '최상위 포식자의 위용과 단독 사냥 전략',
+      simpleDesc: '산중을 지배하는 맹수이자 한반도 생태계의 정점에 선 최상위 포식자.',
+      assetType: 'glb',
+      glb: 'Asset/3. Exhibition/glb/02.glb',
+      embedHtml: '<div class="sketchfab-embed-wrapper"><iframe title="Tiger" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/b279685790ac4194b51707df5cd245d4/embed?autospin=1&autostart=1&transparent=1&dnt=1"></iframe></div>','''
+
+new_tiger = r'''      id: 2,
+      code: '02',
+      name: '호랑이',
+      layer: 'land',
+      layerName: '육지 (산악)',
+      layerCoords: { x: 26, y: 35 },
+      panelTheme: '최상위 포식자의 위용과 단독 사냥 전략',
+      simpleDesc: '산중을 지배하는 맹수이자 한반도 생태계의 정점에 선 최상위 포식자.',
+      assetType: 'glb',
+      glb: 'Asset/3. Exhibition/glb/02.glb','''
+
+if old_horse in data_js:
+    data_js = data_js.replace(old_horse, new_horse)
+if old_tiger in data_js:
+    data_js = data_js.replace(old_tiger, new_tiger)
+
+with open('js/data.js', 'w', encoding='utf-8') as f:
+    f.write(data_js)
+print("js/data.js fixed.")
+
+# 2. Update js/app.js to support dedicated Three.js GLB viewer for 01.glb and 02.glb
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_js = f.read()
+
+glb_viewer_code = r'''
+  /* GLB 모델 전용 3D 뷰어 렌더링 */
+  renderGLBViewer(container, glbUrl, animalName) {
+    container.innerHTML = '';
+    
+    const canvas = document.createElement('canvas');
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.display = 'block';
+    container.appendChild(canvas);
+
+    const loadingTip = document.createElement('div');
+    loadingTip.style.position = 'absolute';
+    loadingTip.style.bottom = '1rem';
+    loadingTip.style.left = '50%';
+    loadingTip.style.transform = 'translateX(-50%)';
+    loadingTip.style.color = 'var(--accent-gold)';
+    loadingTip.style.fontSize = '0.85rem';
+    loadingTip.style.background = 'rgba(8,9,13,0.8)';
+    loadingTip.style.padding = '0.3rem 0.8rem';
+    loadingTip.style.borderRadius = '12px';
+    loadingTip.innerText = `3D 모델 로딩 중: ${animalName}...`;
+    container.appendChild(loadingTip);
+
+    const width = container.clientWidth || 600;
+    const height = container.clientHeight || 520;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    camera.position.set(0, 1.0, 2.8);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.1;
+    renderer.outputEncoding = THREE.sRGBEncoding;
+
+    const controls = new THREE.OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 1.2;
+
+    // 조명
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    scene.add(ambientLight);
+
+    const dirLight1 = new THREE.DirectionalLight(0xfffaed, 2.5);
+    dirLight1.position.set(3, 5, 3);
+    scene.add(dirLight1);
+
+    const dirLight2 = new THREE.DirectionalLight(0xd4af37, 1.8);
+    dirLight2.position.set(-3, -2, -3);
+    scene.add(dirLight2);
+
+    // GLB 로더
+    const loader = new THREE.GLTFLoader();
+    loader.load(glbUrl, (gltf) => {
+      const model = gltf.scene;
+      const box = new THREE.Box3().setFromObject(model);
+      if (!box.isEmpty()) {
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = maxDim > 0 ? (1.8 / maxDim) : 1;
+        model.scale.set(scale, scale, scale);
+
+        const scaledBox = new THREE.Box3().setFromObject(model);
+        const center = scaledBox.getCenter(new THREE.Vector3());
+        model.position.x -= center.x;
+        model.position.y -= center.y;
+        model.position.z -= center.z;
+      }
+      scene.add(model);
+      loadingTip.innerText = `💡 마우스로 드래그하여 ${animalName} 3D 모델을 회전하세요`;
+    }, undefined, (err) => {
+      console.warn('GLB load error:', err);
+      loadingTip.innerText = `${animalName} 3D 모델`;
+    });
+
+    let reqId;
+    const animate = () => {
+      reqId = requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    const onResize = () => {
+      if (!container) return;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+    window.addEventListener('resize', onResize);
+  }
+'''
+
+# Update renderDetail in app.js
+old_render_embed = r'''    // [핵심] 좌측 무대: con_Mapping.md의 3D 에셋 Embed (Sketchfab iframe or GLB)
+    const embedWrap = document.getElementById('detail-3d-embed-wrap');
+    if (embedWrap) {
+      if (animal.embedHtml) {
+        embedWrap.innerHTML = animal.embedHtml;
+      } else if (animal.glb) {
+        embedWrap.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--accent-gold);"><p>3D 모델: ${animal.name}</p></div>`;
+      }
+    }'''
+
+new_render_embed = r'''    // [핵심] 좌측 무대: con_Mapping.md의 3D 에셋 Embed (Sketchfab iframe or GLB 뷰어)
+    const embedWrap = document.getElementById('detail-3d-embed-wrap');
+    if (embedWrap) {
+      if (animal.glb) {
+        this.renderGLBViewer(embedWrap, animal.glb, animal.name);
+      } else if (animal.embedHtml) {
+        embedWrap.innerHTML = animal.embedHtml;
+      }
+    }'''
+
+if old_render_embed in app_js:
+    app_js = app_js.replace(old_render_embed, new_render_embed)
+
+if 'renderGLBViewer(' not in app_js:
+    last_brace = app_js.rfind('}')
+    app_js = app_js[:last_brace] + glb_viewer_code + "\n}\n"
+
+with open('js/app.js', 'w', encoding='utf-8') as f:
+    f.write(app_js)
+print("js/app.js fixed.")
+
+print("01.glb and 02.glb 3D loader completely fixed!")
+exit(0)
+
+
+# 1. Update css/style.css
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css = f.read()
+
+snap_css = """
+/* ============================================================
+   SNAP SCROLL ENHANCEMENTS (1-Wheel-Tick Fast Navigation)
+   ============================================================ */
+#view-main {
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
+  height: 100vh;
+  padding-top: 0 !important;
+  scroll-behavior: smooth;
+}
+
+.scrolly-content-container {
+  padding: 0 1.5rem !important;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.scrolly-step {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0 !important;
+  opacity: 0.2;
+  transform: translateY(20px);
+  transition: all 0.5s ease-out;
+}
+
+.scrolly-step.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scrolly-card {
+  animation: cardFadeIn 0.5s ease-out;
+}
+
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Floating Layer Quick Navigation Dots */
+.layer-quick-nav {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  background: rgba(8, 9, 13, 0.7);
+  padding: 0.8rem 0.6rem;
+  border-radius: 30px;
+  border: 1px solid var(--border-color-subtle);
+  backdrop-filter: blur(10px);
+}
+
+.layer-nav-dot {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.layer-nav-dot:hover, .layer-nav-dot.active {
+  background: var(--accent-gold);
+  border-color: #fff;
+  transform: scale(1.4);
+  box-shadow: 0 0 12px var(--accent-gold-glow);
+}
+
+.layer-nav-dot::after {
+  content: attr(data-label);
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid var(--accent-gold);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.layer-nav-dot:hover::after {
+  opacity: 1;
+}
+"""
+
+if '.layer-quick-nav' not in css:
+    css += "\n" + snap_css
+    with open('css/style.css', 'w', encoding='utf-8') as f:
+        f.write(css)
+    print("css/style.css updated.")
+
+# 2. Update index.html
+with open('index.html', 'r', encoding='utf-8') as f:
+    html = f.read()
+
+dot_nav_html = """
+    <!-- Floating Layer Quick Navigation Dots -->
+    <div class="layer-quick-nav" id="layer-quick-nav">
+      <div class="layer-nav-dot active" data-step-target="intro" data-label="전체 유물"></div>
+      <div class="layer-nav-dot" data-step-target="celestial" data-label="1층위 · 천상 (봉황)"></div>
+      <div class="layer-nav-dot" data-step-target="sky" data-label="2층위 · 하늘 (신선)"></div>
+      <div class="layer-nav-dot" data-step-target="land" data-label="3층위 · 육지 (산악)"></div>
+      <div class="layer-nav-dot" data-step-target="water" data-label="4층위 · 물가 (연꽃)"></div>
+      <div class="layer-nav-dot" data-step-target="sea" data-label="5층위 · 바다 (용)"></div>
+    </div>
+"""
+
+if 'id="layer-quick-nav"' not in html:
+    html = html.replace('<div class="scrolly-content-container">', dot_nav_html + '\n    <div class="scrolly-content-container">')
+    with open('index.html', 'w', encoding='utf-8') as f:
+        f.write(html)
+    print("index.html updated.")
+
+# 3. Update js/app.js
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_js = f.read()
+
+if 'this.initWheelSnapController();' not in app_js:
+    app_js = app_js.replace("this.initScrollyObserver();", "this.initScrollyObserver();\n    this.initWheelSnapController();")
+
+old_obs = "const stepId = entry.target.getAttribute('data-step-id');\n          if (this.viewer) {\n            this.viewer.focusStep(stepId);\n          }"
+new_obs = """const stepId = entry.target.getAttribute('data-step-id');
+          const allSteps = Array.from(document.querySelectorAll('.scrolly-step'));
+          const targetIdx = allSteps.indexOf(entry.target);
+          if (targetIdx !== -1) this.currentStepIdx = targetIdx;
+
+          // 도트 인디케이터 활성화
+          document.querySelectorAll('.layer-nav-dot').forEach(dot => {
+            dot.classList.toggle('active', dot.getAttribute('data-step-target') === stepId);
+          });
+
+          if (this.viewer) {
+            this.viewer.focusStep(stepId);
+          }"""
+
+if old_obs in app_js:
+    app_js = app_js.replace(old_obs, new_obs)
+
+wheel_method = """
+  /* ============================================================
+     5-1. 한 번에 훅훅 넘어가는 스크롤 스냅 휠 컨트롤러
+     ============================================================ */
+  initWheelSnapController() {
+    this.isSnapping = false;
+    this.currentStepIdx = 0;
+    const steps = Array.from(document.querySelectorAll('.scrolly-step'));
+    if (!steps.length) return;
+
+    window.addEventListener('wheel', (e) => {
+      if (this.currentView !== 'main') return;
+      if (this.isSnapping) {
+        e.preventDefault();
+        return;
+      }
+
+      // 휠 델타 감지 (살짝만 굴려도 훅 이동)
+      if (Math.abs(e.deltaY) > 15) {
+        e.preventDefault();
+        this.isSnapping = true;
+
+        if (e.deltaY > 0) {
+          if (this.currentStepIdx < steps.length - 1) {
+            this.currentStepIdx++;
+          }
+        } else {
+          if (this.currentStepIdx > 0) {
+            this.currentStepIdx--;
+          }
+        }
+
+        const targetStep = steps[this.currentStepIdx];
+        if (targetStep) {
+          targetStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        setTimeout(() => {
+          this.isSnapping = false;
+        }, 550);
+      }
+    }, { passive: false });
+
+    // 방향키로도 훅훅 이동
+    window.addEventListener('keydown', (e) => {
+      if (this.currentView !== 'main') return;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+        if (this.currentStepIdx < steps.length - 1) {
+          e.preventDefault();
+          this.currentStepIdx++;
+          steps[this.currentStepIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        if (this.currentStepIdx > 0) {
+          e.preventDefault();
+          this.currentStepIdx--;
+          steps[this.currentStepIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    });
+
+    // 층위 도트 네비게이션 클릭 이벤트
+    document.querySelectorAll('.layer-nav-dot').forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        const stepId = e.currentTarget.getAttribute('data-step-target');
+        const targetStep = document.querySelector(`.scrolly-step[data-step-id="${stepId}"]`);
+        if (targetStep) {
+          const idx = steps.indexOf(targetStep);
+          if (idx !== -1) this.currentStepIdx = idx;
+          targetStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    });
+  }
+"""
+
+if 'initWheelSnapController()' not in app_js:
+    # Insert right before the last closing brace
+    last_brace_idx = app_js.rfind('}')
+    app_js = app_js[:last_brace_idx] + wheel_method + "\n}\n"
+
+with open('js/app.js', 'w', encoding='utf-8') as f:
+    f.write(app_js)
+print("js/app.js updated.")
+
+print("All snap modifications successfully finished!")
+exit(0)
+
+
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_js = f.read()
+
+# Add wheel snap controller to ExhibitionApp
+wheel_snap_code = r'''
+  /* ============================================================
+     5-1. 한 번에 훅훅 넘어가는 스크롤 스냅 휠 컨트롤러
+     ============================================================ */
+  initWheelSnapController() {
+    this.isSnapping = false;
+    this.currentStepIdx = 0;
+    const steps = Array.from(document.querySelectorAll('.scrolly-step'));
+    if (!steps.length) return;
+
+    window.addEventListener('wheel', (e) => {
+      if (this.currentView !== 'main') return;
+      if (this.isSnapping) {
+        e.preventDefault();
+        return;
+      }
+
+      // 휠 델타 감지 (임계값 15 이상이면 즉시 다음/이전 단계로 훅 이동)
+      if (Math.abs(e.deltaY) > 15) {
+        e.preventDefault();
+        this.isSnapping = true;
+
+        if (e.deltaY > 0) {
+          // 아래로 이동
+          if (this.currentStepIdx < steps.length - 1) {
+            this.currentStepIdx++;
+          }
+        } else {
+          // 위로 이동
+          if (this.currentStepIdx > 0) {
+            this.currentStepIdx--;
+          }
+        }
+
+        const targetStep = steps[this.currentStepIdx];
+        if (targetStep) {
+          targetStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        setTimeout(() => {
+          this.isSnapping = false;
+        }, 550); // 휠 연타 방지 쿨다운
+      }
+    }, { passive: false });
+
+    // 키보드 방향키(위/아래)로도 훅훅 이동 지원
+    window.addEventListener('keydown', (e) => {
+      if (this.currentView !== 'main') return;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+        if (this.currentStepIdx < steps.length - 1) {
+          e.preventDefault();
+          this.currentStepIdx++;
+          steps[this.currentStepIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        if (this.currentStepIdx > 0) {
+          e.preventDefault();
+          this.currentStepIdx--;
+          steps[this.currentStepIdx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    });
+
+    // 층위 도트 네비게이션 클릭 이벤트
+    document.querySelectorAll('.layer-nav-dot').forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        const stepId = e.currentTarget.getAttribute('data-step-target');
+        const targetStep = document.querySelector(`.scrolly-step[data-step-id="${stepId}"]`);
+        if (targetStep) {
+          const idx = steps.indexOf(targetStep);
+          if (idx !== -1) this.currentStepIdx = idx;
+          targetStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    });
+  }
+'''
+
+# Inject initWheelSnapController into init() and observer
+if 'this.initWheelSnapController();' not in app_js:
+    app_js = app_js.replace("this.initScrollyObserver();", "this.initScrollyObserver();\n    this.initWheelSnapController();")
+
+# Update observer to sync currentStepIdx and dot nav
+old_observer = r'''          const stepId = entry.target.getAttribute('data-step-id');
+          if (this.viewer) {
+            this.viewer.focusStep(stepId);
+          }'''
+
+new_observer = r'''          const stepId = entry.target.getAttribute('data-step-id');
+          const allSteps = Array.from(document.querySelectorAll('.scrolly-step'));
+          const targetIdx = allSteps.indexOf(entry.target);
+          if (targetIdx !== -1) this.currentStepIdx = targetIdx;
+
+          // 도트 인디케이터 활성화
+          document.querySelectorAll('.layer-nav-dot').forEach(dot => {
+            dot.classList.toggle('active', dot.getAttribute('data-step-target') === stepId);
+          });
+
+          if (this.viewer) {
+            this.viewer.focusStep(stepId);
+          }'''
+
+if old_observer in app_js:
+    app_js = app_js.replace(old_observer, new_observer)
+
+# Add method at the end of class if not present
+if 'initWheelSnapController()' not in app_js:
+    app_js = app_js[:-2] + "\n" + wheel_snap_code + "\n}\n"
+
+with open('js/app.js', 'w', encoding='utf-8') as f:
+    f.write(app_js)
+print("js/app.js updated with wheel snap!")
+
+# -------------------------------------------------------------
+# Update css/style.css for smooth full-page snap
+# -------------------------------------------------------------
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css = f.read()
+
+snap_css = r'''
+/* ============================================================
+   SNAP SCROLL ENHANCEMENTS
+   ============================================================ */
+#view-main {
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
+  height: 100vh;
+  padding-top: 0 !important;
+}
+
+.scrolly-content-container {
+  padding: 0 1.5rem !important;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.scrolly-step {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0 !important;
+  opacity: 0.2;
+  transform: translateY(20px);
+  transition: all 0.5s ease-out;
+}
+
+.scrolly-step.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scrolly-card {
+  animation: cardFadeIn 0.5s ease-out;
+}
+
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Floating Layer Quick Navigation Dots */
+.layer-quick-nav {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  background: rgba(8, 9, 13, 0.7);
+  padding: 0.8rem 0.6rem;
+  border-radius: 30px;
+  border: 1px solid var(--border-color-subtle);
+  backdrop-filter: blur(10px);
+}
+
+.layer-nav-dot {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.layer-nav-dot:hover, .layer-nav-dot.active {
+  background: var(--accent-gold);
+  border-color: #fff;
+  transform: scale(1.4);
+  box-shadow: 0 0 12px var(--accent-gold-glow);
+}
+
+.layer-nav-dot::after {
+  content: attr(data-label);
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid var(--accent-gold);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.layer-nav-dot:hover::after {
+  opacity: 1;
+}
+'''
+
+if '.layer-quick-nav' not in css:
+    css += "\n" + snap_css
+
+with open('css/style.css', 'w', encoding='utf-8') as f:
+    f.write(css)
+print("css/style.css updated with snap CSS!")
+
+# -------------------------------------------------------------
+# Update index.html to include floating layer nav dots
+# -------------------------------------------------------------
+with open('index.html', 'r', encoding='utf-8') as f:
+    html = f.read()
+
+dot_nav_html = r'''
+    <!-- Floating Layer Quick Navigation Dots -->
+    <div class="layer-quick-nav" id="layer-quick-nav">
+      <div class="layer-nav-dot active" data-step-target="intro" data-label="전체 유물"></div>
+      <div class="layer-nav-dot" data-step-target="celestial" data-label="1층위 · 천상 (봉황)"></div>
+      <div class="layer-nav-dot" data-step-target="sky" data-label="2층위 · 하늘 (신선)"></div>
+      <div class="layer-nav-dot" data-step-target="land" data-label="3층위 · 육지 (산악)"></div>
+      <div class="layer-nav-dot" data-step-target="water" data-label="4층위 · 물가 (연꽃)"></div>
+      <div class="layer-nav-dot" data-step-target="sea" data-label="5층위 · 바다 (용)"></div>
+    </div>
+'''
+
+if 'id="layer-quick-nav"' not in html:
+    html = html.replace('<div class="scrolly-content-container">', dot_nav_html + '\n    <div class="scrolly-content-container">')
+
+with open('index.html', 'w', encoding='utf-8') as f:
+    f.write(html)
+print("index.html updated with layer dots!")
+
+print("SNAPPY 1-TICK SCROLL INTEGRATION COMPLETE!")
+
 
 # -------------------------------------------------------------
 # 1. js/threeViewer.js
