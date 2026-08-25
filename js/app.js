@@ -1652,9 +1652,11 @@ class ExhibitionApp {
     const queue = this.docentState.dialogueQueue;
     const idx = this.docentState.queueIdx;
     const optionsFooter = document.getElementById('docent-options-footer');
+    const dialogueBox = document.getElementById('docent-dialogue-box');
     const clickHint = document.getElementById('docent-click-hint');
 
     if (optionsFooter) optionsFooter.style.display = 'none';
+    if (dialogueBox) dialogueBox.style.display = 'block';
 
     if (idx < queue.length) {
       const line = queue[idx];
@@ -1788,8 +1790,11 @@ class ExhibitionApp {
   showDocentChoices(choices, isReturn = false) {
     const footer = document.getElementById('docent-options-footer');
     const list = document.getElementById('docent-options-list');
+    const dialogueBox = document.getElementById('docent-dialogue-box');
     const optTitle = footer ? footer.querySelector('.vn-options-title') : null;
     if (!footer || !list) return;
+
+    if (dialogueBox) dialogueBox.style.display = 'none'; // 질문 선택지를 위해 대화창을 숨기고 공간 100% 확보!
 
     list.innerHTML = '';
     if (optTitle) {
@@ -1812,6 +1817,7 @@ class ExhibitionApp {
       btn.addEventListener('click', () => {
         if (docentData && docentData.questions && docentData.questions[ch.id]) {
           footer.style.display = 'none';
+          if (dialogueBox) dialogueBox.style.display = 'block';
           this.docentState.currentMode = 'QUESTION';
           this.docentState.currentQuestionId = ch.id;
 

@@ -21,8 +21,8 @@ class IncenseBurner3DViewer {
     
     // [intro.jpg]: 거대하게 카메라 앞 좌측을 가득 채우는 Cinematic Close-up Hero Object (모바일은 중앙 핏)
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-    this.introCameraPos = isMobile ? new THREE.Vector3(0, 0.15, 2.8) : new THREE.Vector3(-0.95, 0.45, 0.88);
-    this.introTarget = isMobile ? new THREE.Vector3(0, 0, 0) : new THREE.Vector3(0.35, 0.1, 0);
+    this.introCameraPos = isMobile ? new THREE.Vector3(0, 0.15, 2.8) : new THREE.Vector3(0, -0.05, 2.15);
+    this.introTarget = new THREE.Vector3(0, 0, 0);
     
     this.targetCameraPos = this.introCameraPos.clone();
     this.targetLookAt = this.introTarget.clone();
@@ -32,25 +32,28 @@ class IncenseBurner3DViewer {
   }
 
   getStepCamera(stepId) {
-    const isMobile = window.innerWidth <= 768;
-    // 데스크톱: 카드가 왼쪽(align-left)이면 향로는 우측(-0.55), 카드가 오른쪽(align-right)이면 향로는 좌측(+0.55)으로 100% 분리!
+    const isMobileLandscape = window.innerHeight < 550;
+    
+    // 카드가 오른쪽에 있으면 향로는 왼쪽(-0.6), 카드가 왼쪽에 있으면 향로는 오른쪽(+0.6)으로 완벽 분리!
     const desktopMap = {
-      'intro': { pos: new THREE.Vector3(-0.55, 0.05, 2.3), target: new THREE.Vector3(0, 0, 0) },
-      'celestial': { pos: new THREE.Vector3(-0.55, 0.55, 1.8), target: new THREE.Vector3(0, 0.45, 0) }, // 카드 왼쪽 -> 향로 오른쪽
-      'sky': { pos: new THREE.Vector3(0.55, 0.35, 1.8), target: new THREE.Vector3(0, 0.25, 0) },       // 카드 오른쪽 -> 향로 왼쪽
-      'land': { pos: new THREE.Vector3(-0.55, 0.15, 1.8), target: new THREE.Vector3(0, 0.08, 0) },     // 카드 왼쪽 -> 향로 오른쪽
-      'water': { pos: new THREE.Vector3(0.55, -0.12, 1.8), target: new THREE.Vector3(0, -0.15, 0) },   // 카드 오른쪽 -> 향로 왼쪽
-      'sea': { pos: new THREE.Vector3(-0.55, -0.40, 1.9), target: new THREE.Vector3(0, -0.35, 0) }     // 카드 왼쪽 -> 향로 오른쪽
+      'intro': { pos: new THREE.Vector3(0, -0.05, 2.15), target: new THREE.Vector3(0, 0, 0) }, // 인트로는 정중앙!
+      'celestial': { pos: new THREE.Vector3(-0.60, 0.55, 1.85), target: new THREE.Vector3(0, 0.45, 0) }, // 카드 우 -> 향로 좌
+      'sky': { pos: new THREE.Vector3(0.60, 0.35, 1.85), target: new THREE.Vector3(0, 0.25, 0) },       // 카드 좌 -> 향로 우
+      'land': { pos: new THREE.Vector3(-0.60, 0.15, 1.85), target: new THREE.Vector3(0, 0.08, 0) },     // 카드 우 -> 향로 좌
+      'water': { pos: new THREE.Vector3(0.60, -0.12, 1.85), target: new THREE.Vector3(0, -0.15, 0) },   // 카드 좌 -> 향로 우
+      'sea': { pos: new THREE.Vector3(0.60, -0.40, 1.95), target: new THREE.Vector3(0, -0.35, 0) }      // 카드 좌 -> 향로 우
     };
-    const mobileMap = {
-      'intro': { pos: new THREE.Vector3(0, 0.15, 2.8), target: new THREE.Vector3(0, 0, 0) },
-      'celestial': { pos: new THREE.Vector3(0, 0.65, 2.4), target: new THREE.Vector3(0, 0.45, 0) },
-      'sky': { pos: new THREE.Vector3(0, 0.40, 2.4), target: new THREE.Vector3(0, 0.25, 0) },
-      'land': { pos: new THREE.Vector3(0, 0.15, 2.4), target: new THREE.Vector3(0, 0.08, 0) },
-      'water': { pos: new THREE.Vector3(0, -0.12, 2.4), target: new THREE.Vector3(0, -0.15, 0) },
-      'sea': { pos: new THREE.Vector3(0, -0.42, 2.5), target: new THREE.Vector3(0, -0.35, 0) }
+
+    const landscapeMobileMap = {
+      'intro': { pos: new THREE.Vector3(0, -0.02, 2.35), target: new THREE.Vector3(0, 0, 0) },
+      'celestial': { pos: new THREE.Vector3(-0.65, 0.55, 2.05), target: new THREE.Vector3(0, 0.45, 0) },
+      'sky': { pos: new THREE.Vector3(0.65, 0.35, 2.05), target: new THREE.Vector3(0, 0.25, 0) },
+      'land': { pos: new THREE.Vector3(-0.65, 0.15, 2.05), target: new THREE.Vector3(0, 0.08, 0) },
+      'water': { pos: new THREE.Vector3(0.65, -0.12, 2.05), target: new THREE.Vector3(0, -0.15, 0) },
+      'sea': { pos: new THREE.Vector3(0.65, -0.40, 2.15), target: new THREE.Vector3(0, -0.35, 0) }
     };
-    const map = isMobile ? mobileMap : desktopMap;
+
+    const map = isMobileLandscape ? landscapeMobileMap : desktopMap;
     return map[stepId] || map['intro'];
   }
 
