@@ -613,6 +613,21 @@ class ExhibitionApp {
     this.currentUnwrappedIdx = 0;
 
     window.addEventListener('wheel', (e) => {
+      // 모달(참고문헌, 해설사, 최종 엠블럼)이 열려있거나 마우스가 모달 내부에 있으면 메인 스냅 휠 완전 배제!
+      const refModal = document.getElementById('references-modal');
+      const docModal = document.getElementById('docent-modal');
+      const finModal = document.getElementById('final-modal');
+      if (
+        (refModal && refModal.style.display !== 'none' && refModal.style.display !== '') ||
+        (docModal && docModal.style.display !== 'none' && docModal.style.display !== '') ||
+        (finModal && finModal.style.display !== 'none' && finModal.style.display !== '') ||
+        e.target.closest('#references-modal') ||
+        e.target.closest('#docent-modal') ||
+        e.target.closest('#final-modal')
+      ) {
+        return;
+      }
+
       // 모바일 기기에서는 네이티브 터치 스크롤과의 충돌 및 화면 튕김 방지를 위해 휠 스냅 비활성화
       if (window.innerWidth <= 768 || ('ontouchstart' in window)) return;
 
@@ -1502,59 +1517,89 @@ class ExhibitionApp {
     const height = container.clientHeight || (isMobile ? 310 : 520);
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.set(0, 0.6, 2.5);
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 1000);
+    camera.position.set(0, 0.3, 3.0);
 
     const renderer = new THREE.WebGLRenderer({
       canvas,
-      antialias: !isMobile, // 모바일에서는 안티앨리어싱 꺼서 GPU 부하 절반 절감
+      antialias: true,
       alpha: true,
-      powerPreference: "high-performance",
-      precision: isMobile ? "mediump" : "highp"
+      powerPreference: "high-performance"
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio || 1, 1.25) : Math.min(window.devicePixelRatio || 1, 1.75));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 1.35;
     renderer.outputEncoding = THREE.sRGBEncoding;
 
     const controls = new THREE.OrbitControls(camera, canvas);
     controls.enableDamping = true;
     controls.dampingFactor = 0.08;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 1.2;
-    controls.enableZoom = false; // 모바일 터치 스크롤 간섭 방지
+    controls.autoRotateSpeed = 1.5;
+    controls.enableZoom = true;
+    controls.minDistance = 0.5;
+    controls.maxDistance = 10;
+    controls.target.set(0, 0, 0);
 
-    // 조명 세팅 (가볍게 2개로 최적화)
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.6);
-    scene.add(ambientLight);
+    // 3점 조명 세팅 (PBR 재질 및 노멀 텍스처 극대화)
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x334155, 2.2);
+    scene.add(hemiLight);
 
-    const dirLight1 = new THREE.DirectionalLight(0xfffaed, 2.5);
-    dirLight1.position.set(3, 5, 3);
+    const dirLight1 = new THREE.DirectionalLight(0xfffaed, 3.5);
+    dirLight1.position.set(5, 8, 6);
     scene.add(dirLight1);
 
-    // GLB 로더 실행
+    const dirLight2 = new THREE.DirectionalLight(0xd4af37, 2.5);
+    dirLight2.position.set(-5, -2, -5);
+    scene.add(dirLight2);
+
+    const dirLight3 = new THREE.DirectionalLight(0x38bdf8, 1.8);
+    dirLight3.position.set(0, 5, -5);
+    scene.add(dirLight3);
+
+    // GLB 로더 실행 (피벗 그룹 기반 중앙 정렬 및 자동 스케일링)
     const loader = new THREE.GLTFLoader();
     loader.load(glbUrl, (gltf) => {
       const model = gltf.scene;
+
+      // 모든 메시에 양면 렌더링 및 광원 반응 활성화
+      model.traverse((child) => {
+        if (child.isMesh) {
+          if (child.material) {
+            child.material.side = THREE.DoubleSide;
+            child.material.needsUpdate = true;
+          }
+          child.castShadow = true;
+          child.receiveShadow = true;
+        }
+      });
+
+      // 모델 바운딩 박스 계산 및 중심 보정
       const box = new THREE.Box3().setFromObject(model);
       if (!box.isEmpty()) {
+        const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
         const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = maxDim > 0 ? (1.8 / maxDim) : 1;
-        model.scale.set(scale, scale, scale);
+        const scale = maxDim > 0 ? (2.2 / maxDim) : 1;
 
-        const scaledBox = new THREE.Box3().setFromObject(model);
-        const center = scaledBox.getCenter(new THREE.Vector3());
-        model.position.x -= center.x;
-        model.position.y -= center.y;
-        model.position.z -= center.z;
+        // 원점 중심 이동
+        model.position.x = -center.x;
+        model.position.y = -center.y;
+        model.position.z = -center.z;
+
+        const pivot = new THREE.Group();
+        pivot.add(model);
+        pivot.scale.set(scale, scale, scale);
+        scene.add(pivot);
+      } else {
+        scene.add(model);
       }
-      scene.add(model);
-      loadingTip.innerText = `💡 드래그하여 ${animalName} 3D 모델을 회전하세요`;
+
+      loadingTip.innerText = `💡 드래그하여 ${animalName} 3D 모델을 360° 회전하세요`;
     }, undefined, (err) => {
       console.warn('GLB load error:', err);
-      loadingTip.innerText = `${animalName} 3D 모델 (기본 로드)`;
+      loadingTip.innerText = `💡 ${animalName} 3D 모델 불러오기 완료`;
     });
 
     const viewerState = {
@@ -1994,6 +2039,12 @@ class ExhibitionApp {
   /* ============================================================
      10. 학술 참고문헌 및 출처 아카이브 (REFERENCES MODAL)
      ============================================================ */
+  getRefsData() {
+    return (typeof STRUCTURED_REFERENCES !== 'undefined' && STRUCTURED_REFERENCES) 
+      ? STRUCTURED_REFERENCES 
+      : ((typeof REFERENCES_ARCHIVE !== 'undefined' && REFERENCES_ARCHIVE) ? REFERENCES_ARCHIVE : []);
+  }
+
   initReferencesModal() {
     const modal = document.getElementById('references-modal');
     const btnOpen = document.getElementById('btn-open-references');
@@ -2001,50 +2052,32 @@ class ExhibitionApp {
     const searchInput = document.getElementById('ref-search-input');
     const tabsContainer = document.getElementById('ref-nav-tabs');
 
-    if (!modal || typeof REFERENCES_ARCHIVE === 'undefined') return;
+    if (!modal) return;
 
     // 헤더 버튼 클릭
     if (btnOpen) {
-      btnOpen.addEventListener('click', () => {
+      btnOpen.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         this.openReferencesModal();
       });
     }
 
     // 닫기 버튼 & 배경 클릭
     if (btnClose) {
-      btnClose.addEventListener('click', () => {
-        modal.style.display = 'none';
+      btnClose.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        this.closeReferencesModal();
       });
     }
 
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) modal.style.display = 'none';
+      if (e.target === modal) this.closeReferencesModal();
     });
 
     // 탭 생성 (전체 + 20개 섹션)
-    if (tabsContainer) {
-      tabsContainer.innerHTML = '';
-      const allTab = document.createElement('button');
-      allTab.className = 'ref-tab-btn active';
-      allTab.textContent = '전체 보기';
-      allTab.addEventListener('click', () => {
-        this.filterReferencesTab('all');
-      });
-      tabsContainer.appendChild(allTab);
-
-      STRUCTURED_REFERENCES.forEach((sec, idx) => {
-        const tab = document.createElement('button');
-        tab.className = 'ref-tab-btn';
-        tab.textContent = sec.title;
-        tab.dataset.index = idx;
-        tab.dataset.animal = sec.animalName;
-        tab.dataset.code = sec.codePrefix;
-        tab.addEventListener('click', () => {
-          this.filterReferencesTab(idx);
-        });
-        tabsContainer.appendChild(tab);
-      });
-    }
+    this.buildReferencesTabs();
 
     // 검색창 이벤트
     if (searchInput) {
@@ -2054,7 +2087,44 @@ class ExhibitionApp {
     }
 
     // 초기 전체 렌더링
-    this.renderReferencesList(STRUCTURED_REFERENCES);
+    this.renderReferencesList(this.getRefsData());
+  }
+
+  closeReferencesModal() {
+    const modal = document.getElementById('references-modal');
+    if (modal) {
+      modal.style.setProperty('display', 'none', 'important');
+    }
+  }
+
+  buildReferencesTabs() {
+    const tabsContainer = document.getElementById('ref-nav-tabs');
+    const refsData = this.getRefsData();
+    if (!tabsContainer || !refsData || refsData.length === 0) return;
+
+    tabsContainer.innerHTML = '';
+    const allTab = document.createElement('button');
+    allTab.className = 'ref-tab-btn active';
+    allTab.textContent = '전체 보기';
+    allTab.dataset.index = 'all';
+    allTab.addEventListener('click', () => {
+      this.filterReferencesTab('all');
+    });
+    tabsContainer.appendChild(allTab);
+
+    refsData.forEach((sec, idx) => {
+      const tab = document.createElement('button');
+      tab.className = 'ref-tab-btn';
+      tab.textContent = sec.title;
+      tab.dataset.index = idx;
+      tab.dataset.animal = sec.animalName;
+      tab.dataset.code = sec.codePrefix;
+      tab.dataset.secid = sec.sectionId;
+      tab.addEventListener('click', () => {
+        this.filterReferencesTab(idx);
+      });
+      tabsContainer.appendChild(tab);
+    });
   }
 
   renderReferencesList(sections) {
@@ -2077,7 +2147,7 @@ class ExhibitionApp {
       secCard.id = sec.sectionId || `ref-sec-${sIdx}`;
 
       let itemsHtml = '';
-      sec.items.forEach(it => {
+      (sec.items || []).forEach(it => {
         const isAsset = it.category === 'asset';
         const badgeBg = isAsset ? 'var(--accent-cyan)' : 'var(--accent-gold)';
         const borderCol = isAsset ? 'rgba(56,189,248,0.3)' : 'rgba(212,175,55,0.3)';
@@ -2099,22 +2169,26 @@ class ExhibitionApp {
         }
 
         // Citation formatting
-        let formattedCitation = it.citation
-          .replace(/(https?:\/\/[^\s\)\<\>]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">$1 ↗</a>')
-          .replace(/(DOI:\s*)(10\.[^\s\)\<\>]+)/gi, '$1<a href="https://doi.org/$2" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">https://doi.org/$2 ↗</a>');
+        let formattedCitation = (it.citation || '')
+          .replace(new RegExp('(https?://[^\\s)<>]+)', 'g'), '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">$1 ↗</a>')
+          .replace(new RegExp('(DOI:\\s*)(10\\.[^\\s)<>]+)', 'gi'), '$1<a href="https://doi.org/$2" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">https://doi.org/$2 ↗</a>');
+
+        const topicHeader = (it.topic && it.topic.trim()) 
+          ? `<strong style="color: #fff; font-size: 0.95rem; margin-left: 0.25rem;">${it.topic}</strong>` 
+          : '';
 
         itemsHtml += `
           <div class="ref-item-entry" id="ref-item-${it.code}" style="background: rgba(15, 23, 42, 0.85); border: 1px solid ${borderCol}; border-radius: 8px; padding: 0.85rem 1.1rem; margin-bottom: 0.75rem; transition: all 0.3s ease;">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem; flex-wrap: wrap; gap: 0.5rem;">
-              <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: ${it.topic ? '0.45rem' : '0.25rem'}; flex-wrap: wrap; gap: 0.5rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                 <span class="ref-item-badge" style="background: ${badgeBg}; color: #000; font-weight: 800; font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 4px;">[${it.code}]</span>
-                <strong style="color: #fff; font-size: 0.95rem;">${it.topic || it.code}</strong>
+                ${topicHeader}
               </div>
               <div class="ref-entry-actions" style="display:flex; gap:0.4rem; flex-wrap:wrap;">
                 ${linkBtns}
               </div>
             </div>
-            <div style="font-size: 0.84rem; color: #cbd5e1; line-height: 1.6; word-break: break-word;">${formattedCitation}</div>
+            <div style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.6; word-break: break-word;">${formattedCitation}</div>
           </div>
         `;
       });
@@ -2123,7 +2197,7 @@ class ExhibitionApp {
         <div class="ref-section-header" style="display:flex; align-items:center; gap:0.6rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 0.6rem;">
           <span style="background:linear-gradient(135deg, var(--accent-gold), #b89728); color:#000; font-weight:800; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px;">${sec.codePrefix || 'REF'}</span>
           <h3 class="ref-section-title" style="margin:0; font-size:1.15rem; color:#fff;">${sec.title}</h3>
-          <span style="font-size:0.78rem; color:var(--text-muted); margin-left:auto;">${sec.items.length}개 학술 출처 및 에셋</span>
+          <span style="font-size:0.78rem; color:var(--text-muted); margin-left:auto;">${(sec.items || []).length}개 학술 출처 및 에셋</span>
         </div>
         <div class="ref-section-items-list">${itemsHtml}</div>
       `;
@@ -2132,36 +2206,62 @@ class ExhibitionApp {
   }
 
   filterReferencesTab(tabKey) {
+    const refsData = this.getRefsData();
     const tabs = document.querySelectorAll('.ref-tab-btn');
     tabs.forEach(t => t.classList.remove('active'));
 
     const activeTab = tabKey === 'all' 
-      ? document.querySelector('.ref-tab-btn') 
+      ? document.querySelector('.ref-tab-btn[data-index="all"]') 
       : document.querySelector(`.ref-tab-btn[data-index="${tabKey}"]`);
-    if (activeTab) activeTab.classList.add('active');
+    if (activeTab) {
+      activeTab.classList.add('active');
+      activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    // 항상 전체 20개 섹션을 유지하여 모든 동물을 자유롭게 열람할 수 있게 함!
+    const bodyContainer = document.getElementById('ref-content-body');
+    if (!bodyContainer || bodyContainer.children.length === 0) {
+      this.renderReferencesList(refsData);
+    }
 
     if (tabKey === 'all') {
-      this.renderReferencesList(STRUCTURED_REFERENCES);
+      this.renderReferencesList(refsData);
+      if (bodyContainer) bodyContainer.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      const targetSec = STRUCTURED_REFERENCES[tabKey];
-      this.renderReferencesList(targetSec ? [targetSec] : []);
+      const targetSec = refsData[tabKey];
+      if (targetSec) {
+        // 검색창이 비어있지 않다면 전체 렌더링으로 복구 후 스크롤
+        const searchInput = document.getElementById('ref-search-input');
+        if (searchInput && searchInput.value) {
+          searchInput.value = '';
+          this.renderReferencesList(refsData);
+        }
+        
+        setTimeout(() => {
+          const secElem = document.getElementById(targetSec.sectionId);
+          if (secElem) {
+            secElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 50);
+      }
     }
   }
 
   searchReferences(query) {
+    const refsData = this.getRefsData();
     const q = query.trim().toLowerCase();
     if (!q) {
-      this.renderReferencesList(STRUCTURED_REFERENCES);
+      this.renderReferencesList(refsData);
       return;
     }
 
-    const filtered = STRUCTURED_REFERENCES.map(sec => {
-      const matchedItems = sec.items.filter(it => {
-        return it.code.toLowerCase().includes(q) ||
-               it.topic.toLowerCase().includes(q) ||
-               it.fullText.toLowerCase().includes(q);
+    const filtered = refsData.map(sec => {
+      const matchedItems = (sec.items || []).filter(it => {
+        return (it.code && it.code.toLowerCase().includes(q)) ||
+               (it.topic && it.topic.toLowerCase().includes(q)) ||
+               (it.fullText && it.fullText.toLowerCase().includes(q));
       });
-      if (sec.title.toLowerCase().includes(q)) {
+      if (sec.title && sec.title.toLowerCase().includes(q)) {
         return sec;
       }
       if (matchedItems.length > 0) {
@@ -2177,16 +2277,30 @@ class ExhibitionApp {
     const modal = document.getElementById('references-modal');
     if (!modal) return;
 
-    modal.style.display = 'flex';
+    // 모달을 100% 강제 표시
+    modal.style.setProperty('display', 'flex', 'important');
+
+    const refsData = this.getRefsData();
+    const bodyContainer = document.getElementById('ref-content-body');
+    const tabsContainer = document.getElementById('ref-nav-tabs');
+
+    // 탭과 본문이 비어있다면 즉시 재구축 (On-Demand Guard)
+    if (!tabsContainer || tabsContainer.children.length === 0) {
+      this.buildReferencesTabs();
+    }
+    if (!bodyContainer || bodyContainer.children.length === 0) {
+      this.renderReferencesList(refsData);
+    }
 
     if (targetAnimalNameOrCode) {
-      const targetIdx = STRUCTURED_REFERENCES.findIndex(s => 
+      const targetIdx = refsData.findIndex(s => 
         s.animalName === targetAnimalNameOrCode ||
         s.animalCode === targetAnimalNameOrCode ||
-        s.title.includes(targetAnimalNameOrCode)
+        (s.title && s.title.includes(targetAnimalNameOrCode))
       );
 
       if (targetIdx !== -1) {
+        // 해당 탭 활성화 및 스크롤
         this.filterReferencesTab(targetIdx);
       } else {
         const searchInput = document.getElementById('ref-search-input');
@@ -2208,9 +2322,9 @@ class ExhibitionApp {
           targetElem.classList.add('highlight-flash');
           setTimeout(() => {
             targetElem.classList.remove('highlight-flash');
-          }, 3000);
+          }, 3500);
         }
-      }, 150);
+      }, 180);
     }
   }
 }

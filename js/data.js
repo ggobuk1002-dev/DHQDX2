@@ -95,29 +95,29 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R01-01",
-                "text": "말의 발굽 해부학과 충격 흡수 메커니즘"
+                "text": "말 화석을 통한 말의 진화"
             },
             {
                 "code": "R01-02",
-                "text": "Thomason, J. J. (1998). The equine hoof: Mechanics and function. Equine Veterinary Journal, 30(S26), 7–12."
+                "text": "승마와 정치적 권력"
             },
             {
                 "code": "R01-03",
-                "text": "말의 서서 자는 메커니즘(stay apparatus)"
+                "text": "말의 가축화와 서유라시아 확산"
             },
             {
                 "code": "R01-04",
-                "text": "Hartmann, E., et al. (2017). Sleep behaviour in horses: Effects of housing and management. Applied Animal Behaviour Science, 196, 68–74."
+                "text": "말의 장내 미생물과 소화기 질환"
             },
             {
                 "code": "R01-05",
-                "text": "기마문화와 말의 진화사"
+                "text": "말 발굽 관리와 편자의 역사"
             }
         ],
         "assetList": [
             {
                 "code": "A01-01",
-                "text": "https://digital.khs.go.kr/record/recordDetail3D.do?ichDataUid=13936867936769100228"
+                "text": "국가유산 디지털 서비스. 「서라벌_천년왕경_말」. 공공누리 제1유형(출처표시)."
             }
         ],
         "culturalData": {
@@ -176,19 +176,19 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R02-01",
-                "text": "호랑이의 수영 행동과 물속 적응"
+                "text": "백호의 체색을 결정하는 유전적 기초"
             },
             {
                 "code": "R02-02",
-                "text": "Smithsonian’s National Zoo. (n.d.). Tiger (Panthera tigris)."
+                "text": "한반도 호랑이 감소, 포획, 농업 확대, 서식지 파괴"
             },
             {
                 "code": "R02-03",
-                "text": "백호의 유전적 변이와 근친교배 문제"
+                "text": "일제강점기 호랑이 포획·해수구제정책"
             },
             {
                 "code": "R02-04",
-                "text": "Xu, X., et al. (2013). The genetic basis of white tigers. Current Biology, 23(11), 1031–1035."
+                "text": "조선 전기 한반도의 Panthera 분포·서식지"
             },
             {
                 "code": "R02-05",
@@ -198,7 +198,7 @@ const EXHIBITION_DATA = {
         "assetList": [
             {
                 "code": "A02-01",
-                "text": "https://skfb.ly/6V9tL"
+                "text": "국가유산 디지털 서비스. 「서라벌_천년왕경_호랑이」. 공공누리 제1유형(출처표시)."
             }
         ],
         "culturalData": {
@@ -252,19 +252,19 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R03-01",
-                "text": "수사자 갈기의 성선택과 사회적 신호 기능"
+                "text": "사자 갈기의 성선택과 환경적 요인"
             },
             {
                 "code": "R03-02",
-                "text": "West, P. M., & Packer, C. (2002). Sexual selection, temperature, and the lion's mane. Science, 297(5585), 1339–1343."
+                "text": "사자의 문제 해결, 학습, 기억, 사회적 지능 가설"
             },
             {
                 "code": "R03-03",
-                "text": "사자의 집단 사냥과 프라이드 구조"
+                "text": "동굴사자의 분포, 한반도 출현"
             },
             {
                 "code": "R03-04",
-                "text": "Smithsonian’s National Zoo. (n.d.). Lion (Panthera leo)."
+                "text": "사자 새끼 돌봄, 무리 생활"
             },
             {
                 "code": "R03-05",
@@ -274,7 +274,7 @@ const EXHIBITION_DATA = {
         "assetList": [
             {
                 "code": "A03-01",
-                "text": "https://skfb.ly/6R6tM"
+                "text": "https://skfb.ly/KCBU"
             }
         ],
         "culturalData": {
@@ -328,19 +328,19 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R04-01",
-                "text": "족제비과 동물의 체형 진화와 에너지 대사"
+                "text": "족제비의 신체 형태와 소형 포식자로서의 생태"
             },
             {
                 "code": "R04-02",
-                "text": "Brown, J. H., & Lasiewski, R. C. (1972). Metabolism of weasels: The cost of being long and thin. Ecology, 53(5), 939–943."
+                "text": "족제비의 식성과 소형 설치류 포식"
             },
             {
                 "code": "R04-03",
-                "text": "족제비의 항문샘 화학 신호"
+                "text": "생태적 니치(niche)의 개념"
             },
             {
                 "code": "R04-04",
-                "text": "Zhang, J. X., et al. (2003). Potential chemical signals in the anal gland secretion of the Siberian weasel. Chemical Senses, 28(8), 707–713."
+                "text": "니치 개념의 현대적 해석과 생태적 지위"
             },
             {
                 "code": "R04-05",
@@ -350,7 +350,7 @@ const EXHIBITION_DATA = {
         "assetList": [
             {
                 "code": "A04-01",
-                "text": "https://skfb.ly/6Ws7v"
+                "text": "[https://skfb.ly/oKByZ](https://skfb.ly/oKByZ)"
             }
         ],
         "quizData": {
@@ -392,29 +392,29 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R05-01",
-                "text": "영장류 시각 진화 가설(Visual predation hypothesis)"
+                "text": "영장류의 손·발 구조와 파지 능력"
             },
             {
                 "code": "R05-02",
-                "text": "Cartmill, M. (1974). Rethinking primate origins. Science, 184(4135), 436–443."
+                "text": "인간과 다른 영장류의 진화적 관계"
             },
             {
                 "code": "R05-03",
-                "text": "인류와 영장류의 공통 조상 계통수"
+                "text": "영장류의 번식 행동과 성적 신호"
             },
             {
                 "code": "R05-04",
-                "text": "Smithsonian Human Origins Program. (n.d.). Primate and Human Evolution."
+                "text": "한반도 화석 마카크의 계통적 관계"
             },
             {
                 "code": "R05-05",
-                "text": "영장류의 도구 사용과 인지능력"
+                "text": "북한 플라이스토세 마카크류 화석과 당시 환경"
             }
         ],
         "assetList": [
             {
                 "code": "A05-01",
-                "text": "https://skfb.ly/6V9tL"
+                "text": "https://skfb.ly/pMuOH"
             }
         ],
         "culturalData": {
@@ -468,29 +468,29 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R06-01",
-                "text": "사슴 뿔의 재생 생물학과 줄기세포 연구"
+                "text": "사슴뿔의 재생과 성장"
             },
             {
                 "code": "R06-02",
-                "text": "Kierdorf, U., et al. (2009). Deer antler regeneration: Cells, tissues, and molecular mechanisms. Journal of Experimental Zoology, 312B(7), 785–799."
+                "text": "Li, C. & Suttie, J. M. (2012). Morphogenetic aspects of deer antler development. Frontiers in Bioscience (Elite Edition), 4(5), 1836–1842. DOI: 10.2741/505."
             },
             {
                 "code": "R06-03",
-                "text": "순록의 암수 뿔 형질 비교"
+                "text": "Feleke, M., Bennett, S., Chen, J., Hu, X., Williams, D. & Xu, J. (2020). New physiological insights into the phenomena of deer antler: A unique model for skeletal tissue regeneration. Journal of Orthopaedic Translation, 27, 57–66. DOI: 10.1016/j.jot.2020.10.012."
             },
             {
                 "code": "R06-04",
-                "text": "U.S. National Park Service. (n.d.). Caribou Antlers."
+                "text": "Li, C. (2023). Deer antler renewal gives insights into mammalian epimorphic regeneration. Cell Regeneration, 12, 26."
             },
             {
                 "code": "R06-05",
-                "text": "사슴의 반추 생리학"
+                "text": "사슴뿔과 성선택"
             }
         ],
         "assetList": [
             {
                 "code": "A06-01",
-                "text": "https://skfb.ly/6Ws7v"
+                "text": "https://skfb.ly/6BHXp"
             }
         ],
         "culturalData": {
@@ -544,29 +544,29 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R07-01",
-                "text": "멧돼지의 땅 파기 행동과 산림 토양 생태계"
+                "text": "멧돼지의 굴토 행동과 토양 교란"
             },
             {
                 "code": "R07-02",
-                "text": "Studnitz, M., et al. (2007). Why do pigs root and in what will they root? Applied Animal Behaviour Science, 107(3-4), 183–197."
+                "text": "멧돼지 굴토와 식물 다양성"
             },
             {
                 "code": "R07-03",
-                "text": "멧돼지의 체온 조절과 진흙 목욕"
+                "text": "멧돼지 굴토가 토양에 미치는 영향"
             },
             {
                 "code": "R07-04",
-                "text": "Bracke, M. B. (2011). Review of wallowing in pigs: Description of the behaviour and its motivational basis. Applied Animal Behaviour Science, 132(1-2), 1–13."
+                "text": "멧돼지 굴토와 토양 특성"
             },
             {
                 "code": "R07-05",
-                "text": "야생 멧돼지의 치아 형태학"
+                "text": "돼지의 가축화와 멧돼지의 관계"
             }
         ],
         "assetList": [
             {
                 "code": "A07-01",
-                "text": "https://skfb.ly/6V9tL"
+                "text": "https://skfb.ly/oSyL7"
             }
         ],
         "culturalData": {
@@ -625,29 +625,29 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R08-01",
-                "text": "코끼리 코의 생체역학 및 근육수력학"
+                "text": "Jannel, A., Nair, J. P., Panagiotopoulou, O., Romilio, A. & Salisbury, S. W. (2019). “Keep your feet on the ground”: Simulated range of motion and hind foot posture of the Middle Jurassic sauropod *Rhoetosaurus brownei* and its implications for sauropod biology. *Journal of Morphology*, 280(6), 849–878. DOI: 10.1002/jmor.20989."
             },
             {
                 "code": "R08-02",
-                "text": "Kier, W. M., & Smith, K. K. (1985). Tongues, tentacles and trunks: The biomechanics of movement in muscular-hydrostats. Zoological Journal of the Linnean Society, 83(4), 307–324."
+                "text": "Fischer, M. S., Schaller, N., & others. (2007). The structure of the cushions in the feet of African elephants (*Loxodonta africana*). *Journal of Anatomy*, 210."
             },
             {
                 "code": "R08-03",
-                "text": "상아의 해부학과 밀렵 피해"
+                "text": "Lee, R. et al. (2016). Foot pressure distributions during walking in African elephants (*Loxodonta africana*). *Journal of Experimental Biology*."
             },
             {
                 "code": "R08-04",
-                "text": "Ministry of Environment, Forest and Climate Change, India. (2025). Guidelines on Ivory Management."
+                "text": "전투코끼리와 알렉산더"
             },
             {
                 "code": "R08-05",
-                "text": "코끼리의 저주파 통신"
+                "text": "Naiden, F. S., Garvin, E. E., Vanderspoel, J. & Epplett, C. (2021). Elephants in Hellenistic Warfare. In W. Heckel, F. S. Naiden, E. E. Garvin & J. Vanderspoel (Eds.), *A Companion to Greek Warfare*. Wiley-Blackwell. DOI: 10.1002/9781119438847.ch15."
             }
         ],
         "assetList": [
             {
                 "code": "A08-01",
-                "text": "https://skfb.ly/6R6tM"
+                "text": "https://skfb.ly/QWCR"
             }
         ],
         "culturalData": {
@@ -701,29 +701,29 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R09-01",
-                "text": "다윈핀치류의 부리 형태 진화와 자연선택"
+                "text": "새의 부리 형태와 먹이 이용의 관계"
             },
             {
                 "code": "R09-02",
-                "text": "Grant, P. R., & Grant, B. R. (2002). Unpredictable evolution in a 30-year study of Darwin's finches. Science, 296(5568), 707–711."
+                "text": "다윈핀치의 종분화와 적응방산"
             },
             {
                 "code": "R09-03",
-                "text": "조류 부리의 발생학적 분화"
+                "text": "다윈핀치의 생태적 다양화와 적응방산"
             },
             {
                 "code": "R09-04",
-                "text": "Abzhanov, A., et al. (2004). Bmp4 and morphological variation of beaks in Darwin's finches. Science, 305(5689), 1462–1465."
+                "text": "다윈핀치의 니치분화와 생태적 다양성"
             },
             {
                 "code": "R09-05",
-                "text": "조류 섭식 생태학"
+                "text": "다윈핀치의 적응방산에 대한 종합적 고찰"
             }
         ],
         "assetList": [
             {
                 "code": "A09-01",
-                "text": "https://skfb.ly/6Ws7v"
+                "text": "https://skfb.ly/oLDKA"
             }
         ],
         "quizData": {
@@ -765,7 +765,7 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R10-01",
-                "text": "포식자와 먹이의 진화적 군비경쟁"
+                "text": "진화적 경쟁과 붉은 여왕 가설"
             },
             {
                 "code": "R10-02",
@@ -787,7 +787,7 @@ const EXHIBITION_DATA = {
         "assetList": [
             {
                 "code": "A10-01",
-                "text": "https://skfb.ly/6V9tL"
+                "text": "https://skfb.ly/6XUDU"
             }
         ],
         "quizData": {
@@ -830,29 +830,29 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R11-01",
-                "text": "인도공작 볏깃의 기계적 진동 감각 수용"
+                "text": "볏을 가진 새의 성선택과 성적이형"
             },
             {
                 "code": "R11-02",
-                "text": "Kane, S. A., et al. (2018). Biomechanics of the peafowl's crest: A sensor of social signals. PLOS ONE, 13(11), e0207247."
+                "text": "조류의 성적이형과 성 차이의 발생"
             },
             {
                 "code": "R11-03",
-                "text": "조류 깃털 장식의 성선택과 핸디캡 원리"
+                "text": "조류의 ZZ/ZW 성결정 체계"
             },
             {
                 "code": "R11-04",
-                "text": "Zahavi, A. (1975). Mate selection—A selection for a handicap. Journal of Theoretical Biology, 53(1), 205–214."
+                "text": "조류의 성염색체와 성결정"
             },
             {
                 "code": "R11-05",
-                "text": "꿩과 조류의 형태적 다양성"
+                "text": "조류의 Z 염색체 유전자 발현과 성적 차이"
             }
         ],
         "assetList": [
             {
                 "code": "A11-01",
-                "text": "https://skfb.ly/6Ws7v"
+                "text": "https://skfb.ly/o7yPD"
             }
         ],
         "quizData": {
@@ -894,29 +894,29 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R12-01",
-                "text": "악어류와 조류의 단방향 기류 폐 호흡 비교"
+                "text": "악어류의 형태 진화와 생태적 다양성"
             },
             {
                 "code": "R12-02",
-                "text": "Farmer, C. G. (2015). Similarity of pulmonary airflow in crocodilians and birds. The Anatomical Record, 298(6), 1081–1092."
+                "text": "악어류의 진화와 형태적 보수성"
             },
             {
                 "code": "R12-03",
-                "text": "악어의 수중 감각 돔 기관(ISO)"
+                "text": "파충류의 학습과 인지능력"
             },
             {
                 "code": "R12-04",
-                "text": "Soares, D. (2002). An ancient sensory organ in crocodilians. Nature, 417(6886), 241–242."
+                "text": "파충류의 학습능력에 대한 연구 동향"
             },
             {
                 "code": "R12-05",
-                "text": "지배파충류의 진화사"
+                "text": "파충류의 인지능력에 대한 기존 관점 재검토"
             }
         ],
         "assetList": [
             {
                 "code": "A12-01",
-                "text": "https://skfb.ly/6V9tL"
+                "text": "https://skfb.ly/pAot9"
             }
         ],
         "culturalData": {
@@ -970,29 +970,29 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R13-01",
-                "text": "어류 아가미궁에서 포유류 턱 및 중이골로의 진화"
+                "text": "틱타알릭의 가슴지느러미와 사지의 기원"
             },
             {
                 "code": "R13-02",
-                "text": "Woronowicz, K. C., & Schneider, R. A. (2019). Molecular and cellular mechanisms of evolutionary innovation in the vertebrate jaw. Developmental Biology, 452(1), 1–11."
+                "text": "물고기 턱과 인두궁의 진화"
             },
             {
                 "code": "R13-03",
-                "text": "어류의 측선 감각계와 유체 감지"
+                "text": "척추동물 턱의 진화"
             },
             {
                 "code": "R13-04",
-                "text": "Bleckmann, H., & Zelick, R. (2009). Lateral line system of fish. Integrative Zoology, 4(1), 13–25."
+                "text": "아가미활과 턱·가운데귀의 진화"
             },
             {
                 "code": "R13-05",
-                "text": "담수 어류의 삼투 조절"
+                "text": "『패자의 생명사』"
             }
         ],
         "assetList": [
             {
                 "code": "A13-01",
-                "text": "https://skfb.ly/6Ws7v"
+                "text": "[https://skfb.ly/oEuLR](https://skfb.ly/oEuLR)"
             }
         ],
         "culturalData": {
@@ -1046,29 +1046,29 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R14-01",
-                "text": "해양 포유류의 수렴 진화와 유전체 비교"
+                "text": "물범의 수렴진화와 수중 적응"
             },
             {
                 "code": "R14-02",
-                "text": "Foote, A. D., et al. (2015). Convergent evolution of the genomes of marine mammals. Nature Genetics, 47(3), 272–275."
+                "text": "기각류의 형태와 수영 방식 비교"
             },
             {
                 "code": "R14-03",
-                "text": "기각류의 잠수 생리학과 산소 저장"
+                "text": "물범과 물개·바다사자의 수영 방식과 수렴"
             },
             {
                 "code": "R14-04",
-                "text": "Kooyman, G. L. (1989). Diverse divers: Physiology and behaviour. Springer-Verlag."
+                "text": "물범과 물개·바다사자의 육상 이동 차이"
             },
             {
                 "code": "R14-05",
-                "text": "독도 강치(바다사자)의 생태사"
+                "text": "Zalophus japonicus*의 분류와 명명 역사"
             }
         ],
         "assetList": [
             {
                 "code": "A14-01",
-                "text": "https://skfb.ly/6V9tL"
+                "text": "https://skfb.ly/6SPy7"
             }
         ],
         "culturalData": {
@@ -1122,23 +1122,23 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R15-01",
-                "text": "수달 털의 방수 단열 구조와 열 보존 메커니즘"
+                "text": "수달류의 분류와 계통"
             },
             {
                 "code": "R15-02",
-                "text": "Kuhn, C. A., & Meyer, W. (2010). Comparative hair structure in semiaquatic mammals. Journal of Morphology, 271(9), 1114–1124."
+                "text": "해달의 분류 및 진화"
             },
             {
                 "code": "R15-03",
-                "text": "북아메리카수달의 수중 감각과 얼굴 수염"
+                "text": "수달의 털과 수중생활·체온 유지"
             },
             {
                 "code": "R15-04",
-                "text": "Smithsonian’s National Zoo. (n.d.). North American River Otter."
+                "text": "해달의 털과 단열"
             },
             {
                 "code": "R15-05",
-                "text": "담수 생태계 건강성 지표종으로서의 수달"
+                "text": "해달의 수중 시각"
             }
         ],
         "assetList": [
@@ -1186,19 +1186,19 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R16-01",
-                "text": "왜가리과 조류의 물속 시각 굴절 보정과 타격 정확도"
+                "text": "백로·왜가리의 분류와 명칭"
             },
             {
                 "code": "R16-02",
-                "text": "Katzir, G., & Intrator, N. (1987). Striking of underwater prey by a reef heron, Egretta gularis schistacea. Journal of Comparative Physiology A, 160(4), 517–523."
+                "text": "백로가 왜가리과 내 여러 새를 가리키는 명칭이라는 근거"
             },
             {
                 "code": "R16-03",
-                "text": "백로류의 분류학적 정의"
+                "text": "색채 범주화와 무지개"
             },
             {
                 "code": "R16-04",
-                "text": "국립생물자원관 국가생물종지식정보시스템. (n.d.). 왜가리과 백로류."
+                "text": "색채의 연속성과 인간의 범주화"
             },
             {
                 "code": "R16-05",
@@ -1208,7 +1208,7 @@ const EXHIBITION_DATA = {
         "assetList": [
             {
                 "code": "A16-01",
-                "text": "https://skfb.ly/6TWAv"
+                "text": "https://skfb.ly/pvzLN"
             }
         ],
         "culturalData": {
@@ -1264,29 +1264,29 @@ const EXHIBITION_DATA = {
         "referenceList": [
             {
                 "code": "R17-01",
-                "text": "주금류의 비행 상실과 수렴적 다발적 진화 역사"
+                "text": "날지 않는 새의 진화와 비행 능력 상실"
             },
             {
                 "code": "R17-02",
-                "text": "Harshman, J., et al. (2008). Phylogenomic evidence for multiple losses of flight in ratite birds. PNAS, 105(36), 13462–13467."
+                "text": "새·박쥐·익룡의 날개와 비행 형태의 진화"
             },
             {
                 "code": "R17-03",
-                "text": "타조의 달리기 역학과 에너지 효율"
+                "text": "새·박쥐·익룡의 비행과 수렴진화"
             },
             {
                 "code": "R17-04",
-                "text": "Rubenson, J., et al. (2011). Adaptations for running in ostrich locomotion. Journal of Anatomy, 218(1), 74–90."
+                "text": "수렴진화(Convergent Evolution)의 개념"
             },
             {
                 "code": "R17-05",
-                "text": "거대 주금류의 고생물학"
+                "text": "진화적 상쇄(Evolutionary Trade-off)"
             }
         ],
         "assetList": [
             {
                 "code": "A17-01",
-                "text": "https://skfb.ly/6TWAv"
+                "text": "https://skfb.ly/onu6x"
             }
         ],
         "quizData": {
@@ -1332,19 +1332,19 @@ const EXHIBITION_DATA = {
             },
             {
                 "code": "R18-02",
-                "text": "Davison, G. W. H. (1985). Avian spurs. Journal of Zoology, 206(1), 117–123."
-            },
-            {
-                "code": "R18-03",
                 "text": "새와 뱀의 상징적 대칭"
             },
             {
+                "code": "R18-03",
+                "text": "가루다(Garuda)와 나가(Nāga)의 신화적 관계"
+            },
+            {
                 "code": "R18-04",
-                "text": "Vaz da Silva, F. (2011). Cosmos in a painting: Reflections on Judeo-Christian creation symbolism. Cosmos, 26, 53–77."
+                "text": "가루다와 나가의 상징적 대립"
             },
             {
                 "code": "R18-05",
-                "text": "가루다(Garuda)와 나가(Nāga)의 신화적 관계"
+                "text": "새와 뱀의 계통적 관계"
             }
         ],
         "assetList": [
@@ -1408,19 +1408,19 @@ const EXHIBITION_DATA = {
             },
             {
                 "code": "R19-02",
-                "text": "Isbell, L. A. (2006). Snakes as agents of evolutionary change: The case of the primate visual system. Journal of Human Evolution, 51(1), 1–35."
-            },
-            {
-                "code": "R19-03",
                 "text": "뱀에 대한 선택적 주의와 탐지"
             },
             {
+                "code": "R19-03",
+                "text": "위협 자극에 대한 준비성(Preparedness)과 공포 학습"
+            },
+            {
                 "code": "R19-04",
-                "text": "LoBue, V., & DeLoache, J. S. (2008). Detecting the snake in the grass: Attention to fear-relevant stimuli by adults and young children. Psychological Science, 19(3), 284–289."
+                "text": "뱀에 대한 위협 자극의 선택적 탐지"
             },
             {
                 "code": "R19-05",
-                "text": "위협 자극에 대한 준비성(Preparedness)과 공포 학습"
+                "text": "동아시아 용의 신화와 상징"
             }
         ],
         "assetList": [
