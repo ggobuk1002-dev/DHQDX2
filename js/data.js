@@ -685,6 +685,23 @@ const EXHIBITION_DATA = {
         }
       ],
       "embedHtml": "<iframe title=\"멧돼지 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/e2761cb2839447b6beb0b4ed132b0895/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
+      "culturalData": {
+        "visualGuide": "아라마키고분 멧돼지형 하니와 (3D)",
+        "embedHtml": "<iframe title=\"天理市荒蒔古墳出土猪形埴輪\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/dadaed5bbf4b4902b17111471cabea85/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
+        "story": "일본 아라마키고분의 멧돼지형 하니와와 사산조의 ‘돌진하는 멧돼지’ 장식은 멧돼지의 강한 힘과 야생성을 보여줍니다. 길들여진 돼지와 달리 멧돼지는 사냥의 대상이자 인간이 맞서야 할 자연의 에너지로 인식되었습니다. 풍납토성에서 출토된 돼지·멧돼지 뼈는 백제인의 식생활과 동물 이용 모습을 보여주는 현실의 흔적입니다. 백제금동대향로의 멧돼지는 이러한 생활세계의 동물이 이상세계로 옮겨진 모습으로, 먹거리와 사냥감이면서 동시에 두려움과 생명력을 지닌 야생동물의 여러 모습을 함께 보여줍니다.",
+        "artifacts": [
+          {
+            "title": "아라마키고분 출토 멧돼지형 하니와 (3D)",
+            "museum": "오테마에 대학교 (Otemae University)",
+            "url": "https://sketchfab.com/3d-models/dadaed5bbf4b4902b17111471cabea85"
+          },
+          {
+            "title": "돌진하는 멧돼지 벽체 장식 (Wall panel with a charging boar)",
+            "museum": "메트로폴리탄 미술관 (The Met)",
+            "url": "https://www.metmuseum.org/art/collection/search/322649"
+          }
+        ]
+      },
       "panelImg3": null
     },
     {
@@ -1402,6 +1419,18 @@ const EXHIBITION_DATA = {
         }
       ],
       "embedHtml": "<iframe title=\"백로 / 왜가리 / 두루미 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/95a74fb41f1a46f0acec81a2d6c85093/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
+      "culturalData": {
+        "visualGuide": "대한민국 500원 주화 (학 3D)",
+        "embedHtml": "<iframe title=\"500 Korean won coin\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/2fa97e66fcb4455ca87b4be8a2e602f7/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
+        "story": "백제금동대향로에는 백로과 또는 두루미과로 보이는 새가 표현되어 있으며, 흔히 ‘학’으로 해석됩니다. 동아시아에서 학은 오랜 세월 장수와 고결함, 길상을 상징해 온 새였습니다. 이러한 이미지는 오늘날 대한민국의 500원 주화에서도 이어집니다. 주화에 새겨진 학은 전통적인 상징성을 현대적으로 계승하면서, 힘차게 날아오르는 모습으로 대한민국의 발전과 도약을 나타냅니다. 향로 속 학과 500원 주화를 함께 살펴보면, 한 동물에 담긴 상징이 시대에 따라 새로운 의미를 더하며 이어져 왔음을 알 수 있습니다.",
+        "artifacts": [
+          {
+            "title": "대한민국 500원 주화 (학 3D)",
+            "museum": "Sketchfab 3D Archive",
+            "url": "https://skfb.ly/oFvsp"
+          }
+        ]
+      },
       "panelImg3": null
     },
     {
