@@ -51,8 +51,52 @@ class ExhibitionApp {
     try { this.initScrollyObserver(); } catch (e) { console.error('ScrollyObserver error:', e); }
     try { this.initWheelSnapController(); } catch (e) { console.error('WheelSnap error:', e); }
 
-    // 항상 인트로 화면에서 첫 시작!
-    this.switchView('intro');
+    // 새로고침 시 기존 화면 및 동물 상세 위치 100% 유지 복원
+    this.restoreState();
+
+    window.addEventListener('hashchange', () => {
+      this.restoreState();
+    });
+  }
+
+  restoreState() {
+    let hash = window.location.hash.replace('#', '').trim();
+    
+    if (!hash) {
+      try {
+        const saved = sessionStorage.getItem('exhibition_current_view_state');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed && parsed.view) {
+            if (parsed.view === 'detail' && parsed.code) {
+              hash = `detail-${parsed.code}`;
+            } else if (parsed.view === 'catalog' && parsed.mode === 'unwrapped') {
+              hash = 'unwrapped';
+            } else {
+              hash = parsed.view;
+            }
+          }
+        }
+      } catch (e) {}
+    }
+
+    if (hash.startsWith('detail-')) {
+      const code = hash.replace('detail-', '');
+      this.switchView('detail', code, false);
+    } else if (hash === 'catalog') {
+      this.setCatalogMode('cards');
+      this.switchView('catalog', null, false);
+    } else if (hash === 'unwrapped') {
+      this.setCatalogMode('unwrapped');
+      this.switchView('catalog', null, false);
+    } else if (hash === 'main') {
+      this.switchView('main', null, false);
+    } else if (hash === 'references') {
+      this.switchView('main', null, false);
+      this.openReferencesModal();
+    } else {
+      this.switchView('intro', null, false);
+    }
   }
 
   /* ============================================================
@@ -248,13 +292,46 @@ class ExhibitionApp {
         finalModal.style.display = 'none';
       });
     }
+
+    // 키보드 단축키 (ESC 모달 닫기, 좌우 방향키 동물 상세 네비게이션)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const refModal = document.getElementById('references-modal');
+        if (refModal && refModal.style.display !== 'none') refModal.style.display = 'none';
+        const docModal = document.getElementById('docent-modal');
+        if (docModal && docModal.style.display !== 'none') this.closeDocent();
+        const finModal = document.getElementById('final-modal');
+        if (finModal && finModal.style.display !== 'none') finModal.style.display = 'none';
+      } else if (this.currentView === 'detail') {
+        if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
+        if (e.key === 'ArrowLeft') this.navigateDetail(-1);
+        if (e.key === 'ArrowRight') this.navigateDetail(1);
+      }
+    });
   }
 
-  /* ============================================================
-     3. 뷰 전환 시스템
-     ============================================================ */
-  switchView(viewName, animalCode = null) {
+  switchView(viewName, animalCode = null, updateHash = true) {
     this.currentView = viewName;
+
+    // 브라우저 URL Hash 및 세션 상태 동기화 (새로고침 시 해당 화면 유지)
+    try {
+      let targetHash = viewName;
+      if (viewName === 'detail') {
+        targetHash = `detail-${animalCode || '01'}`;
+      } else if (viewName === 'catalog') {
+        targetHash = this.catalogMode === 'unwrapped' ? 'unwrapped' : 'catalog';
+      }
+      
+      if (updateHash && window.location.hash.replace('#', '') !== targetHash) {
+        window.history.pushState(null, '', '#' + targetHash);
+      }
+      
+      sessionStorage.setItem('exhibition_current_view_state', JSON.stringify({
+        view: viewName,
+        code: animalCode || (this.currentAnimalIndex >= 0 ? EXHIBITION_DATA.animals[this.currentAnimalIndex]?.code : null),
+        mode: this.catalogMode
+      }));
+    } catch (e) {}
 
     // 모든 view-section 비활성화
     document.querySelectorAll('.view-section').forEach(sec => {
@@ -396,6 +473,20 @@ class ExhibitionApp {
       if (title) title.innerText = '향로의 세계: 5대 층위 전개도 상징 탐색';
       if (desc) desc.innerText = '천상·하늘·육지·물가·바다의 각 층위 배경 위 마커를 클릭하여 유물 속 생태계를 탐구하세요. 3D 메인화면과 상호 이동할 수 있습니다.';
       this.renderUnwrappedLayers();
+    }
+
+    if (this.currentView === 'catalog') {
+      try {
+        const targetHash = mode === 'unwrapped' ? 'unwrapped' : 'catalog';
+        if (window.location.hash.replace('#', '') !== targetHash) {
+          window.history.pushState(null, '', '#' + targetHash);
+        }
+        sessionStorage.setItem('exhibition_current_view_state', JSON.stringify({
+          view: 'catalog',
+          code: null,
+          mode: mode
+        }));
+      } catch (e) {}
     }
   }
 
@@ -1961,15 +2052,22 @@ class ExhibitionApp {
       card.className = 'ref-section-card';
       card.id = `ref-card-${idx}`;
 
-      // URL 자동 링크 변환
+      // URL 및 DOI 자동 링크 변환 + 소제목 서식 강화
       let formattedContent = sec.content
         .replace(/(https?:\/\/[^\s\)\<\>]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1 ↗</a>')
-        .replace(/(DOI:\s*)(10\.[^\s\)\<\>]+)/gi, '$1<a href="https://doi.org/$2" target="_blank" rel="noopener noreferrer">https://doi.org/$2 ↗</a>');
+        .replace(/(DOI:\s*)(10\.[^\s\)\<\>]+)/gi, '$1<a href="https://doi.org/$2" target="_blank" rel="noopener noreferrer">https://doi.org/$2 ↗</a>')
+        .replace(/^-(문헌|과학해설|3D에셋)/gm, '<div style="font-weight:700; color:var(--accent-gold); margin-top:0.8rem; margin-bottom:0.3rem;">📌 $1</div>')
+        .replace(/^([0-9]+\.\s*[^\n]+)/gm, '<div style="font-weight:700; color:var(--accent-cyan); margin-top:0.7rem; margin-bottom:0.2rem;">📖 $1</div>');
+
+      const rBadge = sec.rCode ? `<span style="background:rgba(212,175,55,0.2); color:var(--accent-gold); font-size:0.75rem; font-weight:800; padding:0.15rem 0.5rem; border-radius:4px; border:1px solid rgba(212,175,55,0.4);">[${sec.rCode}]</span>` : '';
+      const aBadge = sec.aCode ? `<span style="background:rgba(56,189,248,0.2); color:var(--accent-cyan); font-size:0.75rem; font-weight:800; padding:0.15rem 0.5rem; border-radius:4px; border:1px solid rgba(56,189,248,0.4);">[${sec.aCode}]</span>` : '';
 
       card.innerHTML = `
-        <div class="ref-section-header">
-          <span style="color:var(--accent-gold); font-weight:800; font-size:0.9rem;">#${idx + 1}</span>
-          <h3 class="ref-section-title">${sec.title}</h3>
+        <div class="ref-section-header" style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+          <span style="color:var(--text-muted); font-weight:800; font-size:0.85rem;">#${idx + 1}</span>
+          ${rBadge}
+          ${aBadge}
+          <h3 class="ref-section-title" style="margin:0; font-size:1.1rem; color:#fff;">${sec.rawTitle || sec.title}</h3>
         </div>
         <div class="ref-section-content">${formattedContent}</div>
       `;

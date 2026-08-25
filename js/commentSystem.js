@@ -433,7 +433,18 @@ class CommentManager {
         }
       });
 
-      mergedData[code] = combined;
+      // 4-1. 중복 댓글 자동 제거 (동일 작성자 + 동일 텍스트일 경우 1개만 유지하여 정리)
+      const seenContent = new Set();
+      const deduplicated = [];
+      combined.forEach(cmt => {
+        const key = `${cmt.name || ''}:::${(cmt.text || '').trim()}`;
+        if (!seenContent.has(key)) {
+          seenContent.add(key);
+          deduplicated.push(cmt);
+        }
+      });
+
+      mergedData[code] = deduplicated;
     });
 
     this.data = mergedData;

@@ -671,19 +671,32 @@ img {
 
 .catalog-tabs {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
   gap: 0.5rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   margin-bottom: 2rem;
+  padding-bottom: 0.25rem;
+}
+
+.catalog-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .tab-btn {
-  padding: 0.5rem 1.2rem;
+  padding: 0.5rem 1.1rem;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-color-subtle);
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
 .tab-btn.active, .tab-btn:hover {
@@ -1310,20 +1323,31 @@ img {
 /* Detail Multi-Tab Navigation */
 .detail-info-tabs {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   margin-bottom: 1.25rem;
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 0.5rem;
+}
+
+.detail-info-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .detail-tab-btn {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-color-subtle);
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  padding: 0.6rem 1.1rem;
+  padding: 0.5rem 1rem;
   border-radius: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
   cursor: pointer;
   transition: all var(--transition-fast);
 }
@@ -3464,6 +3488,30 @@ img {
     line-height: 1.35 !important;
     border-radius: 8px !important;
     background: rgba(15, 23, 42, 0.95) !important;
+  }
+
+  /* All Tab Navigations Single Row Touch Scroll in Landscape */
+  .catalog-tabs, .detail-info-tabs, .view-mode-tabs {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    gap: 0.35rem !important;
+    margin-bottom: 0.85rem !important;
+    padding-bottom: 0.25rem !important;
+  }
+
+  .catalog-tabs::-webkit-scrollbar,
+  .detail-info-tabs::-webkit-scrollbar,
+  .view-mode-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .tab-btn, .detail-tab-btn, .view-mode-btn {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    font-size: 0.76rem !important;
+    padding: 0.3rem 0.65rem !important;
   }
 
   /* Catalog View 4-Column Wide Grid for Landscape Mobile */
