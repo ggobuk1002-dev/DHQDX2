@@ -1710,7 +1710,8 @@ img {
   padding: 0.2rem 0.55rem;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
-  margin-bottom: 0.25rem;
+  margin-top: 0.35rem;
+  margin-bottom: 0;
   text-align: center;
   white-space: nowrap;
 }
@@ -3189,23 +3190,8 @@ img {
    - 가로(landscape) 전환 시 16:9 와이드 풀스크린으로 즉시 진입
    ============================================================ */
 .orientation-prompt-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(8, 9, 13, 0.98);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  z-index: 999999;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  text-align: center;
-}
-
-@media screen and (orientation: portrait) and (max-width: 900px) {
-  .orientation-prompt-overlay {
-    display: flex !important;
-  }
+  display: none !important;
+  pointer-events: none;
 }
 
 .orientation-prompt-content {
@@ -3467,7 +3453,8 @@ img {
     display: block !important;
     font-size: 0.68rem !important;
     padding: 0.15rem 0.45rem !important;
-    margin-bottom: 0.2rem !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0 !important;
   }
 
   .docent-vn-ui {

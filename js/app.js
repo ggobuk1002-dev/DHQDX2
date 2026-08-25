@@ -503,6 +503,11 @@ class ExhibitionApp {
       this.finishIntroVideo();
     });
 
+    video.addEventListener('error', (e) => {
+      console.warn('Intro video error, auto proceeding to main exhibition:', e);
+      this.finishIntroVideo();
+    });
+
     const skipBtn = document.getElementById('btn-intro-skip');
     if (skipBtn) {
       skipBtn.addEventListener('click', () => {
@@ -527,9 +532,12 @@ class ExhibitionApp {
       video.muted = true;
       video.playsInline = true;
       video.play().catch(e => {
-        console.warn('Video autoplay prevented:', e);
-        // 브라우저 차단 시 건너뛰기 버튼 강조
+        console.warn('Video autoplay prevented, falling back to exhibition:', e);
+        // 모바일에서 자동 재생 차단 시 곧바로 3D 메인 전시로 직행!
+        this.finishIntroVideo();
       });
+    } else {
+      this.finishIntroVideo();
     }
   }
 

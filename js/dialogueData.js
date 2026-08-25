@@ -3527,3 +3527,5 @@ const DOCENT_DIALOGUES = {
     }
   }
 };
+
+window.DOCENT_DIALOGUES = DOCENT_DIALOGUES;
