@@ -1019,30 +1019,43 @@ class ExhibitionApp {
     if (sourceCredit) {
       let rHtml = '';
       if (animal.referenceList && animal.referenceList.length > 0) {
-        rHtml += `<div class="credit-group" style="margin-bottom: 0.8rem;">
-          <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 0.4rem;">🔬 과학 학술 참고문헌 (References)</div>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem;">`;
+        rHtml += `<div class="credit-group" style="margin-bottom: 0.85rem;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 0.45rem; display: flex; justify-content: space-between; align-items: center;">
+            <span>🔬 과학 학술 참고문헌 (References)</span>
+            <span style="font-size: 0.72rem; color: var(--text-muted);">코드를 클릭하면 해당 문헌으로 이동합니다 ↗</span>
+          </div>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.45rem;">`;
+        
         animal.referenceList.forEach(ref => {
-          let refText = ref.text
-            .replace(/(https?:\/\/[^\s\)\<\>]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">$1 ↗</a>')
-            .replace(/(DOI:\s*)(10\.[^\s\)\<\>]+)/gi, '$1<a href="https://doi.org/$2" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">https://doi.org/$2 ↗</a>');
-
-          rHtml += `<li style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5; background: rgba(255,255,255,0.03); padding: 0.4rem 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-gold);">
-            <span style="color: var(--accent-gold-light); font-weight: 700; margin-right: 0.4rem;">[${ref.code}]</span>${refText}
-          </li>`;
+          rHtml += `
+            <li class="ref-interactive-row" data-code="${ref.code}" data-animal="${animal.name}" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.25); border-left: 3px solid var(--accent-gold); padding: 0.45rem 0.75rem; border-radius: 6px; display: flex; align-items: baseline; gap: 0.6rem; cursor: pointer; transition: all 0.2s ease;">
+              <button class="ref-item-badge-btn" style="background: var(--accent-gold); color: #000; font-weight: 800; font-size: 0.75rem; padding: 0.15rem 0.45rem; border-radius: 4px; border: none; cursor: pointer; white-space: nowrap; flex-shrink: 0;">
+                [${ref.code}] ↗
+              </button>
+              <span style="font-size: 0.82rem; color: #e2e8f0; line-height: 1.45; word-break: break-word;">${ref.text}</span>
+            </li>
+          `;
         });
         rHtml += `</ul></div>`;
       }
 
       if (animal.assetList && animal.assetList.length > 0) {
-        rHtml += `<div class="credit-group" style="margin-bottom: 0.8rem;">
-          <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 0.4rem;">🎨 전시 에셋 및 3D 모델 출처 (Assets)</div>
-          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem;">`;
+        rHtml += `<div class="credit-group" style="margin-bottom: 0.85rem;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 0.45rem; display: flex; justify-content: space-between; align-items: center;">
+            <span>🎨 전시 에셋 및 3D 모델 출처 (Assets)</span>
+            <span style="font-size: 0.72rem; color: var(--text-muted);">코드를 클릭하면 해당 에셋 출처로 이동합니다 ↗</span>
+          </div>
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.45rem;">`;
+        
         animal.assetList.forEach(ast => {
-          let astText = ast.text.replace(/(https?:\/\/[^\s\)\<\>]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">$1 ↗</a>');
-          rHtml += `<li style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5; background: rgba(255,255,255,0.03); padding: 0.4rem 0.6rem; border-radius: 6px; border-left: 3px solid var(--accent-cyan);">
-            <span style="color: var(--accent-cyan); font-weight: 700; margin-right: 0.4rem;">[${ast.code}]</span>${astText}
-          </li>`;
+          rHtml += `
+            <li class="ref-interactive-row" data-code="${ast.code}" data-animal="${animal.name}" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(56,189,248,0.25); border-left: 3px solid var(--accent-cyan); padding: 0.45rem 0.75rem; border-radius: 6px; display: flex; align-items: baseline; gap: 0.6rem; cursor: pointer; transition: all 0.2s ease;">
+              <button class="ref-item-badge-btn" style="background: var(--accent-cyan); color: #000; font-weight: 800; font-size: 0.75rem; padding: 0.15rem 0.45rem; border-radius: 4px; border: none; cursor: pointer; white-space: nowrap; flex-shrink: 0;">
+                [${ast.code}] ↗
+              </button>
+              <span style="font-size: 0.82rem; color: #e2e8f0; line-height: 1.45; word-break: break-word;">${ast.text}</span>
+            </li>
+          `;
         });
         rHtml += `</ul></div>`;
       }
@@ -1050,13 +1063,22 @@ class ExhibitionApp {
       // 전체 참고문헌 아카이브 모달 바로가기 버튼 추가
       rHtml += `
         <div style="margin-top: 0.75rem; text-align: right;">
-          <button id="btn-goto-ref-archive" style="background: rgba(212, 175, 55, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); font-size: 0.8rem; font-weight: 700; padding: 0.35rem 0.85rem; border-radius: 16px; cursor: pointer; transition: all 0.2s ease;">
-            📚 전체 학술 출처 및 원본 아카이브 열람하기 ↗
+          <button id="btn-goto-ref-archive" style="background: rgba(212, 175, 55, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); font-size: 0.82rem; font-weight: 700; padding: 0.4rem 1rem; border-radius: 16px; cursor: pointer; transition: all 0.2s ease;">
+            📚 백제금동대향로 전체 학술 참고문헌 아카이브 열람하기 ↗
           </button>
         </div>
       `;
 
       sourceCredit.innerHTML = rHtml;
+
+      // 각 코드 항목 클릭 시 참고문헌 모달의 해당 문헌으로 즉시 이동 & 하이라이트!
+      sourceCredit.querySelectorAll('.ref-interactive-row').forEach(row => {
+        row.addEventListener('click', () => {
+          const code = row.getAttribute('data-code');
+          const aName = row.getAttribute('data-animal');
+          this.openReferencesModal(aName, code);
+        });
+      });
 
       const gotoRefBtn = document.getElementById('btn-goto-ref-archive');
       if (gotoRefBtn) {
@@ -2010,11 +2032,13 @@ class ExhibitionApp {
       });
       tabsContainer.appendChild(allTab);
 
-      REFERENCES_ARCHIVE.forEach((sec, idx) => {
+      STRUCTURED_REFERENCES.forEach((sec, idx) => {
         const tab = document.createElement('button');
         tab.className = 'ref-tab-btn';
         tab.textContent = sec.title;
         tab.dataset.index = idx;
+        tab.dataset.animal = sec.animalName;
+        tab.dataset.code = sec.codePrefix;
         tab.addEventListener('click', () => {
           this.filterReferencesTab(idx);
         });
@@ -2030,7 +2054,7 @@ class ExhibitionApp {
     }
 
     // 초기 전체 렌더링
-    this.renderReferencesList(REFERENCES_ARCHIVE);
+    this.renderReferencesList(STRUCTURED_REFERENCES);
   }
 
   renderReferencesList(sections) {
@@ -2047,31 +2071,63 @@ class ExhibitionApp {
     }
 
     bodyContainer.innerHTML = '';
-    sections.forEach((sec, idx) => {
-      const card = document.createElement('div');
-      card.className = 'ref-section-card';
-      card.id = `ref-card-${idx}`;
+    sections.forEach((sec, sIdx) => {
+      const secCard = document.createElement('div');
+      secCard.className = 'ref-section-card';
+      secCard.id = sec.sectionId || `ref-sec-${sIdx}`;
 
-      // URL 및 DOI 자동 링크 변환 + 소제목 서식 강화
-      let formattedContent = sec.content
-        .replace(/(https?:\/\/[^\s\)\<\>]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1 ↗</a>')
-        .replace(/(DOI:\s*)(10\.[^\s\)\<\>]+)/gi, '$1<a href="https://doi.org/$2" target="_blank" rel="noopener noreferrer">https://doi.org/$2 ↗</a>')
-        .replace(/^-(문헌|과학해설|3D에셋)/gm, '<div style="font-weight:700; color:var(--accent-gold); margin-top:0.8rem; margin-bottom:0.3rem;">📌 $1</div>')
-        .replace(/^([0-9]+\.\s*[^\n]+)/gm, '<div style="font-weight:700; color:var(--accent-cyan); margin-top:0.7rem; margin-bottom:0.2rem;">📖 $1</div>');
+      let itemsHtml = '';
+      sec.items.forEach(it => {
+        const isAsset = it.category === 'asset';
+        const badgeBg = isAsset ? 'var(--accent-cyan)' : 'var(--accent-gold)';
+        const borderCol = isAsset ? 'rgba(56,189,248,0.3)' : 'rgba(212,175,55,0.3)';
 
-      const rBadge = sec.rCode ? `<span style="background:rgba(212,175,55,0.2); color:var(--accent-gold); font-size:0.75rem; font-weight:800; padding:0.15rem 0.5rem; border-radius:4px; border:1px solid rgba(212,175,55,0.4);">[${sec.rCode}]</span>` : '';
-      const aBadge = sec.aCode ? `<span style="background:rgba(56,189,248,0.2); color:var(--accent-cyan); font-size:0.75rem; font-weight:800; padding:0.15rem 0.5rem; border-radius:4px; border:1px solid rgba(56,189,248,0.4);">[${sec.aCode}]</span>` : '';
+        // Links Buttons
+        let linkBtns = '';
+        if (it.dois && it.dois.length > 0) {
+          it.dois.forEach(doi => {
+            linkBtns += `<a href="https://doi.org/${doi}" target="_blank" rel="noopener noreferrer" class="ref-link-btn" style="background: rgba(56,189,248,0.15); border: 1px solid #38bdf8; color: #38bdf8; font-size: 0.76rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;">📄 논문 원문 열람 (DOI) ↗</a> `;
+          });
+        }
+        if (it.urls && it.urls.length > 0) {
+          it.urls.forEach(u => {
+            if (!it.dois || !it.dois.some(d => u.includes(d))) {
+              const label = isAsset ? '🎨 3D 에셋/유물 페이지 ↗' : '🔗 자료 원본 링크 ↗';
+              linkBtns += `<a href="${u}" target="_blank" rel="noopener noreferrer" class="ref-link-btn" style="background: rgba(212,175,55,0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); font-size: 0.76rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;">${label}</a> `;
+            }
+          });
+        }
 
-      card.innerHTML = `
-        <div class="ref-section-header" style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
-          <span style="color:var(--text-muted); font-weight:800; font-size:0.85rem;">#${idx + 1}</span>
-          ${rBadge}
-          ${aBadge}
-          <h3 class="ref-section-title" style="margin:0; font-size:1.1rem; color:#fff;">${sec.rawTitle || sec.title}</h3>
+        // Citation formatting
+        let formattedCitation = it.citation
+          .replace(/(https?:\/\/[^\s\)\<\>]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">$1 ↗</a>')
+          .replace(/(DOI:\s*)(10\.[^\s\)\<\>]+)/gi, '$1<a href="https://doi.org/$2" target="_blank" rel="noopener noreferrer" style="color:#38bdf8;text-decoration:underline;">https://doi.org/$2 ↗</a>');
+
+        itemsHtml += `
+          <div class="ref-item-entry" id="ref-item-${it.code}" style="background: rgba(15, 23, 42, 0.85); border: 1px solid ${borderCol}; border-radius: 8px; padding: 0.85rem 1.1rem; margin-bottom: 0.75rem; transition: all 0.3s ease;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem; flex-wrap: wrap; gap: 0.5rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="ref-item-badge" style="background: ${badgeBg}; color: #000; font-weight: 800; font-size: 0.75rem; padding: 0.15rem 0.5rem; border-radius: 4px;">[${it.code}]</span>
+                <strong style="color: #fff; font-size: 0.95rem;">${it.topic || it.code}</strong>
+              </div>
+              <div class="ref-entry-actions" style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+                ${linkBtns}
+              </div>
+            </div>
+            <div style="font-size: 0.84rem; color: #cbd5e1; line-height: 1.6; word-break: break-word;">${formattedCitation}</div>
+          </div>
+        `;
+      });
+
+      secCard.innerHTML = `
+        <div class="ref-section-header" style="display:flex; align-items:center; gap:0.6rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(212,175,55,0.3); padding-bottom: 0.6rem;">
+          <span style="background:linear-gradient(135deg, var(--accent-gold), #b89728); color:#000; font-weight:800; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px;">${sec.codePrefix || 'REF'}</span>
+          <h3 class="ref-section-title" style="margin:0; font-size:1.15rem; color:#fff;">${sec.title}</h3>
+          <span style="font-size:0.78rem; color:var(--text-muted); margin-left:auto;">${sec.items.length}개 학술 출처 및 에셋</span>
         </div>
-        <div class="ref-section-content">${formattedContent}</div>
+        <div class="ref-section-items-list">${itemsHtml}</div>
       `;
-      bodyContainer.appendChild(card);
+      bodyContainer.appendChild(secCard);
     });
   }
 
@@ -2085,9 +2141,9 @@ class ExhibitionApp {
     if (activeTab) activeTab.classList.add('active');
 
     if (tabKey === 'all') {
-      this.renderReferencesList(REFERENCES_ARCHIVE);
+      this.renderReferencesList(STRUCTURED_REFERENCES);
     } else {
-      const targetSec = REFERENCES_ARCHIVE[tabKey];
+      const targetSec = STRUCTURED_REFERENCES[tabKey];
       this.renderReferencesList(targetSec ? [targetSec] : []);
     }
   }
@@ -2095,31 +2151,66 @@ class ExhibitionApp {
   searchReferences(query) {
     const q = query.trim().toLowerCase();
     if (!q) {
-      this.renderReferencesList(REFERENCES_ARCHIVE);
+      this.renderReferencesList(STRUCTURED_REFERENCES);
       return;
     }
 
-    const filtered = REFERENCES_ARCHIVE.filter(sec => {
-      return sec.title.toLowerCase().includes(q) || sec.content.toLowerCase().includes(q);
-    });
+    const filtered = STRUCTURED_REFERENCES.map(sec => {
+      const matchedItems = sec.items.filter(it => {
+        return it.code.toLowerCase().includes(q) ||
+               it.topic.toLowerCase().includes(q) ||
+               it.fullText.toLowerCase().includes(q);
+      });
+      if (sec.title.toLowerCase().includes(q)) {
+        return sec;
+      }
+      if (matchedItems.length > 0) {
+        return { ...sec, items: matchedItems };
+      }
+      return null;
+    }).filter(Boolean);
 
     this.renderReferencesList(filtered);
   }
 
-  openReferencesModal(targetAnimalNameOrCode = null) {
+  openReferencesModal(targetAnimalNameOrCode = null, targetItemCode = null) {
     const modal = document.getElementById('references-modal');
     if (!modal) return;
 
     modal.style.display = 'flex';
 
     if (targetAnimalNameOrCode) {
-      const searchInput = document.getElementById('ref-search-input');
-      if (searchInput) searchInput.value = targetAnimalNameOrCode;
-      this.searchReferences(targetAnimalNameOrCode);
+      const targetIdx = STRUCTURED_REFERENCES.findIndex(s => 
+        s.animalName === targetAnimalNameOrCode ||
+        s.animalCode === targetAnimalNameOrCode ||
+        s.title.includes(targetAnimalNameOrCode)
+      );
+
+      if (targetIdx !== -1) {
+        this.filterReferencesTab(targetIdx);
+      } else {
+        const searchInput = document.getElementById('ref-search-input');
+        if (searchInput) searchInput.value = targetAnimalNameOrCode;
+        this.searchReferences(targetAnimalNameOrCode);
+      }
     } else {
       const searchInput = document.getElementById('ref-search-input');
       if (searchInput) searchInput.value = '';
       this.filterReferencesTab('all');
+    }
+
+    // 만약 특정 세부 아이템 코드(예: R13-05)로 이동해야 한다면 스크롤 & 하이라이트!
+    if (targetItemCode) {
+      setTimeout(() => {
+        const targetElem = document.getElementById(`ref-item-${targetItemCode}`);
+        if (targetElem) {
+          targetElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetElem.classList.add('highlight-flash');
+          setTimeout(() => {
+            targetElem.classList.remove('highlight-flash');
+          }, 3000);
+        }
+      }, 150);
     }
   }
 }

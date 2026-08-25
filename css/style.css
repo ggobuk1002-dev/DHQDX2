@@ -2125,6 +2125,45 @@ img {
   color: #7dd3fc;
 }
 
+/* Highlight Flash Animation for Target Reference Item */
+@keyframes highlightFlash {
+  0% {
+    background: rgba(212, 175, 55, 0.5) !important;
+    border-color: var(--accent-gold) !important;
+    box-shadow: 0 0 35px var(--accent-gold-glow) !important;
+    transform: scale(1.02);
+  }
+  50% {
+    background: rgba(212, 175, 55, 0.25) !important;
+    border-color: var(--accent-gold) !important;
+    box-shadow: 0 0 20px var(--accent-gold-glow) !important;
+  }
+  100% {
+    background: rgba(15, 23, 42, 0.85) !important;
+    transform: scale(1);
+  }
+}
+
+.ref-item-entry.highlight-flash {
+  animation: highlightFlash 2.5s ease-out;
+  border-color: var(--accent-gold) !important;
+}
+
+.ref-interactive-row:hover {
+  background: rgba(212, 175, 55, 0.15) !important;
+  border-color: var(--accent-gold) !important;
+  transform: translateX(4px);
+}
+
+.ref-link-btn {
+  transition: all 0.2s ease;
+}
+
+.ref-link-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.2);
+}
+
 .final-emblem-wrap {
   margin-top: 1rem;
   border-radius: var(--radius-md);
