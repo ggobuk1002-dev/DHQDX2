@@ -105,20 +105,21 @@ class IncenseBurner3DViewer {
   }
 
   setupLighting() {
-    const ambientLight = new THREE.AmbientLight(0x0a0e17, 0.4);
+    // 묵직하고 선명한 실물 유물 감상을 위한 풍부하고 따뜻한 조명 시스템
+    const ambientLight = new THREE.AmbientLight(0xfff8eb, 1.6);
     this.scene.add(ambientLight);
 
-    this.eclipseMainLight = new THREE.DirectionalLight(0xc8e6ff, 8.0);
-    this.eclipseMainLight.position.set(-4.5, 3.5, -4.0);
-    this.scene.add(this.eclipseMainLight);
-
-    this.eclipseGoldLight = new THREE.DirectionalLight(0xd4af37, 3.0);
-    this.eclipseGoldLight.position.set(4.0, -2.0, -3.0);
-    this.scene.add(this.eclipseGoldLight);
-
-    this.frontFillLight = new THREE.DirectionalLight(0xffeedd, 0.5);
-    this.frontFillLight.position.set(0, 1.0, 4.0);
+    this.frontFillLight = new THREE.DirectionalLight(0xfffaee, 2.6);
+    this.frontFillLight.position.set(0, 1.5, 4.5);
     this.scene.add(this.frontFillLight);
+
+    this.goldKeyLight = new THREE.DirectionalLight(0xd4af37, 3.2);
+    this.goldKeyLight.position.set(3.5, 4.0, 3.0);
+    this.scene.add(this.goldKeyLight);
+
+    this.sideRimLight = new THREE.DirectionalLight(0xffeedd, 1.8);
+    this.sideRimLight.position.set(-3.5, 2.0, -2.5);
+    this.scene.add(this.sideRimLight);
   }
 
   createEclipseAtmosphere() {
@@ -129,9 +130,9 @@ class IncenseBurner3DViewer {
       const ctx = canvas.getContext('2d');
 
       const gradient = ctx.createRadialGradient(256, 256, 0, 256, 256, 256);
-      gradient.addColorStop(0, 'rgba(210, 240, 255, 0.9)');
-      gradient.addColorStop(0.2, 'rgba(100, 180, 255, 0.4)');
-      gradient.addColorStop(0.5, 'rgba(30, 80, 200, 0.1)');
+      gradient.addColorStop(0, 'rgba(210, 240, 255, 0.5)');
+      gradient.addColorStop(0.2, 'rgba(100, 180, 255, 0.2)');
+      gradient.addColorStop(0.5, 'rgba(30, 80, 200, 0.05)');
       gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
       ctx.fillStyle = gradient;
@@ -147,7 +148,8 @@ class IncenseBurner3DViewer {
       });
 
       this.eclipseGlow = new THREE.Sprite(spriteMat);
-      this.eclipseGlow.position.set(-0.55, 0.45, -0.6);
+      // 모델보다 훨씬 뒤쪽에 배치하여 모델 표면 투과 방지
+      this.eclipseGlow.position.set(-0.55, 0.45, -2.5);
       this.eclipseGlow.scale.set(4.0, 4.0, 1);
       this.scene.add(this.eclipseGlow);
     } catch (e) {
@@ -165,15 +167,19 @@ class IncenseBurner3DViewer {
       (gltf) => {
         this.model = gltf.scene;
 
-        const darkAntiqueGold = new THREE.Color(0x3a3020);
+        // 100% 완전 불투명의 묵직하고 고풍스러운 백제 금동대향로 황금 청동 재질
+        const solidAntiqueGold = new THREE.Color(0xb89838);
         this.model.traverse((child) => {
           if (child.isMesh) {
             if (!isMobile) child.geometry.computeVertexNormals();
             child.material = new THREE.MeshStandardMaterial({
-              color: darkAntiqueGold,
-              metalness: isMobile ? 0.75 : 0.92,
-              roughness: isMobile ? 0.45 : 0.28,
-              emissive: new THREE.Color(0x050402)
+              color: solidAntiqueGold,
+              metalness: isMobile ? 0.78 : 0.86,
+              roughness: isMobile ? 0.42 : 0.34,
+              emissive: new THREE.Color(0x1a1506),
+              transparent: false,
+              opacity: 1.0,
+              depthWrite: true
             });
           }
         });
