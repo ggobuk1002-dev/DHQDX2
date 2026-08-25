@@ -19,10 +19,11 @@ class IncenseBurner3DViewer {
     this.isPaused = false;
     this.animId = null;
     
-    // [intro.jpg]: 거대하게 카메라 앞 좌측을 가득 채우는 Cinematic Close-up Hero Object (모바일은 중앙 핏)
+    this.currentStepId = 'intro';
+    
     const isMobileInit = (typeof window !== 'undefined') && (window.innerWidth <= 768 && window.innerWidth < window.innerHeight);
-    this.introCameraPos = isMobileInit ? new THREE.Vector3(0, 0.10, 3.35) : new THREE.Vector3(0, -0.05, 2.15);
-    this.introTarget = isMobileInit ? new THREE.Vector3(0, -0.05, 0) : new THREE.Vector3(0, 0, 0);
+    this.introCameraPos = isMobileInit ? new THREE.Vector3(0, 0.05, 3.25) : new THREE.Vector3(0, 0, 2.15);
+    this.introTarget = new THREE.Vector3(0, 0, 0);
     
     this.targetCameraPos = this.introCameraPos.clone();
     this.targetLookAt = this.introTarget.clone();
@@ -37,34 +38,34 @@ class IncenseBurner3DViewer {
     const isPortraitMobile = width <= 768 && width < height;
     const isLandscapeMobile = (height < 550) || (width > height && width <= 900);
     
-    // 1. 모바일 세로 모드: 향로는 정중앙 상단에 안정적으로 핏 (X=0, Z=3.05~3.35)
+    // 1. 모바일 세로 모드: 향로는 정중앙(X=0), 초점 Y축과 카메라 Y축 100% 일치
     const portraitMobileMap = {
-      'intro':     { pos: new THREE.Vector3(0, 0.10, 3.35), target: new THREE.Vector3(0, -0.05, 0) },
-      'celestial': { pos: new THREE.Vector3(0, 0.62, 3.05), target: new THREE.Vector3(0, 0.48, 0) },
-      'sky':       { pos: new THREE.Vector3(0, 0.40, 3.05), target: new THREE.Vector3(0, 0.28, 0) },
-      'land':      { pos: new THREE.Vector3(0, 0.18, 3.05), target: new THREE.Vector3(0, 0.08, 0) },
-      'water':     { pos: new THREE.Vector3(0, -0.08, 3.05), target: new THREE.Vector3(0, -0.15, 0) },
-      'sea':       { pos: new THREE.Vector3(0, -0.32, 3.15), target: new THREE.Vector3(0, -0.38, 0) }
+      'intro':     { pos: new THREE.Vector3(0, 0.05, 3.25), target: new THREE.Vector3(0, 0, 0) },
+      'celestial': { pos: new THREE.Vector3(0, 0.50, 2.75), target: new THREE.Vector3(0, 0.50, 0) },
+      'sky':       { pos: new THREE.Vector3(0, 0.28, 2.75), target: new THREE.Vector3(0, 0.28, 0) },
+      'land':      { pos: new THREE.Vector3(0, 0.08, 2.75), target: new THREE.Vector3(0, 0.08, 0) },
+      'water':     { pos: new THREE.Vector3(0, -0.15, 2.75), target: new THREE.Vector3(0, -0.15, 0) },
+      'sea':       { pos: new THREE.Vector3(0, -0.38, 2.85), target: new THREE.Vector3(0, -0.38, 0) }
     };
 
-    // 2. 모바일 가로 모드: 카드 대향 분리 배치
+    // 2. 모바일 가로 모드: 대향 오프셋(X=±0.55), 초점 Y축 100% 일치
     const landscapeMobileMap = {
-      'intro':     { pos: new THREE.Vector3(0, -0.02, 2.35), target: new THREE.Vector3(0, 0, 0) },
-      'celestial': { pos: new THREE.Vector3(-0.55, 0.55, 2.10), target: new THREE.Vector3(0, 0.45, 0) },
-      'sky':       { pos: new THREE.Vector3(0.55, 0.35, 2.10), target: new THREE.Vector3(0, 0.25, 0) },
-      'land':      { pos: new THREE.Vector3(-0.55, 0.15, 2.10), target: new THREE.Vector3(0, 0.08, 0) },
-      'water':     { pos: new THREE.Vector3(0.55, -0.12, 2.10), target: new THREE.Vector3(0, -0.15, 0) },
-      'sea':       { pos: new THREE.Vector3(0.55, -0.40, 2.20), target: new THREE.Vector3(0, -0.35, 0) }
+      'intro':     { pos: new THREE.Vector3(0, 0, 2.35), target: new THREE.Vector3(0, 0, 0) },
+      'celestial': { pos: new THREE.Vector3(-0.55, 0.50, 2.10), target: new THREE.Vector3(0, 0.50, 0) },
+      'sky':       { pos: new THREE.Vector3(0.55, 0.28, 2.10), target: new THREE.Vector3(0, 0.28, 0) },
+      'land':      { pos: new THREE.Vector3(-0.55, 0.08, 2.10), target: new THREE.Vector3(0, 0.08, 0) },
+      'water':     { pos: new THREE.Vector3(0.55, -0.15, 2.10), target: new THREE.Vector3(0, -0.15, 0) },
+      'sea':       { pos: new THREE.Vector3(0.55, -0.38, 2.20), target: new THREE.Vector3(0, -0.38, 0) }
     };
 
-    // 3. 데스크톱 와이드 모드: 완벽한 대향 분리
+    // 3. 데스크톱 와이드 모드: 대향 오프셋(X=±0.60), 초점 Y축 100% 일치
     const desktopMap = {
-      'intro':     { pos: new THREE.Vector3(0, -0.05, 2.15), target: new THREE.Vector3(0, 0, 0) },
-      'celestial': { pos: new THREE.Vector3(-0.60, 0.55, 1.85), target: new THREE.Vector3(0, 0.45, 0) },
-      'sky':       { pos: new THREE.Vector3(0.60, 0.35, 1.85), target: new THREE.Vector3(0, 0.25, 0) },
-      'land':      { pos: new THREE.Vector3(-0.60, 0.15, 1.85), target: new THREE.Vector3(0, 0.08, 0) },
-      'water':     { pos: new THREE.Vector3(0.60, -0.12, 1.85), target: new THREE.Vector3(0, -0.15, 0) },
-      'sea':       { pos: new THREE.Vector3(0.60, -0.40, 1.95), target: new THREE.Vector3(0, -0.35, 0) }
+      'intro':     { pos: new THREE.Vector3(0, 0, 2.15), target: new THREE.Vector3(0, 0, 0) },
+      'celestial': { pos: new THREE.Vector3(-0.60, 0.50, 1.85), target: new THREE.Vector3(0, 0.50, 0) },
+      'sky':       { pos: new THREE.Vector3(0.60, 0.28, 1.85), target: new THREE.Vector3(0, 0.28, 0) },
+      'land':      { pos: new THREE.Vector3(-0.60, 0.08, 1.85), target: new THREE.Vector3(0, 0.08, 0) },
+      'water':     { pos: new THREE.Vector3(0.60, -0.15, 1.85), target: new THREE.Vector3(0, -0.15, 0) },
+      'sea':       { pos: new THREE.Vector3(0.60, -0.38, 1.95), target: new THREE.Vector3(0, -0.38, 0) }
     };
 
     let map = desktopMap;
@@ -309,15 +310,20 @@ class IncenseBurner3DViewer {
     this.setCinematicIntro(enabled);
   }
 
-  focusStep(stepId) {
+  focusStep(stepId, immediate = false) {
     this.isCinematicIntro = false;
-    if (this.eclipseGlow) this.eclipseGlow.visible = true; // 스크롤을 내려도 마음에 든 그 모습 그대로 유지!
+    this.currentStepId = stepId || 'intro';
+    if (this.eclipseGlow) this.eclipseGlow.visible = true;
     if (this.renderer) this.renderer.toneMappingExposure = 1.05;
 
-    const step = this.getStepCamera(stepId);
+    const step = this.getStepCamera(this.currentStepId);
     if (step) {
       this.targetCameraPos.copy(step.pos);
       this.targetLookAt.copy(step.target);
+      if (immediate && this.camera) {
+        this.camera.position.copy(step.pos);
+        this.controls.target.copy(step.target);
+      }
       this.requestRender();
     }
   }
@@ -362,6 +368,16 @@ class IncenseBurner3DViewer {
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
+
+    // 화면 회전(가로 <-> 세로) 시 현재 층위 카메라 및 초점 즉각 재동기화!
+    if (!this.controls.enabled && this.currentStepId) {
+      const step = this.getStepCamera(this.currentStepId);
+      if (step) {
+        this.targetCameraPos.copy(step.pos);
+        this.targetLookAt.copy(step.target);
+      }
+    }
+
     this.requestRender();
   }
 
