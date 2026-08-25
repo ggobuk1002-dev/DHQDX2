@@ -207,20 +207,27 @@ class ExhibitionApp {
     // 도슨트 닫기 버튼
     const btnCloseDocent = document.getElementById('btn-close-docent');
     if (btnCloseDocent) {
-      btnCloseDocent.addEventListener('click', () => this.closeDocent());
-    }
-    if (docentModal) {
-      docentModal.addEventListener('click', (e) => {
-        if (e.target === docentModal) {
-          this.closeDocent();
-        }
+      btnCloseDocent.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.closeDocent();
       });
     }
 
-    // 도슨트 대화창 클릭 진행
+    // 도슨트 대화창 클릭/터치 진행
     const dialogueBox = document.getElementById('docent-dialogue-box');
     if (dialogueBox) {
-      dialogueBox.addEventListener('click', () => this.handleDocentClick());
+      dialogueBox.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.handleDocentClick();
+      });
+    }
+
+    // 옵션 컨테이너 내부 클릭 시 상위 대화창 클릭 전파 차단
+    const optionsFooter = document.getElementById('docent-options-footer');
+    if (optionsFooter) {
+      optionsFooter.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
     }
 
     // 상세 화면 이전/다음 네비게이션
@@ -1522,8 +1529,10 @@ class ExhibitionApp {
     if (animalTag) animalTag.innerText = `${animal.code} ${animal.name}`;
     if (themeText) themeText.innerText = (docentData && docentData.theme) ? docentData.theme : animal.panelTheme;
 
+    modal.classList.add('active');
+    modal.classList.add('is-open');
     modal.style.display = 'flex';
-    modal.style.zIndex = '9999';
+    modal.style.zIndex = '99999';
 
     if (docentData && docentData.start && docentData.start.lines && docentData.start.lines.length > 0) {
       this.startDocent(docentData);
@@ -1534,7 +1543,11 @@ class ExhibitionApp {
 
   closeDocent() {
     const modal = document.getElementById('docent-modal');
-    if (modal) modal.style.display = 'none';
+    if (modal) {
+      modal.classList.remove('active');
+      modal.classList.remove('is-open');
+      modal.style.display = 'none';
+    }
     if (this.docentState.typeTimer) clearTimeout(this.docentState.typeTimer);
     this.docentState.isTyping = false;
   }
