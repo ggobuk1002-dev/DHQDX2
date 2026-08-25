@@ -57,6 +57,7 @@ class IncenseBurner3DViewer {
     if (!this.canvas) return;
 
     this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0x08090d); // 100% 완전 불투명 심연 배경
 
     const width = window.innerWidth || 800;
     const height = window.innerHeight || 600;
@@ -66,17 +67,22 @@ class IncenseBurner3DViewer {
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       antialias: true,
-      alpha: true,
+      alpha: false, // HTML 투명 합성 완전 차단 (투명 현상 근본 해결!)
       powerPreference: "high-performance",
       precision: (window.innerWidth <= 768) ? "mediump" : "highp"
     });
     this.renderer.setSize(width, height);
+    this.renderer.setClearColor(0x08090d, 1.0); // 알파 1.0 완전 불투명
     
+    // 실시간 그림자(Shadow Map) 활성화 -> 틈새와 굴곡의 짙은 음영 생성
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
     // 모바일 DPR 과부하 방지 (모바일: 최대 1.25, 데스크톱: 최대 1.75)
     const isMobile = (window.innerWidth <= 768);
     this.renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio || 1, 1.25) : Math.min(window.devicePixelRatio || 1, 1.75));
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 0.85;
+    this.renderer.toneMappingExposure = 1.1; // 묵직한 어둠과 날카로운 하이라이트 대비
     this.renderer.outputEncoding = THREE.sRGBEncoding;
 
     this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
@@ -105,21 +111,32 @@ class IncenseBurner3DViewer {
   }
 
   setupLighting() {
-    // 묵직하고 선명한 실물 유물 감상을 위한 풍부하고 따뜻한 조명 시스템
-    const ambientLight = new THREE.AmbientLight(0xfff8eb, 1.6);
+    // [intro.jpg 완벽 일치]: 전면 90%는 칠흑 같은 어둠(실루엣 그림자)에 가리워지고, 좌측 에지만 푸른 일식 광선으로 베어냄!
+    
+    // 1. 앰비언트 = 완전한 제로(0x000000) -> 그림자 영역은 100% 칠흑의 어둠으로 완벽히 가리워짐!
+    const ambientLight = new THREE.AmbientLight(0x000000, 0);
     this.scene.add(ambientLight);
 
-    this.frontFillLight = new THREE.DirectionalLight(0xfffaee, 2.6);
-    this.frontFillLight.position.set(0, 1.5, 4.5);
-    this.scene.add(this.frontFillLight);
+    // 2. [intro.jpg의 핵심] 좌측 후면 초강력 푸른 일식 림라이트 (날카로운 에지 라인만 칼날처럼 빛남)
+    this.eclipseRimLight = new THREE.DirectionalLight(0x38bdf8, 12.0);
+    this.eclipseRimLight.position.set(-4.5, 1.8, -2.5);
+    this.eclipseRimLight.target.position.set(0, 0, 0);
+    this.scene.add(this.eclipseRimLight);
+    this.scene.add(this.eclipseRimLight.target);
 
-    this.goldKeyLight = new THREE.DirectionalLight(0xd4af37, 3.2);
-    this.goldKeyLight.position.set(3.5, 4.0, 3.0);
+    // 3. 우측 전면 극미세 앰버 림라이트 (어둠 속에서 황금 조각 굴곡만 아주 희미하게 10% 스침)
+    this.goldKeyLight = new THREE.DirectionalLight(0xd4af37, 0.45);
+    this.goldKeyLight.position.set(4.0, 2.0, 2.0);
+    this.goldKeyLight.target.position.set(0, 0, 0);
     this.scene.add(this.goldKeyLight);
+    this.scene.add(this.goldKeyLight.target);
 
-    this.sideRimLight = new THREE.DirectionalLight(0xffeedd, 1.8);
-    this.sideRimLight.position.set(-3.5, 2.0, -2.5);
-    this.scene.add(this.sideRimLight);
+    // 4. 상단 봉황 벼슬 에지 라이트
+    this.topRimLight = new THREE.DirectionalLight(0xfffaed, 1.2);
+    this.topRimLight.position.set(0, 5.0, -1.5);
+    this.topRimLight.target.position.set(0, 0, 0);
+    this.scene.add(this.topRimLight);
+    this.scene.add(this.topRimLight.target);
   }
 
   createEclipseAtmosphere() {
@@ -130,9 +147,9 @@ class IncenseBurner3DViewer {
       const ctx = canvas.getContext('2d');
 
       const gradient = ctx.createRadialGradient(256, 256, 0, 256, 256, 256);
-      gradient.addColorStop(0, 'rgba(210, 240, 255, 0.5)');
-      gradient.addColorStop(0.2, 'rgba(100, 180, 255, 0.2)');
-      gradient.addColorStop(0.5, 'rgba(30, 80, 200, 0.05)');
+      gradient.addColorStop(0, 'rgba(56, 189, 248, 0.45)');
+      gradient.addColorStop(0.2, 'rgba(20, 80, 200, 0.15)');
+      gradient.addColorStop(0.5, 'rgba(5, 15, 60, 0.03)');
       gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
       ctx.fillStyle = gradient;
@@ -141,16 +158,15 @@ class IncenseBurner3DViewer {
       const texture = new THREE.CanvasTexture(canvas);
       const spriteMat = new THREE.SpriteMaterial({
         map: texture,
-        color: 0x99ccff,
+        color: 0x38bdf8,
         transparent: true,
         blending: THREE.AdditiveBlending,
         depthWrite: false
       });
 
       this.eclipseGlow = new THREE.Sprite(spriteMat);
-      // 모델보다 훨씬 뒤쪽에 배치하여 모델 표면 투과 방지
-      this.eclipseGlow.position.set(-0.55, 0.45, -2.5);
-      this.eclipseGlow.scale.set(4.0, 4.0, 1);
+      this.eclipseGlow.position.set(-0.85, 0.45, -4.5);
+      this.eclipseGlow.scale.set(5.5, 5.5, 1);
       this.scene.add(this.eclipseGlow);
     } catch (e) {
       console.warn('Atmosphere glow skipped:', e);
@@ -159,51 +175,87 @@ class IncenseBurner3DViewer {
 
   loadModel() {
     const loader = new THREE.GLTFLoader();
-    const modelUrl = 'GD_lowpoly.glb';
     const isMobile = (window.innerWidth <= 768);
 
-    loader.load(
-      modelUrl,
-      (gltf) => {
-        this.model = gltf.scene;
+    const onModelSuccess = (gltf) => {
+      const rawModel = gltf.scene;
 
-        // 100% 완전 불투명의 묵직하고 고풍스러운 백제 금동대향로 황금 청동 재질
-        const solidAntiqueGold = new THREE.Color(0xb89838);
-        this.model.traverse((child) => {
-          if (child.isMesh) {
-            if (!isMobile) child.geometry.computeVertexNormals();
-            child.material = new THREE.MeshStandardMaterial({
-              color: solidAntiqueGold,
-              metalness: isMobile ? 0.78 : 0.86,
-              roughness: isMobile ? 0.42 : 0.34,
-              emissive: new THREE.Color(0x1a1506),
-              transparent: false,
-              opacity: 1.0,
-              depthWrite: true
+      // 100% 완전 불투명 솔리드 고대 다크 브론즈 (묵직하고 깊은 질감)
+      const darkBronze = new THREE.Color(0x3a2c0c);
+      const goldSpecular = new THREE.Color(0xffe58f);
+
+      rawModel.traverse((child) => {
+        if (child.isMesh) {
+          child.material = new THREE.MeshPhongMaterial({
+            color: darkBronze,
+            specular: goldSpecular,
+            shininess: 60,
+            emissive: new THREE.Color(0x000000), // 자체발광 0 -> 완전한 칠흑 그림자!
+            transparent: false,
+            opacity: 1.0,
+            depthWrite: true,
+            depthTest: true,
+            side: THREE.FrontSide
+          });
+        }
+      });
+
+      // 회전 후의 바운딩 박스를 기준으로 크기 스케일링 및 원점 센터링
+      const box = new THREE.Box3().setFromObject(rawModel);
+      if (!box.isEmpty()) {
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = maxDim > 0 ? (1.55 / maxDim) : 1;
+        rawModel.scale.set(scale, scale, scale);
+
+        const scaledBox = new THREE.Box3().setFromObject(rawModel);
+        const center = scaledBox.getCenter(new THREE.Vector3());
+        rawModel.position.x -= center.x;
+        rawModel.position.y -= center.y;
+        rawModel.position.z -= center.z;
+      }
+
+      // 제자리에서 Y축 중심으로 자연스럽게 회전할 수 있도록 피벗 RootGroup 구성
+      const rootGroup = new THREE.Group();
+      rootGroup.add(rawModel);
+
+      this.model = rootGroup;
+      this.scene.add(this.model);
+      this.needsRender = true;
+      this.requestRender();
+
+      console.log('[ThreeViewer] 백제금동대향로 3D 모델(Pivoted Gold) 로드 및 렌더링 성공!');
+
+      if (this.loadingCallback) {
+        this.loadingCallback(100, true, false);
+      }
+    };
+
+    // 1순위: modelData.js의 Base64 내장 데이터가 있으면 CORS 차단/네트워크 딜레이 없이 즉시 100% 로드!
+    if (typeof GD_MODEL_BASE64 !== 'undefined' && GD_MODEL_BASE64) {
+      try {
+        loader.load(
+          GD_MODEL_BASE64,
+          onModelSuccess,
+          undefined,
+          (err) => {
+            console.warn('[ThreeViewer] Base64 load fallback to file:', err);
+            loader.load('GD_lowpoly.glb', onModelSuccess, undefined, (fileErr) => {
+              console.error('[ThreeViewer] All GLB loading failed:', fileErr);
+              if (this.loadingCallback) this.loadingCallback(100, true, true);
             });
           }
-        });
+        );
+        return;
+      } catch (e) {
+        console.warn('[ThreeViewer] Base64 exception, trying file:', e);
+      }
+    }
 
-        const box = new THREE.Box3().setFromObject(this.model);
-        if (!box.isEmpty()) {
-          const size = box.getSize(new THREE.Vector3());
-          const maxDim = Math.max(size.x, size.y, size.z);
-          const scale = maxDim > 0 ? (1.6 / maxDim) : 1;
-          this.model.scale.set(scale, scale, scale);
-
-          const scaledBox = new THREE.Box3().setFromObject(this.model);
-          const center = scaledBox.getCenter(new THREE.Vector3());
-          this.model.position.x -= center.x;
-          this.model.position.y -= center.y;
-          this.model.position.z -= center.z;
-        }
-
-        this.scene.add(this.model);
-
-        if (this.loadingCallback) {
-          this.loadingCallback(100, true, false);
-        }
-      },
+    // 2순위: 외부 파일 GD_lowpoly.glb 로드
+    loader.load(
+      'GD_lowpoly.glb',
+      onModelSuccess,
       (xhr) => {
         if (xhr.lengthComputable && this.loadingCallback) {
           const percent = Math.round((xhr.loaded / xhr.total) * 100);
@@ -211,7 +263,7 @@ class IncenseBurner3DViewer {
         }
       },
       (error) => {
-        console.warn('GLB Model load error, fallback:', error);
+        console.error('[ThreeViewer] GLB Model file load error:', error);
         if (this.loadingCallback) {
           this.loadingCallback(100, true, true);
         }
@@ -256,6 +308,7 @@ class IncenseBurner3DViewer {
     if (this.eclipseGlow) this.eclipseGlow.visible = false;
     if (cameraPos) this.targetCameraPos.set(cameraPos.x, cameraPos.y, cameraPos.z);
     if (targetPos) this.targetLookAt.set(targetPos.x, targetPos.y, targetPos.z);
+    this.requestRender();
   }
 
   setDetailInteractive(enabled, part) {
@@ -285,22 +338,18 @@ class IncenseBurner3DViewer {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    // 모바일 주소창 show/hide로 인한 미세 높이 변화 시 버퍼 재성성 방지 (깜빡임/떨림 방지)
-    if (this.lastWidth && Math.abs(width - this.lastWidth) < 10 && Math.abs(height - this.lastHeight) < 120) {
-      return;
-    }
     this.lastWidth = width;
     this.lastHeight = height;
 
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
+    this.requestRender();
   }
 
   requestRender() {
     this.needsRender = true;
-    if (this.isIdle && !this.isPaused) {
-      this.isIdle = false;
+    if (!this.isPaused && !this.animId) {
       this.animate();
     }
   }
@@ -314,32 +363,33 @@ class IncenseBurner3DViewer {
   }
 
   resume() {
-    if (this.isPaused) {
-      this.isPaused = false;
-      this.requestRender();
+    this.isPaused = false;
+    this.lastFrameTime = 0;
+    this.onResize();
+    if (!this.animId) {
+      this.animate();
     }
   }
 
   animate(timestamp = 0) {
-    if (this.isPaused) return;
+    if (this.isPaused) {
+      this.animId = null;
+      return;
+    }
 
     this.animId = requestAnimationFrame((t) => this.animate(t));
 
-    // 초당 60fps 타깃 페이싱 (16.6ms 간격 유지로 불필요한 고주사율 과열 방지)
+    // 초당 60fps 타깃 페이싱
     if (this.lastFrameTime && (timestamp - this.lastFrameTime < 14)) {
       return;
     }
     this.lastFrameTime = timestamp;
 
-    let hasChanges = false;
-
     if (this.model) {
       if (this.isCinematicIntro) {
         this.model.rotation.y += this.autoRotateSpeed;
-        hasChanges = true;
       } else {
         this.model.rotation.y += this.autoRotateSpeed * 0.4;
-        hasChanges = true;
       }
     }
 
@@ -351,18 +401,13 @@ class IncenseBurner3DViewer {
         this.camera.position.lerp(this.targetCameraPos, 0.05);
         this.currentLookAt.lerp(this.targetLookAt, 0.05);
         this.camera.lookAt(this.currentLookAt);
-        hasChanges = true;
       }
     } else {
       this.controls.update();
-      hasChanges = true;
     }
 
-    if (hasChanges || this.needsRender) {
-      if (this.renderer && this.scene && this.camera) {
-        this.renderer.render(this.scene, this.camera);
-      }
-      this.needsRender = false;
+    if (this.renderer && this.scene && this.camera) {
+      this.renderer.render(this.scene, this.camera);
     }
   }
 }

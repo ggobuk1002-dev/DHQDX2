@@ -313,10 +313,14 @@ class ExhibitionApp {
 
     if (viewName === 'intro') {
       if (canvasContainer) {
-        canvasContainer.style.display = 'none';
+        canvasContainer.style.display = 'block';
+        canvasContainer.style.opacity = '1';
       }
-      if (this.viewer) this.viewer.pause();
       this.disposeGLBViewer();
+      if (this.viewer) {
+        this.viewer.resume();
+        this.viewer.setCinematicIntro(true);
+      }
       this.playIntroVideo();
       
     } else if (viewName === 'main') {
