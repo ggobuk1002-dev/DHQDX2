@@ -44,6 +44,7 @@ class ExhibitionApp {
     try { this.initViewer(); } catch (e) { console.error('Viewer init error:', e); }
     try { this.bindEvents(); } catch (e) { console.error('BindEvents error:', e); }
     try { this.initReferencesModal(); } catch (e) { console.error('ReferencesModal error:', e); }
+    try { this.initFinalModal(); } catch (e) { console.error('FinalModal error:', e); }
     try { this.renderCatalog('all'); } catch (e) { console.error('RenderCatalog error:', e); }
     try { this.renderUnwrappedLayers(); } catch (e) { console.error('RenderUnwrapped error:', e); }
     try { this.updateProgress(); } catch (e) { console.error('UpdateProgress error:', e); }
@@ -471,7 +472,7 @@ class ExhibitionApp {
       if (unwrappedContainer) unwrappedContainer.style.display = 'block';
       if (catTabs) catTabs.style.display = 'none';
       if (title) title.innerText = '향로의 세계: 5대 층위 전개도 상징 탐색';
-      if (desc) desc.innerText = '천상·하늘·삼신산·연꽃과 물가·바다의 각 층위 배경 위 마커를 클릭하여 유물 속 생태계를 탐구하세요. 3D 메인화면과 상호 이동할 수 있습니다.';
+      if (desc) desc.innerText = '천상·산마루·삼신산·연꽃과 물가·바다의 각 층위 배경 위 마커를 클릭하여 유물 속 생태계를 탐구하세요. 3D 메인화면과 상호 이동할 수 있습니다.';
       this.renderUnwrappedLayers();
       window.scrollTo({ top: 0, behavior: 'instant' });
       const discoveryView = document.getElementById('discovery-view');
@@ -1778,18 +1779,92 @@ class ExhibitionApp {
 
   updateProgress() {
     const count = this.discoveredAnimals.size;
-    const total = EXHIBITION_DATA.animals.length || 19;
+    const total = (typeof EXHIBITION_DATA !== 'undefined' && EXHIBITION_DATA.animals) ? EXHIBITION_DATA.animals.length : 19;
     const percent = Math.round((count / total) * 100);
 
     const label = document.getElementById('discovery-progress-label');
     const bar = document.getElementById('discovery-progress-bar');
+    const btnOpenFinal = document.getElementById('btn-open-final-modal');
     const banner = document.getElementById('final-completion-banner');
 
     if (label) label.innerText = `${count} / ${total} 개 발견 (${percent}%)`;
     if (bar) bar.style.width = percent + '%';
 
+    if (btnOpenFinal) {
+      btnOpenFinal.style.display = (count >= total) ? 'inline-flex' : 'none';
+    }
+
     if (banner) {
       banner.style.display = (count >= total) ? 'block' : 'none';
+    }
+
+    // 100% 달성 시 최초 1회 축하 팝업 자동 실행
+    if (count >= total && count > 0) {
+      try {
+        const hasCelebrated = sessionStorage.getItem('has_shown_final_celebration');
+        if (!hasCelebrated) {
+          sessionStorage.setItem('has_shown_final_celebration', 'true');
+          setTimeout(() => {
+            this.openFinalModal();
+          }, 450);
+        }
+      } catch (e) {}
+    }
+  }
+
+  initFinalModal() {
+    const modal = document.getElementById('final-modal');
+    const btnClose = document.getElementById('btn-close-final-modal');
+    const btnConfirm = document.getElementById('btn-confirm-final-modal');
+    const btnOpen = document.getElementById('btn-open-final-modal');
+
+    if (btnOpen) {
+      btnOpen.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.openFinalModal();
+      });
+    }
+
+    if (btnClose) {
+      btnClose.addEventListener('click', () => {
+        this.closeFinalModal();
+      });
+    }
+
+    if (btnConfirm) {
+      btnConfirm.addEventListener('click', () => {
+        this.closeFinalModal();
+      });
+    }
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          this.closeFinalModal();
+        }
+      });
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && (modal.style.display === 'flex' || modal.classList.contains('active'))) {
+        this.closeFinalModal();
+      }
+    });
+  }
+
+  openFinalModal() {
+    const modal = document.getElementById('final-modal');
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('active');
+    }
+  }
+
+  closeFinalModal() {
+    const modal = document.getElementById('final-modal');
+    if (modal) {
+      modal.style.display = 'none';
+      modal.classList.remove('active');
     }
   }
 

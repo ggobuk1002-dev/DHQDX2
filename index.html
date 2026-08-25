@@ -16,7 +16,7 @@
   <link rel="preload" href="GD_lowpoly.glb" as="fetch" crossorigin="anonymous">
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=20260825_ultra_v114">
+  <link rel="stylesheet" href="css/style.css?v=20260825_ultra_v116">
   
   <!-- Three.js & Loaders (CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -78,7 +78,7 @@
     <div id="intro-ui-overlay" class="intro-ui-overlay">
       <span class="intro-badge">BAEKJE GREAT GILT-BRONZE INCENSE BURNER</span>
       <h1 class="intro-title">금동대향로 자연사박물관</h1>
-      <p class="intro-subtitle">"자세히 보아야 예쁘다. 너도 그렇다."<br>하나의 유물 속에서 피어나는 천상·하늘·육지·물가·바다의 생명과 인류사</p>
+      <p class="intro-subtitle">"자세히 보아야 예쁘다. 너도 그렇다."<br>하나의 유물 속에서 피어나는 천상·산마루·삼신산·연꽃과 물가·바다의 생명과 인류사</p>
       <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
         <button id="btn-start-exhibition" class="btn-start-exhibition">
           <span>전시 관람 시작하기</span>
@@ -105,7 +105,7 @@
     <div class="layer-quick-nav" id="layer-quick-nav">
       <div class="layer-nav-dot active" data-step-target="intro" data-label="전체 유물"></div>
       <div class="layer-nav-dot" data-step-target="celestial" data-label="천상"></div>
-      <div class="layer-nav-dot" data-step-target="sky" data-label="하늘"></div>
+      <div class="layer-nav-dot" data-step-target="sky" data-label="산마루"></div>
       <div class="layer-nav-dot" data-step-target="land" data-label="삼신산"></div>
       <div class="layer-nav-dot" data-step-target="water" data-label="연꽃과 물가"></div>
       <div class="layer-nav-dot" data-step-target="sea" data-label="바다"></div>
@@ -132,18 +132,18 @@
           <div class="scrolly-link-row">
             <button class="btn-link-layer" data-goto-unwrapped="celestial">🗺️ 천상 층위 전개도 탐색 →</button>
           </div>
-          <span class="btn-step-action">↓ 신선 세계가 펼쳐지는 하늘로</span>
+          <span class="btn-step-action">↓ 신선 세계가 펼쳐지는 산마루로</span>
         </div>
       </div>
 
       <!-- Step 2: Sky (Musicians & Immortals) -->
       <div class="scrolly-step align-right" data-step-id="sky">
         <div class="scrolly-card">
-          <span class="scrolly-tag">하늘 (신선의 산)</span>
-          <h2 class="scrolly-title">음악이 흐르는 신선의 산</h2>
+          <span class="scrolly-tag">산마루</span>
+          <h2 class="scrolly-title">음악이 흐르는 신선의 산마루</h2>
           <p class="scrolly-desc">산 모양 뚜껑의 상부에는 완함·종적·배소·거문고·북을 연주하는 다섯 악사가 자리합니다. 산 사이사이에는 향연이 빠져나오는 구멍이 있어, 향을 피우면 산악 세계 사이로 연기가 피어오르도록 설계되었습니다.</p>
           <div class="scrolly-link-row">
-            <button class="btn-link-layer" data-goto-unwrapped="sky">🗺️ 하늘 층위 전개도 탐색 →</button>
+            <button class="btn-link-layer" data-goto-unwrapped="sky">🗺️ 산마루 층위 전개도 탐색 →</button>
           </div>
           <span class="btn-step-action">↓ 생명의 터전 삼신산으로</span>
         </div>
@@ -229,7 +229,12 @@
       <div class="discovery-progress-wrap">
         <div class="progress-header">
           <span style="color: var(--accent-gold); font-weight: 700;">상징 탐구 완성도</span>
-          <span id="discovery-progress-label" style="color: var(--text-secondary);">0 / 19 개 발견 (0%)</span>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span id="discovery-progress-label" style="color: var(--text-secondary);">0 / 19 개 발견 (0%)</span>
+            <button id="btn-open-final-modal" class="btn-open-final-badge" style="display: none; background: linear-gradient(135deg, var(--accent-gold), #eab308); color: #000; font-weight: 800; font-size: 0.78rem; padding: 0.25rem 0.75rem; border-radius: 12px; border: none; cursor: pointer; box-shadow: 0 0 12px var(--accent-gold-glow); transition: all 0.2s ease;">
+              <span>🏆 완성본 보기 ↗</span>
+            </button>
+          </div>
         </div>
         <div class="progress-track">
           <div id="discovery-progress-bar" class="progress-bar-fill"></div>
@@ -255,7 +260,7 @@
     <div class="unwrapped-layers-wrapper" id="unwrapped-map-container" style="display: none;">
       <div class="unwrapped-intro-guide">
         <h3>🗺️ 금동대향로 5대 층위 전개도 공간 탐색</h3>
-        <p>전개도는 천상·산꼭대기·삼신산·연꽃과 물가·바다의 다섯 세계로 나누어 펼쳐집니다. 각 층위의 배경 위 마커를 클릭하여 상세 콘텐츠로 진입하거나, 3D 메인화면과 상호 이동할 수 있습니다.</p>
+        <p>전개도는 천상·산마루·삼신산·연꽃과 물가·바다의 다섯 세계로 나누어 펼쳐집니다. 각 층위의 배경 위 마커를 클릭하여 상세 콘텐츠로 진입하거나, 3D 메인화면과 상호 이동할 수 있습니다.</p>
       </div>
 
       <div class="unwrapped-layers-list" id="unwrapped-layers-list">
@@ -566,10 +571,18 @@
   <div id="final-modal" class="final-modal-backdrop" style="display: none;">
     <div class="final-modal-card">
       <button id="btn-close-final-modal" class="btn-close-final">✕</button>
-      <h2 style="font-family: var(--font-serif); color: var(--accent-gold); font-size: 2rem; margin-bottom: 0.5rem;">백제금동대향로 19종 생명 세계 완성</h2>
-      <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">천상에서 바다까지, 문화유산과 자연사가 어우러진 백제인의 이상향을 감상하세요.</p>
+      <div class="final-modal-header" style="text-align: center;">
+        <span style="display: inline-block; background: rgba(212, 175, 55, 0.2); color: var(--accent-gold); border: 1px solid var(--accent-gold); font-size: 0.82rem; font-weight: 700; padding: 0.25rem 0.8rem; border-radius: 12px; margin-bottom: 0.5rem;">🎉 19종 백제 상징 전수 탐구 완료!</span>
+        <h2 style="font-family: var(--font-serif); color: var(--accent-gold); font-size: 1.85rem; margin: 0.4rem 0;">백제금동대향로 19종 생명 세계 완성</h2>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.25rem;">천상에서 바다까지, 문화유산과 자연사가 어우러진 백제인의 이상향 완성본을 감상하세요.</p>
+      </div>
       <div class="final-emblem-wrap">
-        <img src="Asset/Final.webp" alt="최종 완성본" class="final-emblem-img">
+        <img src="Asset/Final.webp" alt="백제금동대향로 19종 생명 세계 완성본" class="final-emblem-img">
+      </div>
+      <div style="margin-top: 1.25rem; text-align: center;">
+        <button id="btn-confirm-final-modal" class="btn-primary-gold" style="background: linear-gradient(135deg, var(--accent-gold), #b89728); color: #000; font-weight: 800; padding: 0.6rem 2.2rem; font-size: 0.95rem; border-radius: 20px; border: none; cursor: pointer; box-shadow: 0 0 15px var(--accent-gold-glow);">
+          <span>멋져요! 전시 계속 감상하기</span>
+        </button>
       </div>
     </div>
   </div>
@@ -617,12 +630,12 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/modelData.js?v=20260825_ultra_v114"></script>
-  <script src="js/dialogueData.js?v=20260825_ultra_v114"></script>
-  <script src="js/referencesData.js?v=20260825_ultra_v114"></script>
-  <script src="js/data.js?v=20260825_ultra_v114"></script>
-  <script src="js/commentSystem.js?v=20260825_ultra_v114"></script>
-  <script src="js/threeViewer.js?v=20260825_ultra_v114"></script>
-  <script src="js/app.js?v=20260825_ultra_v114"></script>
+  <script src="js/modelData.js?v=20260825_ultra_v116"></script>
+  <script src="js/dialogueData.js?v=20260825_ultra_v116"></script>
+  <script src="js/referencesData.js?v=20260825_ultra_v116"></script>
+  <script src="js/data.js?v=20260825_ultra_v116"></script>
+  <script src="js/commentSystem.js?v=20260825_ultra_v116"></script>
+  <script src="js/threeViewer.js?v=20260825_ultra_v116"></script>
+  <script src="js/app.js?v=20260825_ultra_v116"></script>
 </body>
 </html>

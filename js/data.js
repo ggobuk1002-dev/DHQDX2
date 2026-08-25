@@ -2,8 +2,7 @@
  * ============================================================
  * EXHIBITION DATA ARCHIVE (Source of Truth)
  * 19 Animals & 5 Sacred Layers of Baekje Incense Burner
- * 100% Robust JSON-Serialized Pure JavaScript Data
- * Genuine Sketchfab 3D Embeds Restored from con_Mapping.md
+ * Canonical 5 Layers: [천상], [산마루], [삼신산], [연꽃과 물가], [바다]
  * ============================================================
  */
 
@@ -12,11 +11,11 @@ const EXHIBITION_DATA = {
     {
       "id": "celestial",
       "layerIndex": 1,
-      "name": "천상 (꼭대기)",
+      "name": "천상",
       "shortName": "천상",
       "category": "celestial",
       "title": "하늘을 향해 날아오르는 봉황",
-      "desc": "향로의 정상에는 턱 밑에 영롱한 구슬을 품은 봉황 한 마리가 날개를 활짝 펼치고 당당하게 서 있습니다. 봉황의 가슴과 배 쪽에는 향 연기가 은은하게 피어오르도록 뚫어놓은 배연공이 숨겨져 있습니다.",
+      "desc": "향로의 정상 천상에는 턱 밑에 영롱한 구슬을 품은 봉황 한 마리가 날개를 활짝 펼치고 당당하게 서 있습니다. 봉황의 가슴과 배 쪽에는 향 연기가 은은하게 피어오르도록 뚫어놓은 배연공이 숨겨져 있습니다.",
       "bg": "Asset/2. Main/bg/bg_celestial.webp",
       "animalCodes": [
         "18"
@@ -25,11 +24,11 @@ const EXHIBITION_DATA = {
     {
       "id": "sky",
       "layerIndex": 2,
-      "name": "하늘",
-      "shortName": "하늘",
+      "name": "산마루",
+      "shortName": "산마루",
       "category": "sky",
-      "title": "신선들의 선율과 천상의 세계",
-      "desc": "봉황 바로 아래 산봉우리에는 다섯 명의 악사가 각각 금, 완함, 동고, 종적, 소를 연주하며 신비로운 천상의 음악을 연주하고 있습니다. 그 주변으로 날아오르는 새들과 신령스러운 기운이 깃들어 있습니다.",
+      "title": "신선들의 선율이 흐르는 산마루",
+      "desc": "봉황 바로 아래 산마루 봉우리에는 다섯 명의 악사가 각각 금, 완함, 동고, 종적, 소를 연주하며 신비로운 천상의 음악을 연주하고 있습니다. 그 주변으로 날아오르는 새들과 신령스러운 기운이 깃들어 있습니다.",
       "bg": "Asset/2. Main/bg/bg_sky.webp",
       "animalCodes": []
     },
@@ -39,7 +38,7 @@ const EXHIBITION_DATA = {
       "name": "삼신산",
       "shortName": "삼신산",
       "category": "land",
-      "title": "첩첩산중, 생명의 터전",
+      "title": "첩첩산중 삼신산의 생태계",
       "desc": "겹겹이 솟아오른 향로의 산악은 신선이 산다고 여겨진 삼신산을 형상화한 것으로 해석됩니다. 산 모양 뚜껑에는 여러 겹의 봉우리와 산길·시냇물·폭포·호수가 표현되어 있고, 그 사이에 호랑이·사슴·멧돼지 등 현실의 동물과 상상의 동물, 기마수렵상과 여러 인물상이 배치되어 있습니다.",
       "bg": "Asset/2. Main/bg/bg_land.webp",
       "animalCodes": [
@@ -63,7 +62,7 @@ const EXHIBITION_DATA = {
       "name": "연꽃과 물가",
       "shortName": "연꽃과 물가",
       "category": "water",
-      "title": "피어나는 연꽃과 수중 생태",
+      "title": "연꽃과 수변 생물들의 터전",
       "desc": "활짝 핀 연꽃을 닮은 몸체의 꽃잎 사이에는 물고기·사슴·학을 비롯한 여러 동물과 인물이 표현되어 있습니다. 일부 형상은 악어처럼 보이는 동물이나 날개 달린 신령한 짐승으로 해석되며, 정확한 종류를 확정하기 어려운 존재도 있습니다.",
       "bg": "Asset/2. Main/bg/bg_waterside.webp",
       "animalCodes": [
@@ -80,7 +79,7 @@ const EXHIBITION_DATA = {
       "name": "바다",
       "shortName": "바다",
       "category": "sea",
-      "title": "기운을 뿜어 올리는 용",
+      "title": "향로를 떠받치는 바다와 용",
       "desc": "향로의 가장 아래에는 한 마리 용이 연꽃 모양 몸체를 입으로 물고, 하늘로 치솟듯 고개를 들어 향로 전체를 떠받치고 있습니다. 몸통과 꼬리, 구름 모양의 갈기를 투조로 장식해 강한 움직임과 생동감을 보여줍니다.",
       "bg": "Asset/2. Main/bg/bg_sea.webp",
       "animalCodes": [
