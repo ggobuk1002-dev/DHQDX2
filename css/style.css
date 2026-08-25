@@ -48,6 +48,11 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
+body.modal-open {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
 button {
   font-family: inherit;
   cursor: pointer;
@@ -2402,23 +2407,103 @@ img {
     bottom: 110%;
   }
 
-  /* 5. Detail View Mobile */
+  /* 5. Detail View Mobile & 3D Stage */
   #view-detail {
-    padding: calc(var(--header-height) + 3rem) 1rem 5rem 1rem;
+    padding: calc(var(--header-height) + 1.5rem) 1rem 5rem 1rem;
+  }
+
+  .detail-nav-top {
+    margin-bottom: 1rem;
+  }
+
+  .btn-back-to-catalog {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.85rem;
+  }
+
+  .detail-step-indicator {
+    font-size: 0.95rem;
   }
 
   .detail-main-layout {
-    flex-direction: column;
-    gap: 2rem;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
   }
 
-  .detail-viewer-column {
-    height: 340px;
+  .detail-stage-column {
+    position: relative !important;
+    top: 0 !important;
+    width: 100% !important;
+    z-index: 10 !important;
+  }
+
+  .stage-viewer-wrap {
+    height: 300px !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .stage-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+    padding: 0.85rem 1rem;
+  }
+
+  .stage-hint {
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
+  .btn-detail-docent-call {
+    width: 100%;
+    justify-content: center;
+    padding: 0.65rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .detail-header-info {
+    padding: 1.25rem;
+  }
+
+  .detail-title {
+    font-size: 1.6rem;
+  }
+
+  .detail-simple-desc {
+    font-size: 0.95rem;
+  }
+
+  .detail-info-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.35rem;
+    padding-bottom: 0.4rem;
+    scrollbar-width: none;
+  }
+
+  .detail-info-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .detail-tab-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-size: 0.82rem;
+    padding: 0.45rem 0.8rem;
+  }
+
+  .perspective-section {
+    padding: 1.25rem;
+  }
+
+  .science-panel-img {
+    max-height: 240px;
   }
 
   .detail-comments-wrapper {
     padding: 1.4rem 1rem;
-    margin-top: 2.5rem;
+    margin-top: 2rem;
   }
 
   .comment-replies-list {
@@ -2426,32 +2511,142 @@ img {
     padding-left: 0.5rem;
   }
 
-  /* 6. Docent Visual Novel Modal */
-  .docent-modal-content {
-    width: 95%;
-    max-height: 90vh;
+  /* 6. Docent Visual Novel Modal (Mobile Collision-Free Bottom Sheet) */
+  .docent-vn-backdrop {
+    padding-bottom: 0 !important;
+    background: rgba(5, 7, 10, 0.82) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    align-items: flex-end !important;
   }
 
-  .docent-character-stage {
-    height: 220px;
+  .docent-vn-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    padding: 0 0.75rem 1rem 0.75rem !important;
   }
 
-  .docent-character-stage img {
-    max-height: 200px;
+  .btn-close-vn {
+    position: absolute !important;
+    top: -2.5rem !important;
+    right: 0.75rem !important;
+    background: rgba(15, 23, 42, 0.95) !important;
+    border: 1px solid var(--accent-gold) !important;
+    color: #fff !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    padding: 0.35rem 0.9rem !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8) !important;
+    z-index: 30 !important;
   }
 
-  .docent-chat-card {
-    padding: 1.25rem 1.25rem 0.75rem 1.25rem;
+  .docent-vn-character {
+    position: absolute !important;
+    bottom: calc(100% - 20px) !important;
+    left: 1.25rem !important;
+    width: 110px !important;
+    height: 140px !important;
+    z-index: 5 !important;
+    pointer-events: none !important;
   }
 
-  .docent-chat-body {
-    font-size: 0.95rem;
-    min-height: 65px;
+  .docent-portrait-img {
+    max-height: 140px !important;
+    filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.95)) !important;
+  }
+
+  .docent-vn-ui {
+    padding: 1rem 1.15rem !important;
+    border-radius: 18px !important;
+    max-height: 65vh !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    min-height: auto !important;
+    box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.9), 0 0 20px var(--accent-gold-glow) !important;
+  }
+
+  .vn-header-badge {
+    font-size: 0.78rem !important;
+    margin-bottom: 0.4rem !important;
+    gap: 0.35rem !important;
+    flex-wrap: wrap !important;
+  }
+
+  .vn-speaker-row {
+    margin-bottom: 0.4rem !important;
+  }
+
+  .vn-speaker-name {
+    font-size: 0.95rem !important;
+    padding: 0.15rem 0.55rem !important;
+  }
+
+  .vn-text-content {
+    font-size: 0.92rem !important;
+    line-height: 1.65 !important;
+    min-height: 52px !important;
+  }
+
+  .vn-click-hint {
+    font-size: 0.75rem !important;
+  }
+
+  .vn-options-container {
+    margin-top: 0.75rem !important;
+    padding-top: 0.75rem !important;
+  }
+
+  .vn-options-title {
+    font-size: 0.82rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .vn-options-list {
+    gap: 0.4rem !important;
+    max-height: 160px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   .btn-docent-option {
-    padding: 0.65rem 1rem;
-    font-size: 0.88rem;
-    min-height: 42px;
+    padding: 0.55rem 0.85rem !important;
+    font-size: 0.84rem !important;
+    line-height: 1.4 !important;
+    min-height: 38px !important;
+    border-radius: 8px !important;
+  }
+}
+
+/* Extra small devices (<= 480px) */
+@media (max-width: 480px) {
+  .stage-viewer-wrap {
+    height: 250px !important;
+  }
+
+  .docent-vn-character {
+    width: 90px !important;
+    height: 115px !important;
+    bottom: calc(100% - 15px) !important;
+    left: 0.75rem !important;
+  }
+
+  .docent-portrait-img {
+    max-height: 115px !important;
+  }
+
+  .docent-vn-ui {
+    padding: 0.85rem 1rem !important;
+    max-height: 70vh !important;
+  }
+
+  .vn-text-content {
+    font-size: 0.88rem !important;
+  }
+
+  .btn-docent-option {
+    font-size: 0.8rem !important;
+    padding: 0.5rem 0.75rem !important;
   }
 }

@@ -204,10 +204,18 @@ class ExhibitionApp {
       });
     }
 
-    // 도슨트 닫기 버튼
+    // 도슨트 닫기 버튼 & 배경 클릭 시 닫기
     const btnCloseDocent = document.getElementById('btn-close-docent');
+    const docentModal = document.getElementById('docent-modal');
     if (btnCloseDocent) {
       btnCloseDocent.addEventListener('click', () => this.closeDocent());
+    }
+    if (docentModal) {
+      docentModal.addEventListener('click', (e) => {
+        if (e.target === docentModal) {
+          this.closeDocent();
+        }
+      });
     }
 
     // 도슨트 대화창 클릭 진행
@@ -1513,6 +1521,7 @@ class ExhibitionApp {
 
     modal.style.display = 'flex';
     modal.style.zIndex = '9999';
+    document.body.classList.add('modal-open');
 
     if (docentData && docentData.start && docentData.start.lines && docentData.start.lines.length > 0) {
       this.startDocent(docentData);
@@ -1526,6 +1535,7 @@ class ExhibitionApp {
     if (modal) modal.style.display = 'none';
     if (this.docentState.typeTimer) clearTimeout(this.docentState.typeTimer);
     this.docentState.isTyping = false;
+    document.body.classList.remove('modal-open');
   }
 
   startDocent(docentData) {
