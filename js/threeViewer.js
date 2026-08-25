@@ -294,6 +294,35 @@ class IncenseBurner3DViewer {
     this.renderer.setSize(width, height);
   }
 
+  requestRender() {
+    this.needsRender = true;
+    if (this.isIdle && !this.isPaused) {
+      this.isIdle = false;
+      this.animate();
+    }
+  }
+
+  focusStep(stepId) {
+    this.isCinematicIntro = false;
+    if (this.eclipseGlow) this.eclipseGlow.visible = false;
+    if (this.renderer) this.renderer.toneMappingExposure = 1.05;
+
+    const step = this.stepCameraMap[stepId] || this.stepCameraMap['intro'];
+    if (step) {
+      this.targetCameraPos.copy(step.pos);
+      this.targetLookAt.copy(step.target);
+      this.requestRender();
+    }
+  }
+
+  setLayerCamera(cameraPos, targetPos) {
+    this.isCinematicIntro = false;
+    if (this.eclipseGlow) this.eclipseGlow.visible = false;
+    if (cameraPos) this.targetCameraPos.set(cameraPos.x, cameraPos.y, cameraPos.z);
+    if (targetPos) this.targetLookAt.set(targetPos.x, targetPos.y, targetPos.z);
+    this.requestRender();
+  }
+
   pause() {
     this.isPaused = true;
     if (this.animId) {
@@ -305,7 +334,7 @@ class IncenseBurner3DViewer {
   resume() {
     if (this.isPaused) {
       this.isPaused = false;
-      this.animate();
+      this.requestRender();
     }
   }
 
@@ -320,24 +349,38 @@ class IncenseBurner3DViewer {
     }
     this.lastFrameTime = timestamp;
 
+    let hasChanges = false;
+
     if (this.model) {
       if (this.isCinematicIntro) {
         this.model.rotation.y += this.autoRotateSpeed;
+        hasChanges = true;
       } else {
         this.model.rotation.y += this.autoRotateSpeed * 0.4;
+        hasChanges = true;
       }
     }
 
     if (!this.controls.enabled) {
-      this.camera.position.lerp(this.targetCameraPos, 0.05);
-      this.currentLookAt.lerp(this.targetLookAt, 0.05);
-      this.camera.lookAt(this.currentLookAt);
+      const posDist = this.camera.position.distanceTo(this.targetCameraPos);
+      const lookDist = this.currentLookAt.distanceTo(this.targetLookAt);
+
+      if (posDist > 0.001 || lookDist > 0.001) {
+        this.camera.position.lerp(this.targetCameraPos, 0.05);
+        this.currentLookAt.lerp(this.targetLookAt, 0.05);
+        this.camera.lookAt(this.currentLookAt);
+        hasChanges = true;
+      }
     } else {
       this.controls.update();
+      hasChanges = true;
     }
 
-    if (this.renderer && this.scene && this.camera) {
-      this.renderer.render(this.scene, this.camera);
+    if (hasChanges || this.needsRender) {
+      if (this.renderer && this.scene && this.camera) {
+        this.renderer.render(this.scene, this.camera);
+      }
+      this.needsRender = false;
     }
   }
 }
