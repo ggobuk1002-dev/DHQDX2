@@ -14,8 +14,8 @@ const EXHIBITION_DATA = {
       "name": "천상",
       "shortName": "천상",
       "category": "celestial",
-      "title": "하늘을 향해 날아오르는 봉황",
-      "desc": "향로의 정상 천상에는 턱 밑에 영롱한 구슬을 품은 봉황 한 마리가 날개를 활짝 펼치고 당당하게 서 있습니다. 봉황의 가슴과 배 쪽에는 향 연기가 은은하게 피어오르도록 뚫어놓은 배연공이 숨겨져 있습니다.",
+      "title": "하늘을 품은 날갯짓, 봉황",
+      "desc": "향로의 가장 높은 곳에는 일반적으로 봉황으로 해석되는 새가 여의주를 턱 아래에 품고 날개를 펼친 채 서 있습니다. 봉황으로 보는 견해가 가장 널리 받아들여지지만, 천계·가릉빈가·금시조 등 다른 해석도 있습니다.",
       "bg": "Asset/2. Main/bg/bg_celestial.webp",
       "animalCodes": [
         "18"
@@ -27,8 +27,8 @@ const EXHIBITION_DATA = {
       "name": "산마루",
       "shortName": "산마루",
       "category": "sky",
-      "title": "신선들의 선율이 흐르는 산마루",
-      "desc": "봉황 바로 아래 산마루 봉우리에는 다섯 명의 악사가 각각 금, 완함, 동고, 종적, 소를 연주하며 신비로운 천상의 음악을 연주하고 있습니다. 그 주변으로 날아오르는 새들과 신령스러운 기운이 깃들어 있습니다.",
+      "title": "음악이 흐르는 신선의 산",
+      "desc": "산 모양 뚜껑의 상부에는 완함·종적·배소·거문고·북을 연주하는 다섯 악사가 자리합니다. 산 사이사이에는 향연이 빠져나오는 구멍이 있어, 향을 피우면 산악 세계 사이로 연기가 피어오르도록 설계되었습니다.",
       "bg": "Asset/2. Main/bg/bg_sky.webp",
       "animalCodes": []
     },
@@ -38,7 +38,7 @@ const EXHIBITION_DATA = {
       "name": "삼신산",
       "shortName": "삼신산",
       "category": "land",
-      "title": "첩첩산중 삼신산의 생태계",
+      "title": "첩첩산중, 생명의 터전",
       "desc": "겹겹이 솟아오른 향로의 산악은 신선이 산다고 여겨진 삼신산을 형상화한 것으로 해석됩니다. 산 모양 뚜껑에는 여러 겹의 봉우리와 산길·시냇물·폭포·호수가 표현되어 있고, 그 사이에 호랑이·사슴·멧돼지 등 현실의 동물과 상상의 동물, 기마수렵상과 여러 인물상이 배치되어 있습니다.",
       "bg": "Asset/2. Main/bg/bg_land.webp",
       "animalCodes": [
@@ -62,7 +62,7 @@ const EXHIBITION_DATA = {
       "name": "연꽃과 물가",
       "shortName": "연꽃과 물가",
       "category": "water",
-      "title": "연꽃과 수변 생물들의 터전",
+      "title": "피어나는 연꽃과 수중 생태",
       "desc": "활짝 핀 연꽃을 닮은 몸체의 꽃잎 사이에는 물고기·사슴·학을 비롯한 여러 동물과 인물이 표현되어 있습니다. 일부 형상은 악어처럼 보이는 동물이나 날개 달린 신령한 짐승으로 해석되며, 정확한 종류를 확정하기 어려운 존재도 있습니다.",
       "bg": "Asset/2. Main/bg/bg_waterside.webp",
       "animalCodes": [
@@ -79,7 +79,7 @@ const EXHIBITION_DATA = {
       "name": "바다",
       "shortName": "바다",
       "category": "sea",
-      "title": "향로를 떠받치는 바다와 용",
+      "title": "기운을 뿜어 올리는 용",
       "desc": "향로의 가장 아래에는 한 마리 용이 연꽃 모양 몸체를 입으로 물고, 하늘로 치솟듯 고개를 들어 향로 전체를 떠받치고 있습니다. 몸통과 꼬리, 구름 모양의 갈기를 투조로 장식해 강한 움직임과 생동감을 보여줍니다.",
       "bg": "Asset/2. Main/bg/bg_sea.webp",
       "animalCodes": [
@@ -94,8 +94,8 @@ const EXHIBITION_DATA = {
       "name": "말",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_01.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "말의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "산악형 뚜껑의 산봉우리 사이에 인물과 함께 표현되어 있습니다.",
+        "appearance": "말을 타고 이동하거나, 말 위에서 몸을 돌려 활을 쏘는 기마수렵 장면으로 나타납니다."
       },
       "layer": "land",
       "layerName": "삼신산",
@@ -112,18 +112,13 @@ const EXHIBITION_DATA = {
         "explanation": "말은 서서 얕은 잠을 잘 수 있습니다. 하지만 깊은 잠을 자려면 몸을 바닥에 눕혀야 합니다.",
         "reference": "근거 01 · Hartmann et al., *Applied Animal Behaviour Science* (2017)",
         "refRange": "말"
-},
+      },
       "simpleDesc": "단단한 땅을 빠르게 달리는 인간의 오랜 동반자이자 기마문화의 상징.",
       "assetType": "glb",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel01-1.webp",
       "panelImg2": "Asset/3. Exhibition/N_Panel/webp/N_Panel01-2.webp",
       "icon": "Asset/2. Main/icon/01.webp",
       "iconDark": "Asset/2. Main/icon_dark/01_dark.webp",
-      "features": [
-        "체중을 지탱하고 충격을 흡수하는 단일 제3지 발굽",
-        "달릴 때 반동 에너지를 극대화하는 긴 다리와 힘줄",
-        "넓은 시야로 포식자를 감시하는 측면 배치 눈"
-      ],
       "scienceStory": "말은 진화 과정에서 발가락 수를 줄여 가운데 발가락 하나로 달리는 특수한 발굽 구조를 갖추었습니다.",
       "sourceCode": "R01",
       "referenceList": [
@@ -197,13 +192,13 @@ const EXHIBITION_DATA = {
       "glb": "Asset/3. Exhibition/glb/01.glb",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C01.webp",
-        "visualGuide": "금령총 기마인물형토기 사진",
-        "story": "일본 고분시대의 말모양 하니와에서도 화려한 말갖춤이 표현되어 당시 승마문화와 유력자의 위세를 엿볼 수 있습니다. 6세기 초 신라의 금령총에서 발견된 기마인물형토기는 사람이 말을 타고 있는 모습을 본뜬 토기로, 안장과 재갈, 발걸이 등 실제 말갖춤이 세밀하게 표현되어 있습니다.",
+        "visualGuide": "금령총 기마인물형토기",
+        "story": "일본 고분시대의 말모양 하니와에서도 화려한 말갖춤이 표현되어, 당시 승마문화와 유력자의 위세를 엿볼 수 있습니다. 6세기 초 신라의 금령총에서 발견된 기마인물형토기는 사람이 말을 타고 있는 모습을 본뜬 토기입니다. 말에는 안장과 재갈, 발걸이 등 당시 실제 사용했던 말갖춤이 세밀하게 표현되어 있어 신라의 기마생활을 엿볼 수 있습니다. 이 토기가 무덤에 함께 묻혔다는 점에서, 말은 현실의 이동수단을 넘어 죽은 이의 사후 여정과도 연결된 존재였을 가능성이 있습니다. 일본 고분시대의 말모양 하니와에서도 화려한 말갖춤이 표현되어, 당시 승마문화와 유력자의 위세를 엿볼 수 있습니다.",
         "artifacts": [
           {
-            "title": "금령총 기마인물형토기 (국보)",
+            "title": "금령총 기마인물형토기",
             "museum": "국립중앙박물관",
-            "url": "https://www.museum.go.kr"
+            "url": "https://www.museum.go.kr/MUSEUM/contents/M0501000000.do?pageSize=10&relicRecommendCategory=&relicRecommendId=16888&sc=COM.RELIC_NAME&schM=view&sv=%ED%86%A0%EA%B8%B0"
           }
         ]
       },
@@ -233,18 +228,13 @@ const EXHIBITION_DATA = {
         "explanation": "호랑이는 헤엄을 잘 치며 더위를 식히거나 강을 건널 때 물에 들어갑니다. 물속에서 사냥한 기록도 있지만, 모든 개체가 언제나 같은 행동을 한다는 뜻은 아닙니다.",
         "reference": "근거 02 · Smithsonian’s National Zoo, Tiger",
         "refRange": "호랑이의 수영·물속 행동"
-},
+      },
       "simpleDesc": "강력한 근육과 은밀한 사냥 기술을 지닌 백두대간의 최상위 포식자.",
       "assetType": "glb",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel02.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/02.webp",
       "iconDark": "Asset/2. Main/icon_dark/02_dark.webp",
-      "features": [
-        "숨소리조차 지우는 부드러운 발바닥 패드와 접이식 발톱",
-        "위장과 은폐에 최적화된 불규칙한 줄무늬 패턴",
-        "먹이를 한 번에 제압하는 강력한 턱과 긴 송곳니"
-      ],
       "scienceStory": "호랑이는 매복과 기습에 최적화된 유연한 척추와 강력한 앞다리 근육을 발달시켰습니다.",
       "sourceCode": "R02",
       "referenceList": [
@@ -274,13 +264,13 @@ const EXHIBITION_DATA = {
       "glb": "Asset/3. Exhibition/glb/02.glb",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C02.webp",
-        "visualGuide": "백호도 및 호랑이 관련 유물",
-        "story": "호랑이는 고구려 고분벽화의 사신도에서 서쪽을 지키는 신령한 백호로 등장하며, 백제에서도 산림의 맹수이자 벽사의 상징으로 숭상되었습니다.",
+        "visualGuide": "호랑이 모양 장대받침 / 부여 군수리 호자",
+        "story": "부여 군수리에서 출토된 호자는 호랑이의 모습을 본떠 만든 백제 사비기의 토기입니다. 호랑이의 몸과 생활용품의 기능이 결합된 모습은, 백제가 중국에서 전해진 형식을 받아들이면서도 자신들의 생활문화 안에서 새롭게 활용한 사례로 볼 수 있습니다.\n\n[연결 유산: 중국 북위 호랑이 모양 장대받침]\n5세기 중국 북위의 호랑이 모양 장대받침은 엎드린 호랑이의 모습을 돌로 조각해 실용적인 기물의 형태와 결합한 유물입니다. 호랑이라는 강한 동물의 형상이 생활·의례용 물건의 조형으로 활용되었다는 점에서 백제의 호자와 비교해 볼 수 있습니다.",
         "artifacts": [
           {
-            "title": "강서대묘 백호도",
-            "museum": "국립중앙박물관",
-            "url": "https://www.museum.go.kr"
+            "title": "Pole base in the form of a tiger",
+            "museum": "The Metropolitan Museum of Art",
+            "url": "https://www.metmuseum.org/art/collection/search/54028"
           }
         ]
       },
@@ -292,8 +282,8 @@ const EXHIBITION_DATA = {
       "name": "사자",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_03.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "사자의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "산악형 뚜껑의 신선세계에 여러 현실·상상동물과 함께 자리합니다.",
+        "appearance": "비교적 작은 네발짐승 형태로 표현되어 있어 가까이 들여다보아야 모습을 확인할 수 있습니다."
       },
       "layer": "land",
       "layerName": "삼신산",
@@ -310,18 +300,13 @@ const EXHIBITION_DATA = {
         "explanation": "그 이야기는 옛 비유와 속설에 가깝습니다. 실제 암사자는 새끼를 숨겨 보호하고 젖을 먹이며, 같은 무리의 암컷들이 함께 새끼를 돌보기도 합니다.",
         "reference": "근거 03 · Smithsonian’s National Zoo, Lion",
         "refRange": "사자 무리의 번식·새끼 돌봄"
-},
+      },
       "simpleDesc": "풍성한 갈기와 무리 생활을 통해 백수(百獸)의 왕으로 군림한 맹수.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel03.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/03.webp",
       "iconDark": "Asset/2. Main/icon_dark/03_dark.webp",
-      "features": [
-        "성선택과 건강 상태를 알리는 짙고 풍성한 갈기",
-        "집단 협력 사냥에 특화된 사회적 의사소통 능력",
-        "영역을 과시하고 무리를 결집하는 강력한 포효"
-      ],
       "scienceStory": "수컷 사자의 웅장한 갈기는 체온 상승의 불리함을 감수하고도 번식 경쟁에서 우위를 점하는 성선택의 대표적 형질입니다.",
       "sourceCode": "R03",
       "referenceList": [
@@ -351,13 +336,13 @@ const EXHIBITION_DATA = {
       "embedHtml": "<iframe title=\"사자 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/b279685790ac4194b51707df5cd245d4/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C03.webp",
-        "visualGuide": "사자상 및 석조 유물",
-        "story": "불교 전래와 함께 백제에 전해진 사자는 부처의 위엄을 상징하며 석탑과 불상의 대좌, 향로의 수호신으로 장식되었습니다.",
+        "visualGuide": "기둥머리 위에 선 사자 (인도 굽타시대)",
+        "story": "5~6세기 인도 굽타시대의 ‘기둥머리 위에 선 사자’는 건축물을 떠받치는 사자의 모습으로 힘과 권위를 드러냅니다. 인도에서 사자는 왕권을 상징했으며, 불교에서는 부처의 가르침과 신성함을 나타내는 형상으로 활용되었습니다. 이러한 사자의 이미지는 종교와 교역을 따라 실제 사자가 살지 않던 지역까지 널리 전해졌습니다. 백제금동대향로의 사자 역시 먼 지역에서 전해진 동물의 이미지와 의미를 백제의 방식으로 받아들여 이상세계에 표현한 사례입니다. 이를 통해 동물뿐 아니라 그 이미지와 이야기도 국경을 넘어 이동했음을 엿볼 수 있습니다.",
         "artifacts": [
           {
-            "title": "익산 미륵사지 석탑 사자상",
-            "museum": "국립익산박물관",
-            "url": "https://iksan.museum.go.kr"
+            "title": "Lion Standing on a Pillar Capital",
+            "museum": "The Metropolitan Museum of Art",
+            "url": "https://www.metmuseum.org/art/collection/search/38393"
           }
         ]
       },
@@ -387,18 +372,13 @@ const EXHIBITION_DATA = {
         "explanation": "족제비는 땅뿐 아니라 물과 나무에서도 움직일 수 있습니다. 헤엄쳐 물에 사는 들쥐를 뒤쫓거나 나무에 올라 다람쥐를 추격한 행동이 보고되었습니다. 길고 가는 몸은 좁은 곳을 지나는 데 유리하지만 활동 공간이 땅에만 한정되는 것은 아닙니다.",
         "reference": "근거 17 · \\[Law, *Mammalian Species* (2018)\\](https://doi.org/10.1093/mspecies/sey013)",
         "refRange": "족제비(*Mustela sibirica*)의 이동 거리·수영·나무 타기·먹이 추격 행동"
-},
+      },
       "simpleDesc": "가늘고 긴 몸으로 좁은 굴속을 누비며 민첩하게 사냥하는 작은 맹수.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel04.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/04.webp",
       "iconDark": "Asset/2. Main/icon_dark/04_dark.webp",
-      "features": [
-        "좁은 틈새와 쥐구멍을 통과하는 원통형 유연한 몸",
-        "에너지 소비율이 높아 끊임없이 먹이를 찾는 높은 대사율",
-        "포식자를 쫓아내고 영역을 표시하는 강한 분비샘"
-      ],
       "scienceStory": "족제비과는 체표면적이 넓어 열 손실이 큼에도 불구하고, 좁은 터널 속 먹이를 추적하기 위해 극단적으로 길고 유연한 몸체 구조를 선택했습니다.",
       "sourceCode": "R04",
       "referenceList": [
@@ -426,7 +406,8 @@ const EXHIBITION_DATA = {
         }
       ],
       "embedHtml": "<iframe title=\"족제비 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/18b390f0dcc943288cc0971e5328159f/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
-      "panelImg3": null
+      "panelImg3": null,
+      "culturalData": null
     },
     {
       "id": 5,
@@ -434,8 +415,8 @@ const EXHIBITION_DATA = {
       "name": "원숭이",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_05.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "원숭이의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "산악형 뚜껑의 산봉우리 사이에 자리하고 있습니다.",
+        "appearance": "몸을 세우거나 앉아 주변을 바라보는 듯한 자세로 표현되어 있습니다."
       },
       "layer": "land",
       "layerName": "삼신산",
@@ -452,18 +433,13 @@ const EXHIBITION_DATA = {
         "explanation": "사람과 오늘날의 원숭이는 공통 조상에서 갈라진 뒤 같은 시간 동안 각자의 환경에 맞게 진화했습니다. 진화는 위아래의 순위가 아니라 갈라지는 나뭇가지에 가깝습니다.",
         "reference": "근거 04 · Smithsonian Human Origins Program",
         "refRange": "사람과 현생 영장류의 공통 조상"
-},
+      },
       "simpleDesc": "나뭇가지를 쥐는 손과 영리한 지능으로 숲을 탐색하는 영장류.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel05.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/05.webp",
       "iconDark": "Asset/2. Main/icon_dark/05_dark.webp",
-      "features": [
-        "물체를 정밀하게 쥐고 매달릴 수 있는 대립성 엄지손가락",
-        "입체적인 원근감을 파악하는 전방 배치 양안 시각",
-        "복잡한 무리 생활과 사회적 규범을 학습하는 고도 뇌 구조"
-      ],
       "scienceStory": "영장류의 엄지손가락 대립 구조와 지문은 나뭇가지를 안전하게 잡고 도구를 조작하는 진화적 디딤돌이 되었습니다.",
       "sourceCode": "R05",
       "referenceList": [
@@ -497,13 +473,13 @@ const EXHIBITION_DATA = {
       "embedHtml": "<iframe title=\"원숭이 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/90df1c6b146749f1ba1f3346831a2f57/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C05.webp",
-        "visualGuide": "원숭이 토우 및 십이지상",
-        "story": "신라와 백제의 토우 및 고분 장식에서 원숭이는 이국적인 동물 교류와 십이지 신앙의 일원으로 자주 표현되었습니다.",
+        "visualGuide": "원숭이형 하니와 (일본 고분시대)",
+        "story": "일본 고분시대의 원숭이형 하니와는 사람을 닮은 얼굴과 몸짓을 흙으로 표현한 무덤 조형물입니다. 원숭이는 인간과 닮은 모습 때문에 여러 문화에서 익살과 모방, 영리함과 욕망을 상징해 왔습니다. 백제금동대향로의 원숭이 역시 산악세계에 생동감을 더하며 인간과 동물의 경계를 생각하게 합니다. 불교 설화에서는 지혜와 희생의 존재로 등장하기도 하지만 이를 향로에 직접 연결하기는 어렵습니다. 두 유산은 같은 원숭이라도 문화와 맥락에 따라 서로 다른 의미로 표현될 수 있음을 보여줍니다.",
         "artifacts": [
           {
-            "title": "경주 용강동 고분 토우",
-            "museum": "국립경주박물관",
-            "url": "https://gyeongju.museum.go.kr"
+            "title": "원숭이형 하니와 (猿形埴輪)",
+            "museum": "Tokyo National Museum / e-Museum",
+            "url": "https://emuseum.nich.go.jp/detail?content_base_id=100618&content_part_id=001&content_pict_id=002&langId=en&webView=0"
           }
         ]
       },
@@ -515,8 +491,8 @@ const EXHIBITION_DATA = {
       "name": "사슴",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_06.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "사슴의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "사슴은 산악형 뚜껑과 연꽃형 몸체에서 모두 확인됩니다.",
+        "appearance": "가느다란 다리와 사슴 특유의 몸 형태를 지닌 네발짐승으로 표현되어 있습니다."
       },
       "layer": "land",
       "layerName": "삼신산",
@@ -533,18 +509,13 @@ const EXHIBITION_DATA = {
         "explanation": "대부분의 사슴과에서는 수컷에게만 뿔이 나지만 순록은 암컷도 뿔이 납니다. 다만 보통 수컷의 뿔이 더 크고 가지가 많습니다.",
         "reference": "근거 05 · U.S. National Park Service, Caribou",
         "refRange": "순록 암수의 뿔"
-},
+      },
       "simpleDesc": "우아한 자태와 계절마다 새로 자라는 장대한 뿔을 지닌 초식동물.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel06.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/06.webp",
       "iconDark": "Asset/2. Main/icon_dark/06_dark.webp",
-      "features": [
-        "줄기세포를 통해 매일 수 센티미터씩 초고속 성장하는 뿔",
-        "천적의 접근을 360도 감지하는 독립적 귀 회전 구조",
-        "가파른 산악 지형을 가볍게 뛰어넘는 유연한 발목 관절"
-      ],
       "scienceStory": "사슴의 뿔은 포유류 중 유일하게 매년 완전히 탈락하고 줄기세포를 통해 완벽히 재생되는 기적 같은 기관입니다.",
       "sourceCode": "R06",
       "referenceList": [
@@ -594,13 +565,13 @@ const EXHIBITION_DATA = {
       "embedHtml": "<iframe title=\"사슴 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/00dd0126dcc0483392afa0a396d05f92/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C06.webp",
-        "visualGuide": "사슴 장식 토기 및 금관 유물",
-        "story": "사슴의 뿔은 신라 금관의 입식 장식 모티브가 되었으며, 백제에서도 장수와 신선 세계를 안내하는 길상적 동물로 사랑받았습니다.",
+        "visualGuide": "사슴형 하니와",
+        "story": "사산조의 사슴무늬 항아리 조각과 일본의 사슴형 하니와는 같은 사슴을 서로 다른 문화적 맥락에서 표현한 유산입니다. 사슴은 왕실의 사냥과 생명력, 무덤과 의례를 상징했으며, 해마다 뿔이 떨어지고 다시 자라는 생태는 재생과 갱신의 의미로 이어졌습니다. 풍납토성에서 출토된 사슴뼈는 백제인이 실제로 사슴을 사냥하고 이용했음을 보여줍니다. 현실의 먹거리이자 자원이었던 사슴은 백제금동대향로에서는 신선과 동물이 공존하는 이상세계의 구성원으로 새롭게 자리합니다.",
         "artifacts": [
           {
-            "title": "천마총 금관 (사슴뿔 장식)",
-            "museum": "국립경주박물관",
-            "url": "https://gyeongju.museum.go.kr"
+            "title": "사슴형 하니와 (鹿形埴輪)",
+            "museum": "Hamamatsu City Catalog",
+            "url": "https://adeac.jp/hamamatsu-city/catalog/mp000130-2022"
           }
         ]
       },
@@ -612,8 +583,8 @@ const EXHIBITION_DATA = {
       "name": "멧돼지",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_07.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "멧돼지의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "산악형 뚜껑의 산봉우리와 기마수렵 장면 가까이에 자리합니다.",
+        "appearance": "낮고 단단한 몸을 가진 멧돼지가 산속에서 움직이는 듯한 모습으로 표현되어 있습니다."
       },
       "layer": "land",
       "layerName": "삼신산",
@@ -630,18 +601,13 @@ const EXHIBITION_DATA = {
         "explanation": "돼지는 깨어 있는 시간의 많은 부분을 코로 땅을 뒤지며 먹이를 찾고 주변을 탐색하는 데 씁니다. 다른 개체와 상호작용하고 경험을 통해 배우는 활동적인 동물입니다.",
         "reference": "근거 06 · Studnitz et al., *Applied Animal Behaviour Science* (2007)",
         "refRange": "돼지의 탐색·땅 파기 행동 종설"
-},
+      },
       "simpleDesc": "단단한 주둥이로 땅을 파헤치며 숲의 물질 순환을 돕는 야성의 전차.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel07.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/07.webp",
       "iconDark": "Asset/2. Main/icon_dark/07_dark.webp",
-      "features": [
-        "단단한 연골과 뼈로 강화된 흙 파기 전용 코 주둥이",
-        "평생 동안 자라며 날카롭게 유지되는 위아래 엄니",
-        "두꺼운 가죽과 지방층으로 형성된 천연 방탄 갑옷"
-      ],
       "scienceStory": "멧돼지의 굴토 행동(Rooting)은 토양을 뒤섞어 유기물을 분해하고 다양한 식물의 발아를 돕는 생태계 엔지니어의 핵심 역할입니다.",
       "sourceCode": "R07",
       "referenceList": [
@@ -686,18 +652,19 @@ const EXHIBITION_DATA = {
       ],
       "embedHtml": "<iframe title=\"멧돼지 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/e2761cb2839447b6beb0b4ed132b0895/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
-        "visualGuide": "아라마키고분 멧돼지형 하니와 (3D)",
-        "embedHtml": "<iframe title=\"天理市荒蒔古墳出土猪形埴輪\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/dadaed5bbf4b4902b17111471cabea85/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
+        "image": null,
+        "visualGuide": "천리시 아라마키고분 출토 멧돼지형 하니와",
+        "embedHtml": "<div class=\"sketchfab-embed-wrapper\"> <iframe title=\"天理市荒蒔古墳出土猪形埴輪\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/dadaed5bbf4b4902b17111471cabea85/embed?autospin=1&autostart=1&transparent=1&dnt=1\"> </iframe> </div>",
         "story": "일본 아라마키고분의 멧돼지형 하니와와 사산조의 ‘돌진하는 멧돼지’ 장식은 멧돼지의 강한 힘과 야생성을 보여줍니다. 길들여진 돼지와 달리 멧돼지는 사냥의 대상이자 인간이 맞서야 할 자연의 에너지로 인식되었습니다. 풍납토성에서 출토된 돼지·멧돼지 뼈는 백제인의 식생활과 동물 이용 모습을 보여주는 현실의 흔적입니다. 백제금동대향로의 멧돼지는 이러한 생활세계의 동물이 이상세계로 옮겨진 모습으로, 먹거리와 사냥감이면서 동시에 두려움과 생명력을 지닌 야생동물의 여러 모습을 함께 보여줍니다.",
         "artifacts": [
           {
-            "title": "아라마키고분 출토 멧돼지형 하니와 (3D)",
-            "museum": "오테마에 대학교 (Otemae University)",
+            "title": "天理市荒蒔古墳出土猪形埴輪 (3D)",
+            "museum": "Otemae University / Sketchfab",
             "url": "https://sketchfab.com/3d-models/dadaed5bbf4b4902b17111471cabea85"
           },
           {
-            "title": "돌진하는 멧돼지 벽체 장식 (Wall panel with a charging boar)",
-            "museum": "메트로폴리탄 미술관 (The Met)",
+            "title": "Wall panel with a charging boar",
+            "museum": "The Metropolitan Museum of Art",
             "url": "https://www.metmuseum.org/art/collection/search/322649"
           }
         ]
@@ -710,8 +677,8 @@ const EXHIBITION_DATA = {
       "name": "코끼리",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_08.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "코끼리의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "산악형 뚜껑의 여러 동물과 인물 사이에 표현되어 있습니다.",
+        "appearance": "긴 코와 큰 몸을 가진 코끼리의 등에 사람이 올라탄 모습으로 나타납니다."
       },
       "layer": "land",
       "layerName": "삼신산",
@@ -728,18 +695,13 @@ const EXHIBITION_DATA = {
         "explanation": "상아는 계속 자라는 앞니이지만 뿌리 쪽에는 신경과 혈관이 있습니다. 특히 밀렵으로 온전한 상아를 빼앗는 과정에서는 코끼리가 죽으며, 남은 조직도 심한 손상과 감염 위험에 놓입니다.",
         "reference": "근거 07 · 인도 환경·산림·기후변화부 상아 절단 지침 (2025); WWF 상아 해설",
         "refRange": "상아의 구조·밀렵 피해"
-},
+      },
       "simpleDesc": "수 톤의 체중을 부드럽게 지탱하는 놀라운 발바닥 쿠션의 거인.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel08.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/08.webp",
       "iconDark": "Asset/2. Main/icon_dark/08_dark.webp",
-      "features": [
-        "수천 개의 근육으로 이루어져 손처럼 정교한 긴 코",
-        "거대한 체중을 골고루 분산하는 탄성 충격 흡수 패드",
-        "혈관을 통해 체열을 효과적으로 방출하는 넓은 귀"
-      ],
       "scienceStory": "코끼리의 발뒤꿈치에는 두꺼운 지방과 결합조직으로 이루어진 특수 쿠션 패드가 있어 거대한 체중 충격을 완벽하게 흡수합니다.",
       "sourceCode": "R08",
       "referenceList": [
@@ -781,13 +743,13 @@ const EXHIBITION_DATA = {
       "embedHtml": "<iframe title=\"코끼리 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/0a7cb290616442c88f89107d9a11f8f0/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C08.webp",
-        "visualGuide": "코끼리 관련 불교 공예품",
-        "story": "코끼리는 보현보살의 가섭 동물로 백제 불교 미술의 핵심 상징이자 남방 해상 교역을 통한 국제 교류를 대변합니다.",
+        "visualGuide": "코끼리 조각 (Elephant figure)",
+        "story": "5~6세기 남아시아의 코끼리 조각은 코끼리가 힘과 권위, 지혜와 종교적 위엄을 상징하는 동물이었음을 보여줍니다. 특히 코끼리와 사자를 함께 표현한 조형에서는 서로 다른 동물의 강한 힘이 결합되기도 했습니다. 코끼리가 살지 않았던 백제의 금동대향로에 이 동물이 등장한다는 점은 실물보다 이미지와 지식이 먼 지역까지 이동했음을 보여줍니다. 향로의 코끼리는 백제인이 직접 본 동물의 기록이라기보다, 불교와 교역을 통해 접한 먼 세계의 지식을 자신들의 이상세계 속에 새롭게 담아낸 흔적이라 할 수 있습니다.",
         "artifacts": [
           {
-            "title": "보현보살 코끼리 대좌",
-            "museum": "국립중앙박물관",
-            "url": "https://www.museum.go.kr"
+            "title": "Elephant figure",
+            "museum": "Victoria and Albert Museum",
+            "url": "https://collections.vam.ac.uk/item/O39822/figure-unknown/"
           }
         ]
       },
@@ -799,8 +761,8 @@ const EXHIBITION_DATA = {
       "name": "이상한 부리를 가진 새",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_09.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "이상한 부리를 가진 새의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "산악형 뚜껑의 여러 동물과 새 사이에 자리하고 있습니다.",
+        "appearance": "코끼리 코처럼 길게 뻗은 부리와 새의 몸이 결합된 독특한 형상으로 표현되어 있습니다."
       },
       "layer": "land",
       "layerName": "삼신산",
@@ -817,18 +779,13 @@ const EXHIBITION_DATA = {
         "explanation": "부리는 먹이와 먹는 방법에 따라 굵고 단단하거나, 길고 가늘거나, 갈고리처럼 굽는 등 다양합니다. 향로 속 새는 특정 종으로 확정하지 않고 부리의 차이를 관찰합니다.",
         "reference": "근거 14 · Grant & Grant, *Science* (2002)",
         "refRange": "다윈핀치류의 부리와 먹이 적응"
-},
+      },
       "simpleDesc": "독특한 형태의 부리로 특정한 먹이 환경에 완벽히 적응한 상상의 새.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel09.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/09.webp",
       "iconDark": "Asset/2. Main/icon_dark/09_dark.webp",
-      "features": [
-        "특정 먹이를 효과적으로 섭취하기 위해 변형된 특수 부리",
-        "가볍고 단단한 케라틴 층으로 둘러싸인 턱뼈 구조",
-        "비행 효율을 극대화하는 경량화된 공기주머니 골격"
-      ],
       "scienceStory": "갈라파고스 핀치처럼 조류의 부리 형태 다양성은 환경과 먹이 자원에 따라 급격히 진화하는 적응방산의 결정적 증거입니다.",
       "sourceCode": "R09",
       "referenceList": [
@@ -860,7 +817,8 @@ const EXHIBITION_DATA = {
         }
       ],
       "embedHtml": "<iframe title=\"이상한 부리를 가진 새 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/1c27c1bec5f6440981a2673db56d0c11/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
-      "panelImg3": null
+      "panelImg3": null,
+      "culturalData": null
     },
     {
       "id": 10,
@@ -868,8 +826,8 @@ const EXHIBITION_DATA = {
       "name": "뱀을 물고 있는 야수",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_10.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "뱀을 물고 있는 야수의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "산악형 뚜껑의 산봉우리 사이에 자리한 상상동물입니다.",
+        "appearance": "네발짐승이 입에 길고 가느다란 뱀을 물고 있는 모습으로 표현되어 있습니다."
       },
       "layer": "land",
       "layerName": "삼신산",
@@ -886,18 +844,13 @@ const EXHIBITION_DATA = {
         "explanation": "사람의 사냥이나 서식지 변화는 다른 동물의 생존과 번식에 영향을 줄 수 있습니다. 예를 들어 스피팅코브라는 움직이는 표적의 얼굴을 따라가며 움직임을 예측해 독을 뿜습니다. 실험에서는 사람의 얼굴을 대상으로 했을 때 높은 명중률을 보였습니다.",
         "reference": "근거 13 · Westhoff et al., *Journal of Experimental Biology* (2010)",
         "refRange": "스피팅코브라의 표적 추적"
-},
+      },
       "simpleDesc": "독사에 맞서 치명적인 공격을 가하는 용맹한 야수와 뱀의 대결.",
-      "assetType": "sketchfab",
+      "assetType": "gif",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel10.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/10.webp",
       "iconDark": "Asset/2. Main/icon_dark/10_dark.webp",
-      "features": [
-        "독사의 공격을 신속히 회피하는 번개 같은 반사신경",
-        "독에 노출되어도 살아남는 변형된 수용체와 해독 단백질",
-        "먹이의 척추를 즉각 부러뜨리는 정밀한 물기 기술"
-      ],
       "scienceStory": "독사의 치명적인 신경독과 이에 대항하는 포식자의 독 저항성 진화는 생물학에서 말하는 '붉은 여왕 가설(Red Queen Hypothesis)'의 완벽한 사례입니다.",
       "sourceCode": "R10",
       "referenceList": [
@@ -925,11 +878,12 @@ const EXHIBITION_DATA = {
       "assetList": [
         {
           "code": "A10-01",
-          "text": "https://skfb.ly/6XUDU"
+          "text": "Asset/3. Exhibition/glb/cramorant-gorging.gif"
         }
       ],
-      "embedHtml": "<iframe title=\"뱀을 물고 있는 야수 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/18b390f0dcc943288cc0971e5328159f/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
-      "panelImg3": null
+      "embedHtml": "<div style=\"width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #0b0f19; border-radius: 8px; overflow: hidden;\"><img src=\"Asset/3. Exhibition/glb/cramorant-gorging.gif\" alt=\"뱀을 물고 있는 야수\" style=\"max-width: 100%; max-height: 100%; object-fit: contain; display: block;\"></div>",
+      "panelImg3": null,
+      "culturalData": null
     },
     {
       "id": 11,
@@ -937,8 +891,8 @@ const EXHIBITION_DATA = {
       "name": "볏을 가진 새",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_11.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "볏을 가진 새의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "산악형 뚜껑에 표현된 여러 작은 새 가운데 하나입니다.",
+        "appearance": "머리 위로 솟은 볏이 특징적인 새의 모습이지만 정확한 종류는 확인되지 않았습니다."
       },
       "layer": "land",
       "layerName": "삼신산",
@@ -955,18 +909,13 @@ const EXHIBITION_DATA = {
         "explanation": "실험실에서 수컷 공작의 구애 날갯짓을 흉내 내자 그 바람에 볏깃이 실제로 진동했습니다. 볏깃은 구애 행동 때 생기는 진동 주파수에도 잘 반응했습니다. 다만 이 연구는 모든 볏 있는 새가 같은 기능을 가진다는 뜻이 아니라, 인도공작에서 감각 기능의 가능성을 보여 준 결과입니다.",
         "reference": "근거 18 · \\[Kane et al., *PLOS ONE* (2018)\\](https://doi.org/10.1371/journal.pone.0207247)",
         "refRange": "인도공작의 볏깃·구애 진동·날갯짓 모사 실험"
-},
+      },
       "simpleDesc": "머리 위의 깃털 장식으로 자신의 건강과 유전적 우수성을 뽐내는 새.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel11-1.webp",
       "panelImg2": "Asset/3. Exhibition/N_Panel/webp/N_Panel11-2.webp",
       "icon": "Asset/2. Main/icon/11.webp",
       "iconDark": "Asset/2. Main/icon_dark/11_dark.webp",
-      "features": [
-        "빛의 각도에 따라 무지개색을 띠는 구조색 깃털",
-        "짝짓기 의식과 위협 시 부풀어 오르는 가동성 볏",
-        "시각적 구애 행동과 정교한 울음소리 패턴"
-      ],
       "scienceStory": "화려한 머리 볏은 포식자의 눈에 띄는 위험에도 불구하고, 배우자에게 자신의 면역력과 생존력을 과시하기 위해 진화한 핸디캡 원리의 산물입니다.",
       "sourceCode": "R11",
       "referenceList": [
@@ -1014,7 +963,8 @@ const EXHIBITION_DATA = {
         }
       ],
       "embedHtml": "<iframe title=\"볏을 가진 새 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/e3827c13a3364e8084797531b58c6ed6/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1\"></iframe>",
-      "panelImg3": null
+      "panelImg3": null,
+      "culturalData": null
     },
     {
       "id": 12,
@@ -1022,8 +972,8 @@ const EXHIBITION_DATA = {
       "name": "악어",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_12.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "악어의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "연꽃형 몸체의 꽃잎 사이에 표현된 동물 가운데 하나입니다.",
+        "appearance": "길쭉한 몸과 꼬리, 낮은 자세를 가진 파충류형 형상으로 보여 악어로 해석되기도 합니다."
       },
       "layer": "water",
       "layerName": "연꽃과 물가",
@@ -1040,18 +990,13 @@ const EXHIBITION_DATA = {
         "explanation": "새는 기낭과 폐를 함께 사용하고 악어는 다른 방식으로 공기를 보내므로 구조가 똑같지는 않습니다. 하지만 두 계통 모두 폐의 주요 통로에서 한 방향 기류가 확인되어, 먼 공통 조상의 호흡 진화를 이해하는 단서가 됩니다.",
         "reference": "근거 08 · Farmer, *Anatomical Record* (2015)",
         "refRange": "새와 현생 악어류의 단방향 기류 비교"
-},
+      },
       "simpleDesc": "수억 년 동안 거의 변하지 않은 완벽한 수중 매복 포식자.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel12.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/12.webp",
       "iconDark": "Asset/2. Main/icon_dark/12_dark.webp",
-      "features": [
-        "물 표면에 수평으로 정렬되는 눈·콧구멍·귀 구조",
-        "물속에서 물고기나 먹이의 미세한 파동을 감지하는 턱 감각공",
-        "사냥감을 물속으로 끌고 들어가 회전하는 데스 롤(Death Roll)"
-      ],
       "scienceStory": "악어는 물속에서 눈과 콧구멍만 내놓고 숨을 쉴 수 있는 두개골 구조와 수중 역학에 최적화된 꼬리를 유지해 왔습니다.",
       "sourceCode": "R12",
       "referenceList": [
@@ -1101,13 +1046,13 @@ const EXHIBITION_DATA = {
       "embedHtml": "<iframe title=\"악어 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/d87d75c454554ca78ac582c6a130e7cb/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C12.webp",
-        "visualGuide": "악어형 상상동물 도판",
-        "story": "중국 남방 및 동남아시아와의 해상 교류를 통해 전해진 악어의 도상은 수중의 신비로운 이수(異獸)로 수용되었습니다.",
+        "visualGuide": "소베크 악어상 (Statuette of the crocodile Sobek)",
+        "story": "5~6세기 인도의 강가 여신상 아래에는 악어를 닮은 상상동물 마카라가 표현되어 강의 힘과 풍요를 상징합니다. 이집트의 소베크 신앙에서도 악어는 두려움과 생명의 물을 함께 품은 존재로 여겨졌습니다. 백제금동대향로에도 악어로 해석되는 파충류가 등장하는데, 이는 먼 지역의 생물에 대한 지식과 이야기가 백제까지 전해졌을 가능성을 보여줍니다. 다만 이들을 직접 연결하기보다, 서로 다른 문화가 물의 강한 힘을 현실의 동물과 신화적 존재를 통해 각기 다르게 형상화했다는 점에 주목할 수 있습니다.",
         "artifacts": [
           {
-            "title": "백제 대외교류 도판 자료",
-            "museum": "국립부여박물관",
-            "url": "https://buyeo.museum.go.kr"
+            "title": "Statuette of the crocodile Sobek",
+            "museum": "Museo Egizio",
+            "url": "https://collezioni.museoegizio.it/en-GB/material/Cat_934/"
           }
         ]
       },
@@ -1119,8 +1064,8 @@ const EXHIBITION_DATA = {
       "name": "물고기",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_13.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "물고기의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "연꽃형 몸체의 연꽃잎과 꽃잎 사이에 여러 마리가 표현되어 있습니다.",
+        "appearance": "물고기다운 몸통과 꼬리지느러미를 가진 모습부터 상상적인 형태까지 다양하게 나타납니다."
       },
       "layer": "water",
       "layerName": "연꽃과 물가",
@@ -1137,18 +1082,13 @@ const EXHIBITION_DATA = {
         "explanation": "진화는 기존 구조를 없애기만 하는 것이 아니라 형태와 기능을 바꾸어 새 역할에 활용합니다. 포유류의 턱과 가운데귀 뼈에는 척추동물 아가미궁 구조의 오랜 역사가 남아 있습니다.",
         "reference": "근거 09 · Woronowicz & Schneider, *Developmental Biology* (2019)",
         "refRange": "물고기 턱·포유류 턱과 가운데귀 뼈의 진화"
-},
+      },
       "simpleDesc": "물살을 가르며 생명의 기원인 수중 세계를 유영하는 지느러미의 개척자.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel13.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/13.webp",
       "iconDark": "Asset/2. Main/icon_dark/13_dark.webp",
-      "features": [
-        "물과의 마찰 저항을 최소화하는 완벽한 유선형 체형",
-        "물속에 녹아있는 산소를 80% 이상 추출하는 역류교환 아가미",
-        "물 흐름과 주변 물체의 접근을 감지하는 옆줄(측선) 신경계"
-      ],
       "scienceStory": "물고기의 지느러미 속 방사골 구조는 훗날 육상으로 올라온 모든 사지동물의 팔다리 뼈로 진화하는 기원이 되었습니다.",
       "sourceCode": "R13",
       "referenceList": [
@@ -1182,13 +1122,13 @@ const EXHIBITION_DATA = {
       "embedHtml": "<iframe title=\"물고기 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/162ba6f0282c453789c77a4fa2f84e6e/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C13.webp",
-        "visualGuide": "어문 토기 및 청동기 유물",
-        "story": "물고기는 풍요와 다산, 부활을 상징하며 백제 연꽃무늬 수막새와 향로 몸체에 생동감 넘치게 배치되었습니다.",
+        "visualGuide": "주형 어망추 (풍납토성 출토)",
+        "story": "풍납토성에서 출토된 배 모양의 주형 어망추는 그물에 매달아 사용하던 백제의 어로 도구입니다. 이는 물고기가 단순한 상징이 아니라 백제인의 식량과 생업을 지탱한 현실의 자원이었음을 보여줍니다. 강과 바다는 사람과 물자, 정보가 오가는 통로이기도 했습니다. 백제금동대향로의 물고기는 이러한 현실의 물세계가 이상세계로 확장된 모습으로 볼 수 있습니다. 특정 어종이나 의미를 단정하기보다, 백제인의 실제 어로생활과 풍요와 생명을 품은 상징적 물세계를 함께 살펴볼 수 있습니다.",
         "artifacts": [
           {
-            "title": "부여 나성 출토 어문 토기",
-            "museum": "국립부여박물관",
-            "url": "https://buyeo.museum.go.kr"
+            "title": "주형 어망추",
+            "museum": "한성백제박물관",
+            "url": "https://baekjemuseum.seoul.go.kr/module/index.jsp?boardid=a&cpage=26&mmode=content&mpid=SBM0301000000&pid=6682&s_que=&strsearch="
           }
         ]
       },
@@ -1200,8 +1140,8 @@ const EXHIBITION_DATA = {
       "name": "물범",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_14.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "물범의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "연꽃형 몸체에 표현된 물·물가와 관련된 동물 가운데 하나입니다.",
+        "appearance": "둥글고 유선형의 몸을 가진 수생동물처럼 보여 물범과 비슷한 동물로 해석되기도 합니다."
       },
       "layer": "water",
       "layerName": "연꽃과 물가",
@@ -1218,18 +1158,13 @@ const EXHIBITION_DATA = {
         "explanation": "이들은 서로 다른 포유류 계통에서 각각 물속 생활에 적응했습니다. 물의 저항을 줄이는 유선형 몸과 헤엄용 팔다리가 비슷해진 것은 같은 환경에서 나타난 수렴 진화입니다.",
         "reference": "근거 10 · Foote et al., *Nature Genetics* (2015)",
         "refRange": "기각류·고래·바다소의 독립적 해양 적응"
-},
+      },
       "simpleDesc": "육지에서 바다로 돌아가 매끄러운 몸으로 차가운 파도를 가르는 기각류.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel14.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/14.webp",
       "iconDark": "Asset/2. Main/icon_dark/14_dark.webp",
-      "features": [
-        "수백 미터 심해 잠수를 견디는 미오글로빈 농축 혈액",
-        "물속에서 완벽한 보온을 제공하는 두꺼운 피하지방(블러버)",
-        "방수 털과 물 저항을 줄이기 위해 몸 안으로 숨겨진 귀·생식기"
-      ],
       "scienceStory": "물범은 육상 식육목 조상에서 갈라져 나와 체온 유지를 위한 두꺼운 피하지방과 지느러미형 사지를 갖추는 수렴진화를 이룩했습니다.",
       "sourceCode": "R14",
       "referenceList": [
@@ -1267,13 +1202,13 @@ const EXHIBITION_DATA = {
       "embedHtml": "<iframe title=\"물범 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/38dc4e92f17e444597274bff6be913c2/embed?autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C14.webp",
-        "visualGuide": "기각류 및 해양 동물 도상",
-        "story": "백제 해상 왕국의 해양 진출과 동해·서해 연안의 해양 동물 교류를 엿볼 수 있는 귀중한 도상입니다.",
+        "visualGuide": "강치 뼈 / 동해 독도 강치의 역사",
+        "story": "백제금동대향로에는 물범으로 해석되는 해양동물이 표현되어 있습니다. 물과 육지를 오가는 물범의 모습은 백제인이 바다의 생명까지 이상세계의 구성원으로 바라보았음을 보여줍니다. 이와 함께 떠올릴 수 있는 동물이 과거 동해와 독도 일대에 살았던 강치입니다. 강치는 오랫동안 우리 바다와 함께했지만 인간의 무분별한 포획으로 결국 사라졌습니다. 향로 속 물범과 강치의 역사를 함께 바라보면, 바다의 동물이 인간의 삶과 상상 속에 어떻게 자리해 왔는지, 그리고 자연과의 공존이 왜 중요한지를 생각하게 합니다.",
         "artifacts": [
           {
-            "title": "국립해양문화재연구소 소장선",
-            "museum": "국립해양문화재연구소",
-            "url": "https://www.seamuse.go.kr"
+            "title": "독도 강치 유적 및 생태자료",
+            "museum": "동북아역사재단 독도연구소",
+            "url": "https://contents.nahf.or.kr/dokdo/item/level.do?levelId=iscac.d_0003_0020_0020"
           }
         ]
       },
@@ -1303,18 +1238,13 @@ const EXHIBITION_DATA = {
         "explanation": "북아메리카수달은 물속에서 눈뿐 아니라 길고 민감한 얼굴 수염도 이용합니다. 이 수염은 먹이의 위치를 알아내고 붙잡는 데 도움을 줍니다. 물속에서는 귀와 콧구멍을 닫을 수도 있습니다.",
         "reference": "근거 19 · \\[Smithsonian’s National Zoo, North American River Otter\\](https://nationalzoo.si.edu/animals/north-american-river-otter)",
         "refRange": "북아메리카수달의 얼굴 수염·수중 감각·귀와 콧구멍"
-},
+      },
       "simpleDesc": "물갈퀴와 빽빽한 털로 하천 생태계를 자유자재로 누비는 수중 사냥꾼.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel15.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/15.webp",
       "iconDark": "Asset/2. Main/icon_dark/15_dark.webp",
-      "features": [
-        "가장 치밀한 이중 방수 털과 공기 단열층",
-        "물살을 추진하는 강한 꼬리와 발가락 사이 물갈퀴",
-        "물속 시야를 확보하기 위한 굴절률 조절 수정체"
-      ],
       "scienceStory": "수달의 털은 1제곱센티미터당 수만 가닥의 치밀한 방수 구조를 이루어 물이 피부에 직접 닿지 않도록 공기층을 가두어 체온을 보호합니다.",
       "sourceCode": "R15",
       "referenceList": [
@@ -1353,8 +1283,9 @@ const EXHIBITION_DATA = {
           "text": "https://sketchfab.com/models/57b88c7e30c74b588f28102177849397"
         }
       ],
-      "embedHtml": "<iframe title=\"수달 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/188d7264dc354c7195cf47f4540bf252/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
-      "panelImg3": null
+      "embedHtml": "<div class=\"sketchfab-embed-wrapper\"> <iframe title=\"Model 96A - North American Otter\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/57b88c7e30c74b588f28102177849397/embed?autospin=1&autostart=1&ui_infos=0&dnt=1\"> </iframe> </div>",
+      "panelImg3": null,
+      "culturalData": null
     },
     {
       "id": 16,
@@ -1362,8 +1293,8 @@ const EXHIBITION_DATA = {
       "name": "백로 / 왜가리 / 두루미",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_16.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "백로 / 왜가리 / 두루미의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "연꽃형 몸체의 상단 연꽃잎과 그 사이에 자리하고 있습니다.",
+        "appearance": "긴 다리와 목, 뾰족한 부리를 가진 물새의 모습으로 표현되어 있습니다."
       },
       "layer": "water",
       "layerName": "연꽃과 물가",
@@ -1380,18 +1311,13 @@ const EXHIBITION_DATA = {
         "explanation": "‘백로’는 흰 깃털을 가진 여러 왜가리류를 묶어 부르는 이름입니다. 쇠백로·중백로·대백로처럼 서로 다른 종이 포함되므로, 한 종의 고유 이름으로만 보면 안 됩니다.",
         "reference": "근거 11 · 국립생물자원관 국가생물종지식정보시스템",
         "refRange": "왜가리과 백로류의 종 분류"
-},
+      },
       "simpleDesc": "물가에 고요히 서 있다가 벼락같이 물고기를 낚아채는 섭금류.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel16.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/16.webp",
       "iconDark": "Asset/2. Main/icon_dark/16_dark.webp",
-      "features": [
-        "에너지를 순간 방출하여 부리를 투사하는 S자형 탄성 목",
-        "깊은 펄과 여울에서도 몸을 띄우지 않고 걷는 긴 다리",
-        "물에 젖지 않는 방수 파우더 깃털(분우) 관리 체계"
-      ],
       "scienceStory": "왜가리과의 S자형 목 경추 구조는 마치 용수철처럼 에너지를 압축했다가 순간적으로 부리를 발사하는 탄성 투사 메커니즘을 자랑합니다.",
       "sourceCode": "R16",
       "referenceList": [
@@ -1420,13 +1346,14 @@ const EXHIBITION_DATA = {
       ],
       "embedHtml": "<iframe title=\"백로 / 왜가리 / 두루미 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/95a74fb41f1a46f0acec81a2d6c85093/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
-        "visualGuide": "대한민국 500원 주화 (학 3D)",
-        "embedHtml": "<iframe title=\"500 Korean won coin\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/2fa97e66fcb4455ca87b4be8a2e602f7/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
+        "image": null,
+        "visualGuide": "대한민국 500원 주화 (학 도상 3D)",
+        "embedHtml": "<div class=\"sketchfab-embed-wrapper\"> <iframe title=\"500 Korean won coin\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/2fa97e66fcb4455ca87b4be8a2e602f7/embed?autospin=1&autostart=1&transparent=1&dnt=1\"> </iframe> </div>",
         "story": "백제금동대향로에는 백로과 또는 두루미과로 보이는 새가 표현되어 있으며, 흔히 ‘학’으로 해석됩니다. 동아시아에서 학은 오랜 세월 장수와 고결함, 길상을 상징해 온 새였습니다. 이러한 이미지는 오늘날 대한민국의 500원 주화에서도 이어집니다. 주화에 새겨진 학은 전통적인 상징성을 현대적으로 계승하면서, 힘차게 날아오르는 모습으로 대한민국의 발전과 도약을 나타냅니다. 향로 속 학과 500원 주화를 함께 살펴보면, 한 동물에 담긴 상징이 시대에 따라 새로운 의미를 더하며 이어져 왔음을 알 수 있습니다.",
         "artifacts": [
           {
-            "title": "대한민국 500원 주화 (학 3D)",
-            "museum": "Sketchfab 3D Archive",
+            "title": "500 Korean won coin (3D)",
+            "museum": "Sketchfab (https://skfb.ly/oFvsp)",
             "url": "https://skfb.ly/oFvsp"
           }
         ]
@@ -1457,18 +1384,13 @@ const EXHIBITION_DATA = {
         "explanation": "20개 핵 유전자를 비교한 연구에서는 날 수 있는 티나무가 주금류 계통 안에 놓였습니다. 이 결과를 가장 잘 설명하는 가설은 타조·레아·호주 지역의 주금류 계통에서 비행 능력이 적어도 세 번 독립적으로 사라졌다는 것입니다. 비슷한 달리기형 몸이 반드시 한 번만 생겼다는 뜻은 아닙니다.",
         "reference": "근거 20 · \\[Harshman et al., *PNAS* (2008)\\](https://doi.org/10.1073/pnas.0803242105)",
         "refRange": "20개 핵 유전자·현생 주금류와 티나무·비행 능력의 독립적 상실"
-},
+      },
       "simpleDesc": "날개 대신 강력한 다리 근육을 발달시켜 대지를 질주하는 주조류.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel17-1.webp",
       "panelImg2": "Asset/3. Exhibition/N_Panel/webp/N_Panel17-2.webp",
       "icon": "Asset/2. Main/icon/17.webp",
       "iconDark": "Asset/2. Main/icon_dark/17_dark.webp",
-      "features": [
-        "탄성 에너지를 보존하여 질주 효율을 높이는 긴 발목 힘줄",
-        "체중을 가볍게 유지하기 위한 단단하고 콤팩트한 체간 골격",
-        "방향 전환과 고속 주행 시 균형을 잡아주는 날개 조타"
-      ],
       "scienceStory": "달리는 새는 무거운 날개 비행 근육을 줄이고 다리 힘줄에 에너지를 저장하는 탄성 주행 구조를 발전시켜 장거리 질주 효율을 극대화했습니다.",
       "sourceCode": "R17",
       "referenceList": [
@@ -1512,7 +1434,8 @@ const EXHIBITION_DATA = {
         }
       ],
       "embedHtml": "<iframe title=\"달리는 새 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/b61466de53d24988835bb755dc2f73da/embed?autospin=1&autostart=1&transparent=1&ui_infos=0&dnt=1\"></iframe>",
-      "panelImg3": "Asset/3. Exhibition/N_Panel/webp/N_Panel17-3.webp"
+      "panelImg3": "Asset/3. Exhibition/N_Panel/webp/N_Panel17-3.webp",
+      "culturalData": null
     },
     {
       "id": 18,
@@ -1520,8 +1443,8 @@ const EXHIBITION_DATA = {
       "name": "봉황",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_18.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "봉황의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "향로의 가장 높은 곳인 산악형 뚜껑 정상에 자리합니다.",
+        "appearance": "날개와 긴 꼬리를 펼치고 턱 아래에 구슬을 품은 큰 새로, 일반적으로 봉황으로 보지만 금시조로 해석하는 견해도 있습니다."
       },
       "layer": "celestial",
       "layerName": "천상 (꼭대기)",
@@ -1538,18 +1461,13 @@ const EXHIBITION_DATA = {
         "explanation": "뱀과 새는 생김새가 아주 다르지만, 공통 조상에서 갈라져 나온 하나의 계통에 포함됩니다. 이 계통을 석형류(Sauropsida)라고 합니다.",
         "reference": "근거 15 · Brusatte et al., *Current Biology* (2015)",
         "refRange": "조류의 공룡 기원과 파충류 계통"
-},
+      },
       "simpleDesc": "향로의 정상에서 세상을 굽어살피며 태평성대를 알리는 신조.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel18.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/18.webp",
       "iconDark": "Asset/2. Main/icon_dark/18_dark.webp",
-      "features": [
-        "자연계의 여러 조류 형질이 융합된 완벽한 이상적 도상",
-        "향로 내부의 연기를 하늘로 품어내는 가슴 배연공 구조",
-        "왕권의 정당성과 우주적 질서를 상징하는 천상적 위상"
-      ],
       "scienceStory": "봉황은 닭의 며느리발톱, 공작의 깃털, 맹금류의 부리 등 현실 조류의 강력하고 아름다운 형질들이 결합되어 탄생한 문화적 이상향의 결정체입니다.",
       "sourceCode": "R18",
       "referenceList": [
@@ -1583,13 +1501,13 @@ const EXHIBITION_DATA = {
       "embedHtml": "<iframe title=\"봉황 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/778006bf99114fde8898b61104bc43d4/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C18.webp",
-        "visualGuide": "봉황무늬 벽돌 및 금속공예품",
-        "story": "봉황은 백제 왕실의 존엄과 태평성대를 상징하는 최고위 도상으로 부여 외리 무늬벽돌과 향로 정상에 우뚝 서 있습니다.",
+        "visualGuide": "부여 외리 봉황무늬 벽돌 (국립중앙박물관 3D)",
+        "story": "부여 외리의 봉황무늬 벽돌에는 긴 꼬리와 화려한 깃을 지닌 상서로운 새가 표현되어 있습니다. 봉황은 태평성대와 왕권의 정당성, 조화로운 세계를 상징하는 존재로, 현실의 여러 새 특징을 결합해 만들어진 이상적인 동물입니다. 백제금동대향로 정상의 새 역시 일반적으로 봉황으로 해석되며, 연꽃과 산악세계 위에서 향로의 우주를 완성합니다. 두 유산을 함께 보면 백제가 상서로운 새의 이미지를 건축과 공예에 반복해 활용하며 이상적 세계와 권위, 길상의 의미를 표현했음을 알 수 있습니다.",
         "artifacts": [
           {
             "title": "부여 외리 봉황무늬 벽돌",
-            "museum": "국립부여박물관",
-            "url": "https://buyeo.museum.go.kr"
+            "museum": "국립중앙박물관",
+            "url": "https://www.museum.go.kr/MUSEUM/contents/M0505000000.do?relicId=179706&schM=view&searchId=search"
           }
         ]
       },
@@ -1601,8 +1519,8 @@ const EXHIBITION_DATA = {
       "name": "용",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_19.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "용의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "향로의 가장 아래쪽 받침 전체가 한 마리의 용으로 이루어져 있습니다.",
+        "appearance": "입으로 연꽃 모양 몸체를 받치고 고개를 치켜든 채 몸과 꼬리를 힘차게 휘감은 역동적인 자세입니다."
       },
       "layer": "sea",
       "layerName": "바다",
@@ -1619,18 +1537,13 @@ const EXHIBITION_DATA = {
         "explanation": "한 실험에서 성인 참가자들은 흐릿하게 가린 뱀, 새, 고양이, 물고기 그림을 보고 동물을 맞췄습니다. 뱀 그림은 다른 동물 그림보다 더 높은 정답률을 보였습니다. 이런 결과는 사람이 뱀처럼 위험할 수 있는 동물을 빠르게 알아차리는 능력을 가지고 있을 가능성을 보여줍니다. 이를 설명하는 가설 가운데 하나가 뱀탐지이론(snake detection theory)입니다.",
         "reference": "근거 16 · Kawai & He, *PLOS ONE* (2016), doi:10.1371/journal.pone.0164342",
         "refRange": "성인 20명·노이즈로 흐린 동물 그림"
-},
+      },
       "simpleDesc": "용트림하는 역동적인 몸체로 지상과 천상을 연결하는 받침대의 수호자.",
       "assetType": "sketchfab",
       "panelImg": "Asset/3. Exhibition/N_Panel/webp/N_Panel19.webp",
       "panelImg2": null,
       "icon": "Asset/2. Main/icon/19.webp",
       "iconDark": "Asset/2. Main/icon_dark/19_dark.webp",
-      "features": [
-        "향로의 거대한 하중을 역학적으로 지탱하는 3개의 발가락 지지대",
-        "금속을 뚫고 깎아내어 강렬한 공간감을 연출한 투조 기법",
-        "수중과 천상을 잇는 생명 순환의 영원한 에너지원"
-      ],
       "scienceStory": "백제금동대향로의 용은 뱀의 몸통, 악어의 턱, 물고기의 비늘 등 수생 및 파충류 포식자들의 원초적 힘에 대한 인류의 공포와 경외심이 투영된 상징입니다.",
       "sourceCode": "R19",
       "referenceList": [
@@ -1668,13 +1581,13 @@ const EXHIBITION_DATA = {
       "embedHtml": "<iframe title=\"용 3D Model\" frameborder=\"0\" allowfullscreen mozallowfullscreen=\"true\" webkitallowfullscreen=\"true\" allow=\"autoplay; fullscreen; xr-spatial-tracking\" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src=\"https://sketchfab.com/models/d942a0d167594169b3f037f562458d38/embed?autospin=1&autostart=1&transparent=1&dnt=1\"></iframe>",
       "culturalData": {
         "image": "Asset/3. Exhibition/C_data/webp/C19.webp",
-        "visualGuide": "용무늬 은제 허리띠 및 벽화",
-        "story": "용은 우주의 수기를 다스리는 최고의 신수로, 백제 무령왕릉 출토 용장식 은제 허리띠와 고분 벽화에서 최상의 권위를 드러냅니다.",
+        "visualGuide": "부여 외리 용무늬 벽돌 (국립중앙박물관 3D)",
+        "story": "부여 외리의 용무늬 벽돌에는 구름과 물을 움직이는 상상동물인 용이 역동적으로 표현되어 있습니다. 동아시아에서 용은 비와 물을 다스려 생명과 농경을 돕는 존재이자 왕권과 신성한 질서를 상징했습니다. 백제금동대향로의 용은 아래에서 향로의 몸체를 떠받치며 연꽃과 산악세계, 봉황으로 이어지는 전체 세계의 기반을 이룹니다. 두 유산을 함께 보면 용이 단순한 장식이 아니라 물과 하늘, 땅을 연결하고 세계의 질서를 유지하는 우주적 존재로 표현되었음을 알 수 있습니다.",
         "artifacts": [
           {
-            "title": "무령왕릉 용장식 은제 허리띠",
-            "museum": "국립공주박물관",
-            "url": "https://gongju.museum.go.kr"
+            "title": "부여 외리 용무늬 벽돌",
+            "museum": "국립중앙박물관",
+            "url": "https://www.museum.go.kr/MUSEUM/contents/M0505000000.do?relicId=196874&schM=view&searchId=search"
           }
         ]
       },

@@ -973,17 +973,12 @@ class ExhibitionApp {
     const embedWrap = document.getElementById('detail-3d-embed-wrap');
     if (embedWrap) {
       if (animal.glb) {
-        this.renderGLBViewer(embedWrap, animal.glb, animal.name);
+        this.renderGLBViewer(embedWrap, animal.glb, animal.name, animal.code);
       } else if (animal.embedHtml) {
         embedWrap.innerHTML = animal.embedHtml;
       }
     }
 
-    // 3가지 핵심 관찰 포인트
-    const featuresList = document.getElementById('detail-features-list');
-    if (featuresList && animal.features) {
-      featuresList.innerHTML = animal.features.map(f => `<li>${f}</li>`).join('');
-    }
 
     // 사회·문화적 관점 (DOCENT_DIALOGUES 연동)
     const cultureText = document.getElementById('detail-culture-text');
@@ -1512,7 +1507,7 @@ class ExhibitionApp {
     }
   }
 
-  renderGLBViewer(container, glbUrl, animalName) {
+  renderGLBViewer(container, glbUrl, animalName, animalCode) {
     this.disposeGLBViewer();
     container.innerHTML = '';
     
@@ -1582,9 +1577,14 @@ class ExhibitionApp {
     dirLight3.position.set(0, 5, -5);
     scene.add(dirLight3);
 
-    // GLB 로더 실행 (피벗 그룹 기반 중앙 정렬 및 자동 스케일링)
+    // 로컬 file:// 및 오프라인 환경 CORS 방지를 위해 Base64 우선 로드
+    let modelSource = glbUrl;
+    if (typeof ANIMAL_MODELS_BASE64 !== 'undefined' && animalCode && ANIMAL_MODELS_BASE64[animalCode]) {
+      modelSource = ANIMAL_MODELS_BASE64[animalCode];
+    }
+
     const loader = new THREE.GLTFLoader();
-    loader.load(glbUrl, (gltf) => {
+    const onGLTFSuccess = (gltf) => {
       const model = gltf.scene;
 
       // 모든 메시에 양면 렌더링 및 광원 반응 활성화
@@ -1621,10 +1621,24 @@ class ExhibitionApp {
       }
 
       loadingTip.innerText = `💡 드래그하여 ${animalName} 3D 모델을 360° 회전하세요`;
-    }, undefined, (err) => {
-      console.warn('GLB load error:', err);
-      loadingTip.innerText = `💡 ${animalName} 3D 모델 불러오기 완료`;
-    });
+    };
+
+    loader.load(
+      modelSource,
+      onGLTFSuccess,
+      undefined,
+      (err) => {
+        console.warn('[renderGLBViewer] Initial load failed, trying fallback url:', err);
+        if (modelSource !== glbUrl && glbUrl) {
+          loader.load(glbUrl, onGLTFSuccess, undefined, (fallbackErr) => {
+            console.error('[renderGLBViewer] GLB fallback failed:', fallbackErr);
+            loadingTip.innerText = `💡 ${animalName} 3D 모델 불러오기 완료`;
+          });
+        } else {
+          loadingTip.innerText = `💡 ${animalName} 3D 모델 불러오기 완료`;
+        }
+      }
+    );
 
     const viewerState = {
       renderer,
