@@ -215,8 +215,8 @@ const EXHIBITION_DATA = {
       "name": "호랑이",
       "iconography": {
         "img": "Asset/3. Exhibition/real_img/real_02.webp",
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "호랑이의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "location": "산악형 뚜껑의 여러 산봉우리 사이에 자리하고 있습니다.",
+        "appearance": "줄무늬가 표현된 네발짐승이 산속을 움직이는 듯한 모습으로 조각되어 있습니다."
       },
       "layer": "land",
       "layerName": "삼신산",
@@ -368,9 +368,9 @@ const EXHIBITION_DATA = {
       "code": "04",
       "name": "족제비",
       "iconography": {
-        "img": null,
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "족제비의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "img": "Asset/3. Exhibition/real_img/real_04.webp",
+        "location": "산악형 뚜껑에 표현된 작은 네발짐승 가운데 하나입니다.",
+        "appearance": "길쭉한 몸과 짧은 다리를 가진 낮은 체형으로 보여 족제비과 동물로 해석되기도 합니다."
       },
       "layer": "land",
       "layerName": "삼신산",
@@ -1284,9 +1284,9 @@ const EXHIBITION_DATA = {
       "code": "15",
       "name": "수달",
       "iconography": {
-        "img": null,
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "수달의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "img": "Asset/3. Exhibition/real_img/real_15.webp",
+        "location": "연꽃형 몸체의 상단 연꽃잎 부근에 자리하고 있습니다.",
+        "appearance": "네발짐승이 물고기를 입에 물고 이동하는 듯한 모습으로 표현되어 수달로 해석되기도 합니다."
       },
       "layer": "water",
       "layerName": "연꽃과 물가",
@@ -1438,9 +1438,9 @@ const EXHIBITION_DATA = {
       "code": "17",
       "name": "달리는 새",
       "iconography": {
-        "img": null,
-        "location": "백제금동대향로 본체에 정교하게 조각되어 있습니다.",
-        "appearance": "달리는 새의 생생한 특징과 동작이 백제 금속공예의 정수로 표현되어 있습니다."
+        "img": "Asset/3. Exhibition/real_img/real_17.webp",
+        "location": "연꽃형 몸체 상단의 연꽃잎에 표현된 새 가운데 하나입니다.",
+        "appearance": "긴 다리를 뒤로 뻗고 몸을 앞으로 움직이는 듯해 달리거나 날아오르는 순간처럼 보입니다."
       },
       "layer": "land",
       "layerName": "삼신산",
